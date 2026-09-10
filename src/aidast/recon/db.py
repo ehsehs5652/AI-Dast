@@ -201,6 +201,10 @@ def init_db(db_path: Path) -> sqlite3.Connection:
     conn = sqlite3.connect(db_path)
     conn.execute("PRAGMA foreign_keys = ON;")
     conn.executescript(SCHEMA)
+    _migrate_context_schema(conn)
+    from aidast.pipeline.schema import migrate_pipeline_schema
+
+    migrate_pipeline_schema(conn)
     conn.commit()
     return conn
 
@@ -490,3 +494,63 @@ def insert_websocket_message(
         (new_id("wsmsg"), connection_id, direction, payload),
     )
     conn.commit()
+
+
+CONTEXT_SCHEMA = """
+CREATE TABLE IF NOT EXISTS discovery_contexts (
+    context_id TEXT PRIMARY KEY,
+    origin_id TEXT NOT NULL REFERENCES origins(origin_id),
+    session_id TEXT REFERENCES sessions(session_id),
+    parent_context_id TEXT REFERENCES discovery_contexts(context_id),
+    page_url TEXT, page_title TEXT, action_type TEXT NOT NULL,
+    action_target TEXT, auth_state TEXT NOT NULL DEFAULT 'unknown',
+    context_summary TEXT, started_at TEXT, ended_at TEXT
+);
+CREATE TABLE IF NOT EXISTS endpoint_observations (
+    observation_id TEXT PRIMARY KEY,
+    endpoint_id TEXT NOT NULL REFERENCES endpoints(endpoint_id),
+    context_id TEXT REFERENCES discovery_contexts(context_id),
+    http_transaction_id TEXT REFERENCES http_transactions(http_transaction_id),
+    source_tool TEXT NOT NULL, discovery_kind TEXT NOT NULL,
+    observed_url TEXT, association_method TEXT NOT NULL,
+    observed_at TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS annotation_runs (
+    annotation_run_id TEXT PRIMARY KEY,
+    scan_id TEXT NOT NULL REFERENCES scans(scan_id),
+    model TEXT NOT NULL, prompt_version TEXT NOT NULL,
+    taxonomy_version TEXT NOT NULL, status TEXT NOT NULL
+        CHECK(status IN ('pending','running','completed','failed')),
+    error_message TEXT, started_at TEXT, finished_at TEXT
+);
+CREATE TABLE IF NOT EXISTS endpoint_annotations (
+    annotation_id TEXT PRIMARY KEY,
+    observation_id TEXT NOT NULL REFERENCES endpoint_observations(observation_id),
+    annotation_run_id TEXT NOT NULL REFERENCES annotation_runs(annotation_run_id),
+    category TEXT NOT NULL, tag TEXT NOT NULL, rationale TEXT NOT NULL,
+    confidence REAL CHECK(confidence IS NULL OR confidence BETWEEN 0 AND 1),
+    created_at TEXT NOT NULL,
+    UNIQUE(observation_id, annotation_run_id, category, tag)
+);
+CREATE INDEX IF NOT EXISTS idx_observations_endpoint ON endpoint_observations(endpoint_id);
+CREATE INDEX IF NOT EXISTS idx_observations_context ON endpoint_observations(context_id);
+CREATE INDEX IF NOT EXISTS idx_annotations_observation ON endpoint_annotations(observation_id);
+CREATE INDEX IF NOT EXISTS idx_annotations_tag ON endpoint_annotations(category, tag);
+"""
+
+
+def _migrate_context_schema(conn: sqlite3.Connection) -> None:
+    """Additive v2 migration: preserve legacy rows and unknown provenance."""
+    columns = {row[1] for row in conn.execute("PRAGMA table_info(http_transactions)")}
+    if "origin_id" not in columns:
+        conn.execute("ALTER TABLE http_transactions ADD COLUMN origin_id TEXT REFERENCES origins(origin_id)")
+    conn.executescript(CONTEXT_SCHEMA)
+    conn.execute("""UPDATE http_transactions SET origin_id=(
+        SELECT origin_id FROM endpoints WHERE endpoints.endpoint_id=http_transactions.endpoint_id
+    ) WHERE origin_id IS NULL AND endpoint_id IS NOT NULL""")
+    observation_columns = {row[1] for row in conn.execute("PRAGMA table_info(endpoint_observations)")}
+    if "evidence_json" not in observation_columns:
+        conn.execute("ALTER TABLE endpoint_observations ADD COLUMN evidence_json TEXT NOT NULL DEFAULT '{}'")
+    version = conn.execute("PRAGMA user_version").fetchone()[0]
+    if version < 3:
+        conn.execute("PRAGMA user_version=3")

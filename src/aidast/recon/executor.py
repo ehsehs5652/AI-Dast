@@ -15,11 +15,20 @@ from __future__ import annotations
 import functools
 from pathlib import Path
 from urllib.parse import urlparse
+from uuid import NAMESPACE_URL, uuid5
 
 from aidast.recon import db as dbmod
+from aidast.auth.browser import TargetSession, BrowserLoginError, origin
 from aidast.recon.judgment import merge_and_normalize
-from aidast.recon.models import ReconStep, ReconTask, ReconTaskStatus
+from aidast.recon.models import (
+    ReconStep,
+    ReconTask,
+    ReconTaskStatus,
+    ReconTaskTarget,
+)
 from aidast.recon.origin import resolve_origin
+from aidast.recon.policy import TargetPolicy
+from aidast.scope.models import AssetType
 from aidast.recon.tools.asset_dns_port import run_dnsx, run_naabu, run_nmap, run_subfinder
 from aidast.recon.tools.endpoint_discovery import discover_endpoints
 from aidast.recon.tools.http_probe import ProbeResult, probe
@@ -93,17 +102,34 @@ class ReconExecutor:
         # 아직 Scope 파이프라인이 안 붙어서 None이면 mitmproxy가
         # 스코프 강제 없이(fail-open) 관찰만 한다.
         scope_rules: dict | None = None,
+        target_policies: dict[tuple[str, str], TargetPolicy] | None = None,
+        require_policy_enforcement: bool = False,
+        execution_start_urls: dict[tuple[str, str], str] | None = None,
+        annotation_agent=None,
+        auth_bootstrap: dict | None = None,
+        target_sessions: dict[tuple[str, str], TargetSession] | None = None,
     ):
+        self.target_sessions = target_sessions
+        self.annotation_agent = annotation_agent
+        self.auth_bootstrap = auth_bootstrap or {}
         self.scan_id = scan_id
         self.conn = dbmod.init_db(db_path)
         dbmod.insert_scan(self.conn, scan_id=scan_id, scope_type=scope_type, scope_value=scope_value)
         self.ffuf_wordlist = ffuf_wordlist
         self.scope_rules = scope_rules
+        self.target_policies = target_policies or {}
+        self.require_policy_enforcement = require_policy_enforcement
+        self.execution_start_urls = execution_start_urls or {}
         self._asset_ids: dict[str, str] = {}
         self._origin_ids: dict[str, str] = {}
         self._probe_cache: dict[str, ProbeResult] = {}
+        self._spawned_tasks: list[ReconTask] = []
+        self._scheduled_hosts: set[str] = set()
 
     def run(self, tasks: list[ReconTask]) -> None:
+        if self.target_sessions is not None:
+            for task in tasks:
+                self._session_for(task)
         completed_ids: set[str] = set()
         pending = list(tasks)
         while pending:
@@ -113,6 +139,9 @@ class ReconExecutor:
                     self._execute(task)
                     completed_ids.add(task.task_id)
                     pending.remove(task)
+                    if self._spawned_tasks:
+                        pending.extend(self._spawned_tasks)
+                        self._spawned_tasks = []
                     progressed = True
             if not progressed:
                 raise ReconExecutionError("의존관계를 풀 수 없는 Task가 남아 있음")
@@ -146,15 +175,118 @@ class ReconExecutor:
             self._asset_ids[task.target.asset] = asset_id
         return asset_id
 
+    def _policy_for(self, task: ReconTask) -> TargetPolicy | None:
+        policy = self.target_policies.get(
+            (task.target.asset_type.value, task.target.asset)
+        )
+        if self.require_policy_enforcement and policy is None:
+            raise ReconExecutionError(
+                f"검증된 TargetPolicy가 없음: {task.target.asset}"
+            )
+        return policy
+
+    def _url_for(self, task: ReconTask) -> str:
+        return self.execution_start_urls.get(
+            (task.target.asset_type.value, task.target.asset),
+            _as_url(task.target.asset),
+        )
+
+    def _session_for(self, task: ReconTask) -> TargetSession | None:
+        if self.target_sessions is None:
+            return None
+        session = self.target_sessions.get((task.target.asset_type.value, task.target.asset))
+        if session is None:
+            raise BrowserLoginError("target has no pre-Recon login session; select and log in to this target first")
+        session.verify()
+        if origin(session.start_url) != origin(self._url_for(task)):
+            raise BrowserLoginError("target session cannot be forwarded to another origin")
+        return session
+
+    def _probe_headers(self, task: ReconTask) -> dict:
+        session = self._session_for(task)
+        if session is None:
+            return {}
+        from aidast.recon.tools.playwright_driver import ManualSessionConfig, PlaywrightDriver
+        # Header extraction reads the scoped snapshot without launching a browser.
+        reader = PlaywrightDriver(self._url_for(task), ManualSessionConfig(
+            login_url=self._url_for(task), session_file=str(session.runtime_path(self.scan_id)),
+        ))
+        return reader.get_auth_headers()
+
     @_stage("asset_discovery")
     def _handle_asset_discovery(self, task: ReconTask) -> None:
         asset_id = self._ensure_asset(task)
-        if task.target.asset_type.value == "DOMAIN":
-            for sub in run_subfinder(task.target.asset):
-                dbmod.insert_observation(
-                    self.conn, origin_id=asset_id, obs_type="subdomain",
-                    key="subfinder", value=sub, source="subfinder",
+        policy = self._policy_for(task)
+        asset_type = task.target.asset_type.value
+        if asset_type not in {"DOMAIN", "WILDCARD"}:
+            return
+        root = task.target.asset.removeprefix("*.")
+        if policy is not None:
+            if not policy.include_subdomains:
+                print("   [건너뜀] TargetPolicy가 서브도메인 탐색을 허용하지 않음")
+                return
+            if not policy.allows_host(root):
+                raise ReconExecutionError(
+                    f"TargetPolicy가 subfinder 루트를 허용하지 않음: {root}"
                 )
+        for sub in run_subfinder(root):
+            hostname = sub.lower().rstrip(".")
+            if policy is not None and not policy.allows_host(hostname):
+                print(f"   [제외] subfinder 범위 밖 결과: {sub}")
+                continue
+            dbmod.insert_dns_resolution(
+                self.conn, asset_id=asset_id, hostname=hostname, source="subfinder",
+            )
+            if policy is not None:
+                self._schedule_discovered_host(task, hostname, policy)
+
+    def _schedule_discovered_host(
+        self, parent: ReconTask, hostname: str, wildcard_policy: TargetPolicy
+    ) -> None:
+        if hostname in self._scheduled_hosts:
+            return
+        self._scheduled_hosts.add(hostname)
+        child_policy = wildcard_policy.model_copy(
+            update={
+                "asset_type": AssetType.DOMAIN,
+                "asset": hostname,
+                "allowed_hosts": [hostname],
+                "include_subdomains": False,
+                "policy_id": f"{wildcard_policy.policy_id}:host:{hostname}",
+            }
+        )
+        self.target_policies[(AssetType.DOMAIN.value, hostname)] = child_policy
+        previous = parent.task_id
+        for sequence, step in enumerate(
+            (
+                ReconStep.DNS_RESOLUTION,
+                ReconStep.HOST_PORT_DISCOVERY,
+                ReconStep.HTTP_PROBE,
+                ReconStep.ORIGIN_DISCOVERY,
+                ReconStep.ENDPOINT_DISCOVERY,
+            ),
+            start=1,
+        ):
+            task_id = "task_" + uuid5(
+                NAMESPACE_URL,
+                f"{parent.plan_id}:{parent.task_id}:{hostname}:{step.value}",
+            ).hex
+            self._spawned_tasks.append(
+                ReconTask(
+                    task_id=task_id,
+                    plan_id=parent.plan_id,
+                    scope_id=parent.scope_id,
+                    task_type=step,
+                    sequence=sequence,
+                    target=ReconTaskTarget(
+                        asset_type=AssetType.DOMAIN,
+                        asset=hostname,
+                    ),
+                    depends_on_task_ids=[previous],
+                    constraints=parent.constraints,
+                )
+            )
+            previous = task_id
 
     @_stage("dns_resolution")
     def _handle_dns_resolution(self, task: ReconTask) -> None:
@@ -169,9 +301,11 @@ class ReconExecutor:
     def _handle_host_port_discovery(self, task: ReconTask) -> None:
         asset_id = self._ensure_asset(task)
         host = _extract_host(task.target.asset)
+        policy = self._policy_for(task)
+        allowed_ports = policy.allowed_ports if policy is not None else None
         found: list[tuple[str, str]] = (
-            [(entry, "naabu") for entry in run_naabu([host])]
-            + [(entry, "nmap") for entry in run_nmap([host])]
+            [(entry, "naabu") for entry in run_naabu([host], ports=allowed_ports)]
+            + [(entry, "nmap") for entry in run_nmap([host], ports=allowed_ports)]
         )
         for entry, source in found:
             parsed = _parse_host_port(entry)
@@ -184,8 +318,16 @@ class ReconExecutor:
 
     @_stage("http_probe")
     def _handle_http_probe(self, task: ReconTask) -> None:
-        url = _as_url(task.target.asset)
-        result = probe(url)
+        url = self._url_for(task)
+        policy = self._policy_for(task)
+        if policy is not None and not policy.allows_url(url):
+            raise ReconExecutionError(f"TargetPolicy가 HTTP 요청을 허용하지 않음: {url}")
+        result = probe(
+            url,
+            timeout=policy.limits.timeout_seconds if policy else 30.0,
+            policy=policy,
+            headers=self._probe_headers(task),
+        )
         self._probe_cache[task.target.asset] = result
         if not result.ok:
             raise ReconExecutionError(f"{url} 응답 없음")
@@ -193,9 +335,17 @@ class ReconExecutor:
     @_stage("origin_discovery")
     def _handle_origin_discovery(self, task: ReconTask) -> None:
         asset_id = self._ensure_asset(task)
-        url = _as_url(task.target.asset)
+        url = self._url_for(task)
 
-        probe_result = self._probe_cache.get(task.target.asset) or probe(url)
+        policy = self._policy_for(task)
+        if policy is not None and not policy.allows_url(url):
+            raise ReconExecutionError(f"TargetPolicy가 Origin 요청을 허용하지 않음: {url}")
+        probe_result = self._probe_cache.get(task.target.asset) or probe(
+            url,
+            timeout=policy.limits.timeout_seconds if policy else 30.0,
+            policy=policy,
+            headers=self._probe_headers(task),
+        )
         resolution = resolve_origin(probe_result)
 
         origin_id = dbmod.upsert_origin(
@@ -219,19 +369,44 @@ class ReconExecutor:
         if origin_id is None:
             raise ReconExecutionError("ORIGIN_DISCOVERY가 먼저 끝나야 함")
 
-        url = _as_url(task.target.asset)
+        url = self._url_for(task)
+        policy = self._policy_for(task)
+        session = self._session_for(task)
         # katana_standard/headless를 discover_endpoints()가 둘 다 돌리므로
         # origins.main_crawler_mode(SPA 추정값)는 더 이상 실행 분기에 쓰이지
         # 않는다 - 참고용 기록으로만 origins 테이블에 남아 있다.
         capture_path = Path(f"mitm_capture_{self.scan_id}.jsonl")
-        proxy_process, proxy_url = start_mitmproxy(capture_path, scope_rules=self.scope_rules)
+        rules = policy.mitm_rules() if policy is not None else self.scope_rules
+        if rules is not None and self.auth_bootstrap:
+            rules = dict(rules)
+            rules["auth_bootstrap"] = self.auth_bootstrap
+        from aidast.recon.annotations import ObservationRecorder
+        recorder = ObservationRecorder(self.conn, origin_id=origin_id,
+                                       scan_id=self.scan_id, agent=self.annotation_agent)
+        proxy_process, proxy_url = start_mitmproxy(capture_path, scope_rules=rules)
         try:
-            raw = discover_endpoints(url, ffuf_wordlist=self.ffuf_wordlist, mitm_proxy_url=proxy_url)
+            if self.require_policy_enforcement and proxy_url is None:
+                raise ReconExecutionError("정책 강제 mitmproxy를 시작할 수 없음")
+            raw = discover_endpoints(
+                url,
+                ffuf_wordlist=self.ffuf_wordlist,
+                mitm_proxy_url=proxy_url,
+                target_policy=policy,
+                observation_callback=recorder.record,
+                run_id=self.scan_id,
+                auth_bootstrap=self.auth_bootstrap,
+                session_file=str(session.runtime_path(self.scan_id)) if session else None,
+                identity_id=session.identity if session else None,
+                preauthenticated=session is not None,
+            )
         finally:
             stop_mitmproxy(proxy_process)
             if proxy_url is not None:
-                ingested = ingest_mitm_capture(self.conn, capture_path)
-                print(f"   [mitmproxy] {ingested}건 적재")
+                ingested, blocked = ingest_mitm_capture(self.conn, capture_path, origin_id=origin_id)
+                print(
+                    f"   [mitmproxy] 허용 {ingested}건 적재, "
+                    f"정책 차단 {blocked}건"
+                )
 
         merged = merge_and_normalize(raw)
         for item in merged:

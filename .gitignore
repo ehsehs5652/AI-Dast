@@ -23,3 +23,6 @@ scope_rules_*.json
 # OS / 에디터
 .DS_Store
 .vscode/
+
+# Local pre-migration database backups
+.aidast_db_backups/

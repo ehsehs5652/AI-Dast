@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0",
+  "scope_id": "scope_259f7f38b03743e1bf7cdd52d3c8b6c6",
+  "policies": [
+    {
+      "asset_type": "DOMAIN",
+      "asset": "admin.shopify.com",
+      "allowed_schemes": [
+        "https"
+      ],
+      "allowed_hosts": [
+        "admin.shopify.com"
+      ],
+      "include_subdomains": false,
+      "allowed_ports": [
+        443
+      ],
+      "allowed_path_prefixes": [
+        "/store/YOUR_STORE"
+      ],
+      "excluded_path_prefixes": [],
+      "allowed_methods": [
+        "GET",
+        "HEAD",
+        "OPTIONS"
+      ],
+      "limits": {
+        "requests_per_second": 1.0,
+        "concurrency": 3,
+        "timeout_seconds": 20,
+        "max_depth": 3,
+        "max_requests": 2000
+      },
+      "tools": {
+        "playwright_interaction": false,
+        "form_submission": false,
+        "katana_headless": true,
+        "ffuf_enabled": true,
+        "ffuf_recursion": false,
+        "mitm_capture_bodies": false
+      },
+      "policy_notes": [
+        "Execution is limited to https://admin.shopify.com/store/YOUR_STORE and its path subtree; sibling store paths and other hosts are not authorized.",
+        "Only test stores you created using your registered HackerOne YOURHANDLE @ wearehackerone.com email. Operator control does not waive this requirement.",
+        "Do not access or interact with stores you did not create, test Shopify Support, or contact Support for advance validation or progress inquiries.",
+        "Do not conduct unlawful activities or disrupt or compromise other people's data. Do not disclose findings before resolution or without permission.",
+        "Report verified vulnerabilities immediately and follow all submission rules.",
+        "GraphQL introspection may support research but is ineligible as a standalone report. Other listed vulnerability exclusions and eligibility conditions remain applicable.",
+        "Python reset ungrounded Codex execution controls to application defaults: katana_headless, timeout_seconds"
+      ],
+      "restriction_evidence": [],
+      "schema_version": "1.0",
+      "scope_id": "scope_259f7f38b03743e1bf7cdd52d3c8b6c6",
+      "policy_id": "policy_1_468e1331e252"
+    }
+  ]
+}

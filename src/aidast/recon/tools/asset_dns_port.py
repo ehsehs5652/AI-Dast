@@ -36,20 +36,23 @@ def run_dnsx(hosts: list[str]) -> list[str]:
     return _run_tool(["dnsx", "-silent"], tool_name="dnsx", input_text="\n".join(hosts))
 
 
-def run_naabu(hosts: list[str]) -> list[str]:
-    if not hosts:
+def run_naabu(hosts: list[str], *, ports: list[int] | None = None) -> list[str]:
+    if not hosts or ports == []:
         return []
-    return _run_tool(["naabu", "-silent"], tool_name="naabu", input_text="\n".join(hosts))
+    command = ["naabu", "-silent"]
+    if ports is not None:
+        command += ["-p", ",".join(str(port) for port in ports)]
+    return _run_tool(command, tool_name="naabu", input_text="\n".join(hosts))
 
 
-def run_nmap(hosts: list[str]) -> list[str]:
+def run_nmap(hosts: list[str], *, ports: list[int] | None = None) -> list[str]:
     """호스트별로 nmap을 돌려서 열린 포트를 `host:port` 문자열 리스트로 반환.
 
     naabu와 출력 형식(host:port)을 맞춰서 executor.py가 두 도구 결과를 같은
     방식으로 파싱할 수 있게 한다. nmap은 naabu와 달리 표준입력으로 여러
     호스트를 한 번에 못 받아서(호스트 인자 방식) 호스트마다 따로 실행한다.
     """
-    if not hosts:
+    if not hosts or ports == []:
         return []
     if shutil.which("nmap") is None:
         print("  [건너뜀] nmap이 설치돼 있지 않음")
@@ -57,8 +60,12 @@ def run_nmap(hosts: list[str]) -> list[str]:
     results: list[str] = []
     for host in hosts:
         try:
+            command = ["nmap", "-Pn", "-T2", "--open"]
+            if ports is not None:
+                command += ["-p", ",".join(str(port) for port in ports)]
+            command += ["-oG", "-", host]
             completed = subprocess.run(
-                ["nmap", "-Pn", "-T4", "--open", "-oG", "-", host],
+                command,
                 capture_output=True,
                 text=True,
                 timeout=120,

@@ -35,6 +35,8 @@ from playwright.sync_api import (
     sync_playwright,
 )
 
+from aidast.recon.policy import TargetPolicy
+from aidast.recon.tools.api_secondary_discovery import _http_request
 
 # =========================================================
 # Configuration
@@ -97,6 +99,10 @@ class InteractionConfig:
 
     action_wait_ms: int = 500
 
+    # HTML에서 type이 생략된 form 내부 button은 submit이 기본값이다.
+    # 승인된 TargetPolicy가 명시적으로 허용한 경우에만 누른다.
+    allow_form_submission: bool = False
+
     # 자동으로 누르면 위험할 수 있는 Action
     blocked_words: tuple[str, ...] = (
 
@@ -155,8 +161,16 @@ class PlaywrightDriver:
         *,
         interaction_config: InteractionConfig | None = None,
         proxy_url: str | None = None,
+        target_policy: TargetPolicy | None = None,
+        auth_bootstrap: dict | None = None,
+        preauthenticated: bool = False,
     ):
 
+        if target_policy is not None and not proxy_url:
+            raise ValueError("policy-enforced browser requires a proxy")
+        self.preauthenticated = preauthenticated
+        self.target_policy = target_policy
+        self.auth_bootstrap = auth_bootstrap or {}
         self.base_url = (
             base_url.rstrip("/")
         )
@@ -191,10 +205,13 @@ class PlaywrightDriver:
         ) = None
 
         self.requests: list[dict] = []
+        self._observation_cursor = 0
+        self._context_serial = 0
+        self._action_context = None
 
         self.websockets: list[dict] = []
 
-        self._phase = "login"
+        self._phase = "runtime"
 
         self._auth_expired = False
 
@@ -537,6 +554,8 @@ class PlaywrightDriver:
 
     def _launch_manual_browser(
         self,
+        *,
+        manual_login: bool = False,
     ) -> None:
 
         self._ensure_playwright()
@@ -595,13 +614,13 @@ class PlaywrightDriver:
             # 내내 그 탭을 기다리다 타임아웃나는 부작용이 있었다.
             "--disable-gpu",
 
-            "--ignore-certificate-errors",
-
-            "about:blank",
+            self.session_config.login_url if manual_login else "about:blank",
         ]
 
-        if self.proxy_url:
-
+        if manual_login:
+            command.insert(-1, "--no-proxy-server")
+        elif self.proxy_url:
+            command.insert(-1, "--ignore-certificate-errors")
             command.insert(
                 -1,
                 (
@@ -609,6 +628,8 @@ class PlaywrightDriver:
                     f"{self.proxy_url}"
                 ),
             )
+            # Chromium otherwise bypasses configured proxies for loopback.
+            command.insert(-1, "--proxy-bypass-list=<-loopback>")
 
         self._chrome_process = (
             subprocess.Popen(
@@ -624,6 +645,14 @@ class PlaywrightDriver:
             )
         )
 
+        if not manual_login:
+            self._attach_manual_browser()
+
+    def _attach_manual_browser(self) -> None:
+        """Attach only after manual login, or to the policy-enforced runtime."""
+        port = self._cdp_port
+        if port is None or self.playwright is None:
+            raise RuntimeError("manual browser is not running")
         self._chrome_ws_url = (
             self._wait_for_cdp(
                 port
@@ -656,7 +685,8 @@ class PlaywrightDriver:
 
         self.context = contexts[0]
 
-        self._register_context_handlers()
+        if self._phase != "login":
+            self._register_context_handlers()
 
         pages = self.context.pages
 
@@ -670,15 +700,39 @@ class PlaywrightDriver:
                 self.context.new_page()
             )
 
-        for page in self.context.pages:
-
-            self._register_page_handlers(
-                page
-            )
+        if self._phase != "login":
+            for page in self.context.pages:
+                self._register_page_handlers(page)
 
     # =====================================================
     # HTTP Network Observation
     # =====================================================
+
+    def _guard_request(self, route) -> None:
+        """Apply policy before browser egress; the proxy also checks redirects.
+
+        Do not include URLs or headers in rejection messages: browser URLs may
+        contain session tokens. Handler errors abort rather than bypass policy.
+        """
+        try:
+            request = route.request
+            parsed = urlparse(request.url)
+            allowed = (
+                self.target_policy is not None
+                and not parsed.username and not parsed.password
+                and self.target_policy.allows_url(request.url, method=request.method)
+            )
+        except Exception:
+            allowed = False
+        if allowed:
+            route.continue_()
+        else:
+            route.abort("blockedbyclient")
+
+    @staticmethod
+    def _path_matches(path: str, prefix: str) -> bool:
+        prefix = str(prefix).rstrip("/") or "/"
+        return prefix == "/" or path == prefix or path.startswith(prefix + "/")
 
     def _register_context_handlers(
         self,
@@ -686,6 +740,11 @@ class PlaywrightDriver:
 
         if self.context is None:
             return
+
+        if self.target_policy is not None:
+            self.context.route("**/*", self._guard_request)
+            # WebSocket messages are outside the HTTP policy contract.
+            self.context.route_web_socket("**/*", lambda route: route.close())
 
         def on_request(
             request,
@@ -711,8 +770,27 @@ class PlaywrightDriver:
                 request.url
             )
 
+            from aidast.recon import db
+            from aidast.recon.annotations import safe_url, safe_text
+            page_url = ''
+            page_title = ''
+            try:
+                page = request.frame.page
+                page_url = safe_url(request.frame.url)
+                page_title = safe_text(page.title())
+            except Exception:
+                pass
+            context = dict(self._action_context or {})
+            context.setdefault('context_key', f'{self._phase}:{page_url}')
+            context.setdefault('action_type', 'navigation')
+            context.setdefault('association_method', 'request_frame')
+            context.update(page_url=page_url, page_title=page_title, auth_state='unknown')
             self.requests.append(
                 {
+                    "context": context,
+                    "observed_at": db.now(),
+                    "url": safe_url(request.url),
+                    "discovery_kind": "http_request",
                     "method": (
                         request.method.upper()
                     ),
@@ -936,102 +1014,66 @@ class PlaywrightDriver:
     # Manual Authentication
     # =====================================================
 
-    def capture_and_start(
-        self,
-    ) -> None:
-        """
-        실제 브라우저를 실행하고
-        사용자가 직접 로그인한다.
-
-        로그인 후 Enter를 누르면
-        인증상태를 파일에 저장한다.
-
-        Chromium은 Katana Headless가
-        CDP로 사용할 수 있도록 계속 살아있다.
-        """
-
+    def capture_and_start(self) -> None:
+        """Manual direct login, then a separate policy-enforced browser runtime."""
+        if self.preauthenticated:
+            raise RuntimeError("target session expired; log in again before restarting Recon")
         self._phase = "login"
-
-        self._launch_manual_browser()
-
-        page = (
-            self._ensure_page()
-        )
-
-        print()
-        print(
-            "  =================================="
-        )
-        print(
-            "  Playwright Manual Authentication"
-        )
-        print(
-            "  =================================="
-        )
-        print(
-            "  Chromium 브라우저를 실행했습니다."
-        )
-
         try:
+            # No proxy, routing hooks, or CDP client while the operator logs in.
+            self._launch_manual_browser(manual_login=True)
+            print("  [Playwright] 직접 연결 로그인 창을 열었습니다. 브라우저에서 로그인해주세요.")
+            input("  로그인 완료 후 Enter > ")
+            self._attach_manual_browser()
+            if not self.save_session():
+                raise RuntimeError("could not save the target session after manual login")
+        finally:
+            # Never let a direct browser become the automatic crawler runtime.
+            self._shutdown_runtime()
+            self._phase = "runtime"
 
-            page.goto(
-                self.session_config
-                .login_url,
+        self.start_from_session()
 
-                wait_until=(
-                    "domcontentloaded"
-                ),
-
-                timeout=(
-                    self.session_config
-                    .timeout_ms
-                ),
-            )
-
-        except Exception as exc:
-
-            print(
-                "  [경고] 초기 페이지 이동 실패: "
-                f"{exc}"
-            )
-
-        print()
-        print(
-            "  브라우저에서 직접 로그인해주세요."
-        )
-        print(
-            "  로그인 페이지를 모르면 "
-            "브라우저에서 직접 이동하면 됩니다."
-        )
-        print()
-        print(
-            "  로그인 완료 후 "
-            "터미널로 돌아오세요."
-        )
-        print()
-
-        input(
-            "  로그인 완료 후 Enter > "
-        )
-
-        self.save_session()
-
-        # 로그인 과정 중 발생한 401은
-        # 세션 만료로 취급하지 않음
-        self._auth_expired = False
-
+    def start_from_session(self) -> None:
+        """Restore the pre-Recon snapshot without launching another login flow."""
+        if not self.session_path.is_file():
+            raise RuntimeError("pre-Recon target session is missing")
         self._phase = "runtime"
+        try:
+            self._launch_manual_browser()
+            self._restore_target_session()
+            page = self._ensure_page()
+            response = page.goto(self.base_url, wait_until="domcontentloaded",
+                                 timeout=self.session_config.timeout_ms)
+            if self.target_policy is not None and not self.target_policy.allows_url(page.url):
+                raise RuntimeError("login did not return to the approved start URL boundary")
+            if response is not None and response.status >= 400:
+                raise RuntimeError("approved start URL returned an error after login")
+            if not self.session_is_valid():
+                raise RuntimeError("target session validation failed after login")
+            if not self.save_session():
+                raise RuntimeError("could not save the target session after return")
+        except BaseException:
+            self._shutdown_runtime()
+            raise
+        self._auth_expired = False
+        print("  [Playwright] 프록시·Scope 적용 및 타깃 복귀 완료; Recon을 시작합니다.")
 
-        print()
-        print(
-            "  [Playwright] "
-            "로그인 세션 확보 완료"
-        )
-
-        print(
-            f"  CDP : "
-            f"{self._chrome_ws_url}"
-        )
+    def _restore_target_session(self) -> None:
+        """Restore only target cookies and storage into the proxied CDP context."""
+        state = self._filter_storage_state(json.loads(self.session_path.read_text(encoding="utf-8")))
+        self.context.add_cookies(state.get("cookies", []))
+        origins = json.dumps(state.get("origins", []), ensure_ascii=False)
+        self.context.add_init_script(script=f"""
+            (() => {{
+                const saved = {origins};
+                const current = saved.find(item => item.origin === location.origin);
+                for (const item of current?.localStorage || []) {{
+                    localStorage.setItem(item.name, item.value);
+                }}
+            }})();
+        """)
+        self._restore_saved_session_storage()
 
     # =====================================================
     # Target Storage Filtering
@@ -1430,6 +1472,7 @@ class PlaywrightDriver:
                 ),
 
                 ignore_https_errors=True,
+                service_workers="block" if self.target_policy is not None else "allow",
             )
         )
 
@@ -1993,6 +2036,17 @@ class PlaywrightDriver:
 
         try:
 
+            if self.target_policy is not None:
+                # APIRequestContext does not pass through browser route handlers.
+                status, _, _ = _http_request(
+                    check_url, headers=self.get_auth_headers(),
+                    timeout=self.session_config.timeout_ms / 1000,
+                    target_policy=self.target_policy, proxy_url=self.proxy_url,
+                )
+                valid = status is not None and status not in self.session_config.invalid_auth_statuses
+                self._auth_expired = not valid
+                return valid
+
             response = (
                 self.context
                 .request
@@ -2007,6 +2061,7 @@ class PlaywrightDriver:
                         self.session_config
                         .timeout_ms
                     ),
+                    max_redirects=0,
                 )
             )
 
@@ -2325,13 +2380,9 @@ class PlaywrightDriver:
                         )
                     )
 
-                    if (
-                        inside_form
-                        and button_type
-                        not in {
-                            "button",
-                            "",
-                        }
+                    if inside_form and (
+                        button_type != "button"
+                        or not config.allow_form_submission
                     ):
 
                         continue
@@ -2340,13 +2391,18 @@ class PlaywrightDriver:
                 # Click
                 # -------------------------------------
 
-                element.click(
-                    timeout=1500
-                )
-
-                page.wait_for_timeout(
-                    config.action_wait_ms
-                )
+                self._context_serial += 1
+                self._action_context = {
+                    'context_key': f'action:{self._context_serial}',
+                    'action_type': 'click',
+                    'action_target': description[:300],
+                    'association_method': 'action_time_window',
+                }
+                try:
+                    element.click(timeout=1500)
+                    page.wait_for_timeout(config.action_wait_ms)
+                finally:
+                    self._action_context = None
 
                 actions += 1
 
@@ -2528,6 +2584,12 @@ class PlaywrightDriver:
     # =====================================================
     # HTTP Results
     # =====================================================
+
+    def drain_observations(self) -> list[dict]:
+        """Unmerged requests since the last phase boundary."""
+        items = self.requests[self._observation_cursor:]
+        self._observation_cursor = len(self.requests)
+        return [dict(item) for item in items]
 
     def get_http_results(
         self,

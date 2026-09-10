@@ -41,16 +41,22 @@
 from __future__ import annotations
 
 import json
+import html
+import math
 import re
 import shutil
 import subprocess
 import tempfile
+import hashlib
+import uuid
 
+from dataclasses import replace
 from pathlib import Path
 from typing import Callable
 from urllib.parse import (
     urljoin,
     urlparse,
+    unquote,
 )
 
 from .api_secondary_discovery import (
@@ -67,12 +73,26 @@ from .ffuf_root_selector import (
     FfufRootSelectionError,
     select_ffuf_roots_from_endpoints,
 )
+from aidast.recon.policy import TargetPolicy
 
 
 ALLOWED_SCHEMES = {
     "http",
     "https",
 }
+
+
+def _tool_rate_args(tool: str, requests_per_second: float) -> list[str]:
+    """Translate a fractional policy rate without ever rounding it upward."""
+    if requests_per_second < 1:
+        delay_seconds = math.ceil(1 / requests_per_second)
+        return ["-delay", str(delay_seconds)] if tool == "katana" else [
+            "-p", str(delay_seconds)
+        ]
+    integer_rate = math.floor(requests_per_second)
+    return ["-rl", str(integer_rate)] if tool == "katana" else [
+        "-rate", str(integer_rate)
+    ]
 
 
 # =========================================================
@@ -211,6 +231,23 @@ def _normalize_route(
         or "/"
     )
 
+    # Katana/browser error pages can leak escaped fragments into a discovered
+    # URL (for example `%5C`, `\\`, `&quot;`).  They are not reliable routes;
+    # reject them instead of decoding or rewriting them into a new target.
+    # Decode only for validation (the returned route remains in its original
+    # canonical encoding).  A second pass catches double-escaped separators
+    # such as ``%255C`` without rewriting legitimate encoded characters.
+    decoded_path = path
+    for _ in range(2):
+        decoded_path = html.unescape(unquote(decoded_path))
+    if (
+        "\\" in decoded_path
+        or any(ord(char) < 0x20 or ord(char) == 0x7F for char in decoded_path)
+        or re.search(r"%(?![0-9A-Fa-f]{2})", path)
+        or re.search(r"&(?:amp|quot|apos|lt|gt|#(?:\d+|x[0-9A-Fa-f]+));?", path, re.IGNORECASE)
+    ):
+        return None
+
     if not path.startswith(
         "/"
     ):
@@ -305,6 +342,8 @@ def _deduplicate_results(
                 "path"
             ] = path
 
+            item["observation_variants"] = result.get("observation_variants", [dict(result)])
+
             item[
                 "sources"
             ] = (
@@ -314,6 +353,10 @@ def _deduplicate_results(
             unique[key] = item
 
             continue
+
+        unique[key]["observation_variants"].extend(
+            result.get("observation_variants", [dict(result)])
+        )
 
         stored_sources = (
             unique[key]
@@ -402,6 +445,7 @@ def _parse_katana_output(
     *,
     base_url: str,
     source: str,
+    target_policy: TargetPolicy | None = None,
 ) -> list[dict]:
 
     results: list[
@@ -424,30 +468,62 @@ def _parse_katana_output(
 
         raw_count += 1
 
-        path = (
-            _normalize_route(
-                line,
-                base_url,
-            )
-        )
-
-        if path is None:
-
-            removed_count += 1
-
+        request = {}
+        response = {}
+        endpoint = line
+        if line.startswith(('{', '[')):
+            try:
+                record = json.loads(line)
+            except (ValueError, TypeError):
+                continue
+            if not isinstance(record, dict) or not isinstance(record.get('request'), dict):
+                continue
+            request = record['request']
+            response = record.get('response') or {}
+            if not isinstance(response, dict):
+                response = {}
+            endpoint = request.get('endpoint')
+        if not isinstance(endpoint, str):
             continue
-
-        results.append(
-            {
-                "method": "GET",
-
-                "path": path,
-
-                "content_type": None,
-
-                "source": source,
-            }
-        )
+        path = _normalize_route(endpoint, base_url)
+        if path is None:
+            removed_count += 1
+            continue
+        method = str(request.get('method') or 'GET').upper()
+        if not re.fullmatch(r'[A-Z]{1,20}', method):
+            continue
+        if target_policy is not None:
+            parsed_base = urlparse(base_url)
+            if not target_policy.allows_url(
+                f'{parsed_base.scheme}://{parsed_base.netloc}{path}', method=method
+            ):
+                removed_count += 1
+                continue
+        from aidast.recon.annotations import sanitize_evidence, safe_url
+        headers = response.get('headers') or {}
+        headers = {str(k).lower().replace('_', '-'): v for k, v in headers.items()} if isinstance(headers, dict) else {}
+        evidence = sanitize_evidence({
+            'parent_url': request.get('source'),
+            'html_tag': request.get('tag'),
+            'html_attribute': request.get('attribute'),
+            'response_status': response.get('status_code'),
+            'content_type': headers.get('content-type'),
+            'content_length': response.get('content_length'),
+            'redirect_url': headers.get('location'),
+        })
+        parent_url = evidence.get('parent_url', '')
+        results.append({
+            'method': method, 'path': path,
+            'url': safe_url(urljoin(base_url, endpoint)),
+            'content_type': evidence.get('content_type'), 'source': source,
+            'discovery_kind': 'http_response' if evidence.get('response_status') else 'tool_report',
+            'evidence': evidence,
+            'context': {
+                'context_key': f'{source}:parent:{parent_url}',
+                'page_url': parent_url, 'action_type': 'tool_run',
+                'association_method': 'crawler_source' if parent_url else 'tool_batch',
+            },
+        })
 
     print(
         f"  {source} Raw : "
@@ -465,6 +541,26 @@ def _parse_katana_output(
     )
 
     return results
+
+
+def _filter_results_by_policy(
+    results: list[dict], *, base_url: str, target_policy: TargetPolicy | None
+) -> list[dict]:
+    if target_policy is None:
+        return results
+    parsed_base = urlparse(base_url)
+    origin = f"{parsed_base.scheme}://{parsed_base.netloc}"
+    filtered: list[dict] = []
+    for result in results:
+        path = result.get("path")
+        if not path:
+            continue
+        candidate = origin + path
+        if target_policy.allows_url(
+            candidate, method=result.get("method", "GET")
+        ):
+            filtered.append(result)
+    return filtered
 
 
 # =========================================================
@@ -497,7 +593,11 @@ def discover_with_katana(
     auth_headers: dict[str, str] | None,
     chrome_ws_url: str | None = None,
     proxy_url: str | None = None,
+    target_policy: TargetPolicy | None = None,
 ) -> list[dict]:
+
+    if target_policy is not None and not proxy_url:
+        raise ValueError("policy-enforced katana requires a proxy")
 
     if shutil.which(
         "katana"
@@ -516,6 +616,7 @@ def discover_with_katana(
         base_url,
 
         "-silent",
+        "-j", "-or", "-ob",
 
         # JavaScript Crawl
         "-jc",
@@ -526,6 +627,19 @@ def discover_with_katana(
             base_url
         ),
     ]
+
+    if target_policy is not None:
+        base_command += [
+            "-d", str(target_policy.limits.max_depth),
+            "-c", str(target_policy.limits.concurrency),
+            "-timeout", str(target_policy.limits.timeout_seconds),
+            # Keep a focused recon phase bounded even when the request budget
+            # is large; the policy budget remains enforced by mitmproxy.
+            "-ct", "150s",
+        ]
+        base_command += _tool_rate_args(
+            "katana", target_policy.limits.requests_per_second
+        )
 
     if proxy_url:
 
@@ -732,6 +846,7 @@ def discover_with_katana(
             base_url=base_url,
 
             source=source,
+            target_policy=target_policy,
         )
     )
 
@@ -834,7 +949,21 @@ def discover_with_ffuf(
     auth_headers: dict[str, str] | None,
     proxy_url: str | None = None,
     root_selector: Callable[[list[dict]], list[str]] | None = None,
+    target_policy: TargetPolicy | None = None,
 ) -> list[dict]:
+    parsed_base = urlparse(base_url)
+    ffuf_origin = (
+        f"{parsed_base.scheme}://{parsed_base.netloc}"
+        if parsed_base.scheme and parsed_base.netloc
+        else base_url.rstrip("/")
+    )
+
+    if target_policy is not None and not target_policy.tools.ffuf_enabled:
+        print("  [건너뜀] TargetPolicy에서 ffuf가 허용되지 않음")
+        return []
+
+    if target_policy is not None and not proxy_url:
+        raise ValueError("policy-enforced ffuf requires a proxy")
 
     if shutil.which(
         "ffuf"
@@ -883,6 +1012,14 @@ def discover_with_ffuf(
         )
         roots = _build_ffuf_roots(seed_endpoints)
 
+    if target_policy is not None:
+        roots = [
+            root for root in roots
+            if target_policy.allows_url(
+                ffuf_origin + (root if root.startswith("/") else "/" + root)
+            )
+        ]
+
     print(
         f"  ffuf Root : "
         f"{len(roots)}개"
@@ -903,16 +1040,16 @@ def discover_with_ffuf(
         if root == "/":
 
             fuzz_url = (
-                f"{base_url.rstrip('/')}"
-                "/FUZZ"
+                ffuf_origin
+                + "/FUZZ"
             )
 
         else:
 
             fuzz_url = (
-                f"{base_url.rstrip('/')}"
-                f"{root.rstrip('/')}"
-                "/FUZZ"
+                ffuf_origin
+                + f"{root.rstrip('/')}"
+                + "/FUZZ"
             )
 
         print(
@@ -959,6 +1096,19 @@ def discover_with_ffuf(
             # SPA Soft-404 보정
             "-ac",
         ]
+
+        if proxy_url:
+            command += ["-x", proxy_url]
+
+        if target_policy is not None:
+            command += [
+                "-t", str(target_policy.limits.concurrency),
+                "-timeout", str(target_policy.limits.timeout_seconds),
+                "-maxtime", "150",
+            ]
+            command += _tool_rate_args(
+                "ffuf", target_policy.limits.requests_per_second
+            )
 
         run_timeout = 180
 
@@ -1081,6 +1231,21 @@ def discover_with_ffuf(
             if path is None:
                 continue
 
+            if target_policy is not None and not target_policy.allows_url(ffuf_origin + path):
+                continue
+            from aidast.recon.annotations import sanitize_evidence, safe_url
+            evidence = sanitize_evidence({
+                'fuzz_root': root,
+                'seed_paths': [item.get('path') for item in seed_endpoints
+                               if isinstance(item.get('path'), str)
+                               and (root == '/' or item['path'] == root.rstrip('/')
+                                    or item['path'].startswith(root.rstrip('/') + '/'))][:10],
+                'response_status': entry.get('status'),
+                'content_type': entry.get('content-type'),
+                'content_length': entry.get('length'),
+                'word_count': entry.get('words'), 'line_count': entry.get('lines'),
+                'redirect_url': entry.get('redirectlocation'),
+            })
             results.append(
                 {
                     "method": "GET",
@@ -1094,6 +1259,15 @@ def discover_with_ffuf(
                     ),
 
                     "source": "ffuf",
+                    "url": safe_url(discovered_url),
+                    "discovery_kind": "http_response" if evidence.get('response_status') else "tool_report",
+                    "evidence": evidence,
+                    "context": {
+                        "context_key": f"ffuf:root:{root}",
+                        "action_type": "tool_run",
+                        "action_target": safe_url(fuzz_url),
+                        "association_method": "fuzz_root",
+                    },
                 }
             )
 
@@ -1124,6 +1298,10 @@ def discover_with_ffuf(
 
 def _make_default_session_file(
     base_url: str,
+    *,
+    run_id: str | None = None,
+    identity_id: str | None = None,
+    auth_bootstrap: dict | None = None,
 ) -> str:
 
     parsed = urlparse(
@@ -1152,10 +1330,13 @@ def _make_default_session_file(
         hostname,
     )
 
-    return (
-        ".aidast_sessions/"
-        f"{safe_host}_{port}.json"
-    )
+    # Hash identifiers so caller input cannot escape the session directory or
+    # disclose identity labels. An omitted run ID deliberately starts fresh.
+    run_key = hashlib.sha256((run_id or uuid.uuid4().hex).encode()).hexdigest()[:24]
+    identity_key = hashlib.sha256((identity_id or "manual").encode()).hexdigest()[:24]
+    origin_key = hashlib.sha256(base_url.encode()).hexdigest()[:16]
+    return str(Path(".aidast_sessions") / run_key / identity_key
+               / f"{safe_host}_{port}_{origin_key}.json")
 
 
 # =========================================================
@@ -1206,7 +1387,29 @@ def discover_endpoints(
     enable_playwright_interaction: bool = True,
 
     zap_executable: str = "zaproxy",
+    target_policy: TargetPolicy | None = None,
+    observation_callback=None,
+    run_id: str | None = None,
+    identity_id: str | None = None,
+    auth_bootstrap: dict | None = None,
+    preauthenticated: bool = False,
 ) -> list[dict]:
+
+    if target_policy is not None and not mitm_proxy_url:
+        raise ValueError("policy-enforced endpoint discovery requires a proxy")
+    if target_policy is not None and playwright_proxy_url and playwright_proxy_url != mitm_proxy_url:
+        raise ValueError("policy-enforced browser must use the shared enforcement proxy")
+    if target_policy is not None and not target_policy.allows_url(base_url):
+        raise ValueError(f"TargetPolicy가 base URL을 허용하지 않음: {base_url}")
+
+    def observe(phase, items):
+        if observation_callback is not None:
+            observation_callback(phase, _filter_results_by_policy(
+                items, base_url=base_url, target_policy=target_policy))
+
+    def observe_browser(phase):
+        if observation_callback is not None and driver is not None:
+            observe(phase, driver.drain_observations())
 
     driver: (
         PlaywrightDriver
@@ -1226,7 +1429,7 @@ def discover_endpoints(
         )
         print(
             "  PHASE 1 - "
-            "Playwright Authentication"
+            "Playwright Session Restore" if preauthenticated else "Playwright Authentication"
         )
         print(
             "  =================================="
@@ -1237,7 +1440,7 @@ def discover_endpoints(
 
             or
             _make_default_session_file(
-                base_url
+                base_url, run_id=run_id, identity_id=identity_id,
             )
         )
 
@@ -1263,6 +1466,16 @@ def discover_endpoints(
             )
         )
 
+        effective_interaction_config = interaction_config or InteractionConfig()
+        effective_interaction_config = replace(
+            effective_interaction_config,
+            allow_form_submission=bool(
+                target_policy is not None
+                and target_policy.tools.form_submission
+                and effective_interaction_config.allow_form_submission
+            ),
+        )
+
         driver = (
             PlaywrightDriver(
                 base_url,
@@ -1270,13 +1483,16 @@ def discover_endpoints(
                 session_config,
 
                 interaction_config=(
-                    interaction_config
+                    effective_interaction_config
                 ),
 
                 proxy_url=(
                     playwright_proxy_url
                     or mitm_proxy_url
                 ),
+                target_policy=target_policy,
+                auth_bootstrap=auth_bootstrap,
+                preauthenticated=preauthenticated,
             )
         )
 
@@ -1290,7 +1506,11 @@ def discover_endpoints(
         # Session 저장
         # ---------------------------------------------
 
-        driver.capture_and_start()
+        if preauthenticated:
+            driver.start_from_session()
+        else:
+            driver.capture_and_start()
+        observe_browser("playwright_login")
 
         auth_headers = (
             driver.get_auth_headers()
@@ -1311,6 +1531,9 @@ def discover_endpoints(
         # XHR / Fetch / Document
         login_results = (
             driver.get_http_results()
+        )
+        login_results = _filter_results_by_policy(
+            login_results, base_url=base_url, target_policy=target_policy
         )
 
         print(
@@ -1363,50 +1586,36 @@ def discover_endpoints(
                 proxy_url=(
                     mitm_proxy_url
                 ),
+                target_policy=target_policy,
             )
         )
+
+        observe("katana_standard", standard_results)
 
         # ---------------------------------------------
         # Headless
         # ---------------------------------------------
 
-        driver.ensure_session()
-
-        auth_headers = (
-            driver.get_auth_headers()
+        headless_allowed = (
+            target_policy is None or target_policy.tools.katana_headless
         )
-
-        # ensure_session에서 재로그인을 했다면
-        # CDP URL이 바뀔 수 있으므로
-        # 바로 직전에 다시 가져온다.
-        chrome_ws_url = (
-            driver.get_chrome_ws_url()
-        )
-
-        print()
-        print(
-            "  [2/2] Katana Headless"
-        )
-
-        headless_results = (
-            discover_with_katana(
+        if headless_allowed:
+            driver.ensure_session()
+            auth_headers = driver.get_auth_headers()
+            chrome_ws_url = driver.get_chrome_ws_url()
+            print()
+            print("  [2/2] Katana Headless")
+            headless_results = discover_with_katana(
                 base_url,
-
                 mode="headless",
-
-                auth_headers=(
-                    auth_headers
-                ),
-
-                chrome_ws_url=(
-                    chrome_ws_url
-                ),
-
-                proxy_url=(
-                    mitm_proxy_url
-                ),
+                auth_headers=auth_headers,
+                chrome_ws_url=chrome_ws_url,
+                proxy_url=mitm_proxy_url,
+                target_policy=target_policy,
             )
-        )
+        else:
+            print("  [건너뜀] TargetPolicy에서 Katana Headless가 허용되지 않음")
+            headless_results = []
 
         # =================================================
         # ★ 중요
@@ -1417,9 +1626,10 @@ def discover_endpoints(
         # 새 Playwright Runtime을 만든다.
         # =================================================
 
-        driver.restore_runtime(
-            force=True
-        )
+        observe("katana_headless", headless_results)
+        observe_browser("playwright_katana")
+        if headless_allowed:
+            driver.restore_runtime(force=True)
 
         auth_headers = (
             driver.get_auth_headers()
@@ -1508,8 +1718,11 @@ def discover_endpoints(
                 proxy_url=(
                     mitm_proxy_url
                 ),
+                target_policy=target_policy,
             )
         )
+
+        observe("ffuf", ffuf_results)
 
         # =================================================
         # PHASE 4
@@ -1528,7 +1741,9 @@ def discover_endpoints(
             "  =================================="
         )
 
-        if enable_playwright_interaction:
+        if enable_playwright_interaction and (
+            target_policy is None or target_policy.tools.playwright_interaction
+        ):
 
             driver.ensure_session()
 
@@ -1559,6 +1774,11 @@ def discover_endpoints(
         playwright_results = (
             driver.get_http_results()
         )
+        playwright_results = _filter_results_by_policy(
+            playwright_results, base_url=base_url, target_policy=target_policy
+        )
+
+        observe_browser("playwright_interaction")
 
         websocket_results = (
             driver.get_websocket_results()
@@ -1646,21 +1866,20 @@ def discover_endpoints(
         ] = []
 
         try:
+            secondary_results = discover_api_secondary(
+                base_url,
 
-            secondary_results = (
-                discover_api_secondary(
-                    base_url,
+                primary_results,
 
-                    primary_results,
+                headers=(
+                    auth_headers
+                ),
 
-                    headers=(
-                        auth_headers
-                    ),
-
-                    zap_executable=(
-                        zap_executable
-                    ),
-                )
+                zap_executable=(
+                    zap_executable
+                ),
+                target_policy=target_policy,
+                proxy_url=mitm_proxy_url,
             )
 
         except Exception as exc:
@@ -1670,6 +1889,9 @@ def discover_endpoints(
                 "API Secondary Discovery 실패: "
                 f"{exc}"
             )
+
+        observe("api_secondary", secondary_results)
+        observe_browser("playwright_final")
 
         # =================================================
         # Final
@@ -1752,5 +1974,7 @@ def discover_endpoints(
     finally:
 
         if driver is not None:
-
-            driver.close()
+            try:
+                observe_browser("playwright_cleanup")
+            finally:
+                driver.close()

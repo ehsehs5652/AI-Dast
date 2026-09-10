@@ -25,9 +25,12 @@ import json
 import subprocess
 import tempfile
 from pathlib import Path
-from urllib.error import HTTPError, URLError
+from urllib.error import URLError
 from urllib.parse import urljoin, urlparse
-from urllib.request import Request, urlopen
+from urllib.request import HTTPRedirectHandler, ProxyHandler, build_opener
+
+from aidast.core.request_broker import RequestBroker, RequestPolicyError
+from aidast.recon.policy import TargetPolicy
 
 
 # =========================================================
@@ -62,6 +65,33 @@ GRAPHQL_COMMON_PATHS = {
 # HTTP
 # =========================================================
 
+class _NoRedirect(HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        return None
+
+
+class _RequiredProxy(ProxyHandler):
+    """Do not let ambient NO_PROXY silently bypass the enforcement proxy."""
+
+    def proxy_open(self, req, proxy, type):
+        parsed = urlparse(proxy)
+        if parsed.scheme not in {"http", "https"} or not parsed.hostname or parsed.username or parsed.password:
+            raise ValueError("invalid policy proxy configuration")
+        original_type = req.type
+        req.set_proxy(parsed.netloc, parsed.scheme)
+        if original_type != parsed.scheme and original_type != "https":
+            return self.parent.open(req, timeout=req.timeout)
+        return None
+
+
+def _request_broker(target_policy: TargetPolicy, proxy_url: str | None) -> RequestBroker:
+    opener = build_opener(
+        _RequiredProxy({"http": proxy_url, "https": proxy_url}) if proxy_url else ProxyHandler({}),
+        _NoRedirect(),
+    )
+    return RequestBroker(target_policy, transport=opener.open, max_body_bytes=2_000_000)
+
+
 def _http_request(
     url: str,
     *,
@@ -69,7 +99,13 @@ def _http_request(
     headers: dict[str, str] | None = None,
     body: bytes | None = None,
     timeout: float = 5.0,
+    target_policy: TargetPolicy | None = None,
+    proxy_url: str | None = None,
+    broker: RequestBroker | None = None,
 ) -> tuple[int | None, dict[str, str], bytes]:
+
+    if target_policy is None or not target_policy.allows_url(url, method=method):
+        return (None, {}, b"")
 
     request_headers = {
         "User-Agent": "aidast-recon/0.1",
@@ -78,43 +114,17 @@ def _http_request(
     if headers:
         request_headers.update(headers)
 
-    request = Request(
-        url,
-        data=body,
-        headers=request_headers,
-        method=method,
-    )
-
     try:
-
-        with urlopen(
-            request,
-            timeout=timeout,
-        ) as response:
-
-            return (
-                response.status,
-                dict(response.headers.items()),
-                response.read(2_000_000),
-            )
-
-    except HTTPError as exc:
-
-        data = (
-            exc.read(2_000_000)
-            if exc.fp
-            else b""
+        active_broker = broker or _request_broker(target_policy, proxy_url)
+        if active_broker.policy != target_policy:
+            raise RequestPolicyError("request broker policy mismatch")
+        response = active_broker.request(
+            url, method=method, headers=request_headers, data=body,
+            timeout=min(timeout, target_policy.limits.timeout_seconds),
         )
+        return response.status_code, response.headers, response.body
 
-        return (
-            exc.code,
-            dict(exc.headers.items())
-            if exc.headers
-            else {},
-            data,
-        )
-
-    except URLError:
+    except (URLError, RequestPolicyError, TimeoutError, ValueError):
 
         return (
             None,
@@ -293,9 +303,14 @@ def detect_openapi(
     endpoints: list[dict],
     *,
     headers: dict[str, str] | None = None,
+    target_policy: TargetPolicy | None = None,
+    proxy_url: str | None = None,
+    broker: RequestBroker | None = None,
 ) -> list[str]:
 
     found: list[str] = []
+    if broker is None and target_policy is not None:
+        broker = _request_broker(target_policy, proxy_url)
 
     candidates = (
         _build_openapi_candidates(
@@ -316,11 +331,17 @@ def detect_openapi(
             base_url,
         ):
             continue
+        if target_policy is not None and not target_policy.allows_url(url, method="GET"):
+            continue
 
         status, _, body = (
             _http_request(
                 url,
                 headers=headers,
+                timeout=(target_policy.limits.timeout_seconds if target_policy else 5.0),
+                target_policy=target_policy,
+                proxy_url=proxy_url,
+                broker=broker,
             )
         )
 
@@ -399,6 +420,9 @@ def _graphql_request(
     query: str,
     *,
     headers: dict[str, str] | None = None,
+    target_policy: TargetPolicy | None = None,
+    proxy_url: str | None = None,
+    broker: RequestBroker | None = None,
 ) -> dict | None:
 
     payload = json.dumps(
@@ -420,6 +444,10 @@ def _graphql_request(
         method="POST",
         headers=request_headers,
         body=payload,
+        timeout=(target_policy.limits.timeout_seconds if target_policy else 5.0),
+        target_policy=target_policy,
+        proxy_url=proxy_url,
+        broker=broker,
     )
 
     if status is None:
@@ -448,6 +476,9 @@ def _confirm_graphql(
     url: str,
     *,
     headers: dict[str, str] | None = None,
+    target_policy: TargetPolicy | None = None,
+    proxy_url: str | None = None,
+    broker: RequestBroker | None = None,
 ) -> bool:
     """
     GraphQL 자체인지 확인한다.
@@ -463,6 +494,9 @@ def _confirm_graphql(
         }
         """,
         headers=headers,
+        target_policy=target_policy,
+        proxy_url=proxy_url,
+        broker=broker,
     )
 
     if result is None:
@@ -480,6 +514,9 @@ def _graphql_introspection_enabled(
     url: str,
     *,
     headers: dict[str, str] | None = None,
+    target_policy: TargetPolicy | None = None,
+    proxy_url: str | None = None,
+    broker: RequestBroker | None = None,
 ) -> bool:
 
     result = _graphql_request(
@@ -497,6 +534,9 @@ def _graphql_introspection_enabled(
         }
         """,
         headers=headers,
+        target_policy=target_policy,
+        proxy_url=proxy_url,
+        broker=broker,
     )
 
     if not result:
@@ -520,9 +560,14 @@ def detect_graphql(
     endpoints: list[dict],
     *,
     headers: dict[str, str] | None = None,
+    target_policy: TargetPolicy | None = None,
+    proxy_url: str | None = None,
+    broker: RequestBroker | None = None,
 ) -> list[dict]:
 
     found: list[dict] = []
+    if broker is None and target_policy is not None:
+        broker = _request_broker(target_policy, proxy_url)
 
     candidates = (
         _build_graphql_candidates(
@@ -543,10 +588,15 @@ def detect_graphql(
             base_url,
         ):
             continue
+        if target_policy is not None and not target_policy.allows_url(url, method="POST"):
+            continue
 
         if not _confirm_graphql(
             url,
             headers=headers,
+            target_policy=target_policy,
+            proxy_url=proxy_url,
+            broker=broker,
         ):
             continue
 
@@ -554,6 +604,9 @@ def detect_graphql(
             _graphql_introspection_enabled(
                 url,
                 headers=headers,
+                target_policy=target_policy,
+                proxy_url=proxy_url,
+                broker=broker,
             )
         )
 
@@ -687,6 +740,7 @@ def _run_zap(
     *,
     zap_executable: str = "zap.sh",
     timeout: int = 300,
+    proxy_url: str | None = None,
 ) -> bool:
 
     command = [
@@ -695,6 +749,17 @@ def _run_zap(
         "-autorun",
         str(plan_path),
     ]
+    if proxy_url is not None:
+        proxy = urlparse(proxy_url)
+        if proxy.scheme not in {"http", "https"} or not proxy.hostname or not proxy.port:
+            raise ValueError(f"invalid policy proxy URL: {proxy_url}")
+        command.extend(
+            [
+                "-config", "connection.proxyChain.enabled=true",
+                "-config", f"connection.proxyChain.hostName={proxy.hostname}",
+                "-config", f"connection.proxyChain.port={proxy.port}",
+            ]
+        )
 
     try:
 
@@ -763,6 +828,7 @@ def _parse_zap_har(
     *,
     base_url: str,
     source: str,
+    target_policy: TargetPolicy | None = None,
 ) -> list[dict]:
 
     if not har_path.exists():
@@ -811,6 +877,10 @@ def _parse_zap_har(
         if not _same_origin(
             url,
             base_url,
+        ):
+            continue
+        if target_policy is not None and not target_policy.allows_url(
+            url, method=method
         ):
             continue
 
@@ -884,6 +954,8 @@ def discover_api_secondary(
     headers: dict[str, str] | None = None,
     zap_executable: str = "zap.sh",
     max_messages: int = 300,
+    target_policy: TargetPolicy | None = None,
+    proxy_url: str | None = None,
 ) -> list[dict]:
     """
     API 2차 Discovery.
@@ -911,10 +983,21 @@ def discover_api_secondary(
     # Detect OpenAPI
     # =====================================================
 
+    if target_policy is not None:
+        if proxy_url is None:
+            raise ValueError("policy-enforced API discovery requires a proxy")
+        if not target_policy.allows_url(base_url, method="GET"):
+            raise ValueError(f"TargetPolicy가 API base URL을 허용하지 않음: {base_url}")
+        max_messages = min(max_messages, target_policy.limits.max_requests)
+
+    broker = _request_broker(target_policy, proxy_url) if target_policy is not None else None
     openapi_urls = detect_openapi(
         base_url,
         endpoints,
         headers=headers,
+        target_policy=target_policy,
+        proxy_url=proxy_url,
+        broker=broker,
     )
 
     # =====================================================
@@ -925,6 +1008,9 @@ def discover_api_secondary(
         base_url,
         endpoints,
         headers=headers,
+        target_policy=target_policy,
+        proxy_url=proxy_url,
+        broker=broker,
     )
 
     # ZAP이 endpoint만 가지고 introspection 할 수 있는
@@ -1023,6 +1109,7 @@ def discover_api_secondary(
             if _run_zap(
                 openapi_plan,
                 zap_executable=zap_executable,
+                proxy_url=proxy_url,
             ):
 
                 openapi_results = (
@@ -1030,6 +1117,7 @@ def discover_api_secondary(
                         openapi_har,
                         base_url=base_url,
                         source="zap_openapi",
+                        target_policy=target_policy,
                     )
                 )
 
@@ -1080,6 +1168,7 @@ def discover_api_secondary(
             if _run_zap(
                 graphql_plan,
                 zap_executable=zap_executable,
+                proxy_url=proxy_url,
             ):
 
                 graphql_results = (
@@ -1087,6 +1176,7 @@ def discover_api_secondary(
                         graphql_har,
                         base_url=base_url,
                         source="zap_graphql",
+                        target_policy=target_policy,
                     )
                 )
 

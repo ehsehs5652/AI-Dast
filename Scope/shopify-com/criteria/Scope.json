@@ -1,0 +1,270 @@
+{
+  "schema_version": "1.0",
+  "scope_id": "scope_259f7f38b03743e1bf7cdd52d3c8b6c6",
+  "created_at": "2026-09-09T09:00:02.902377Z",
+  "source": {
+    "requested_url": "https://www.shopify.com/bugbounty/criteria",
+    "final_url": "https://www.shopify.com/bugbounty/criteria",
+    "title": "Criteria | Shopify Bug Bounty",
+    "captured_at": "2026-09-09T09:00:02.900812Z",
+    "capture_status": "COMPLETE",
+    "capture_reason": "NONE",
+    "content_sha256": "1aaa381964d8ee5799bfd57ca0fe7f8deafbd591d69edb7964cee41594dbdd26",
+    "text": "Domains in scope\nAsset Name | Coverage | Environment\nAuthentication & ATO | In Scope | Non-Core\n*.pci.shopifyinc.com | In Scope | Core\ncommunity.shopify.dev | Out of Scope | Non-Core\nacademy.shopify.com | Out of Scope | Non-Core\nsupplier-portal.shopifycloud.com | Out of Scope | Non-Core\n*.shopifycs.com | In Scope | Non-Core\nhttps://github.com/Shopify/* | In Scope | Non-Core\nadmin.shopify.com | In Scope | Core\narrive-server.shopifycloud.com | In Scope | Core\nshopify.plus | In Scope | Core\nshop.app | In Scope | Core\nshopifyinbox.com | In Scope | Non-Core\nlinkpop.com | In Scope | Non-Core\n*.shopifycloud.com | In Scope | Non-Core\n*.shopifykloud.com | In Scope | Non-Core\nShopify Mobile Applications | In Scope | Non-Core\nShopify Developed Apps | In Scope | Non-Core\ncommunity.shopify.com | Out of Scope | Non-Core\nlivechat.shopify.com | Out of Scope | Non-Core\ncdn.shopify.com | Out of Scope | Non-Core\n*.shopify.com | In Scope | Non-Core\n*.shopify.io | In Scope | Non-Core\nShopify Third Party Store | In Scope | Non-Core\nShopify Third Party Apps | In Scope | Non-Core\n*.email.shopify.com | Out of Scope | Non-Core\ninvestors.shopify.com | Out of Scope | Non-Core\naccounts.shopify.com | In Scope | Core\npartners.shopify.com | In Scope | Core\nyour-store.myshopify.com | In Scope | Core\nOther | Out of Scope | Non-Core\nEligibility for Rewards\nOnly test against stores you created using your HackerOne YOURHANDLE @ wearehackerone.com registered email."
+  },
+  "analysis": {
+    "program_name": "Shopify Bug Bounty",
+    "program_description": "Shopify의 취약점 신고 프로그램으로, 해당 페이지는 자산 범위, 부적격 취약점 및 참여 규칙을 설명한다. 출처: [Criteria | Shopify Bug Bounty](https://www.shopify.com/bugbounty/criteria). captured_text에는 자산 표와 짧은 규칙 발췌를 수록했다.",
+    "in_scope_assets": [
+      {
+        "asset_type": "OTHER",
+        "asset": "Authentication & ATO",
+        "description": "Non-Core 인증 및 계정 탈취 범주",
+        "eligibility": "범위에 포함되지만 구체적인 대상은 명시되지 않음",
+        "maximum_severity": "명시되지 않음"
+      },
+      {
+        "asset_type": "WILDCARD",
+        "asset": "*.pci.shopifyinc.com",
+        "description": "Core",
+        "eligibility": "프로그램 규칙 적용",
+        "maximum_severity": "명시되지 않음"
+      },
+      {
+        "asset_type": "WILDCARD",
+        "asset": "*.shopifycs.com",
+        "description": "Non-Core",
+        "eligibility": "프로그램 규칙 적용",
+        "maximum_severity": "명시되지 않음"
+      },
+      {
+        "asset_type": "SOURCE_CODE",
+        "asset": "https://github.com/Shopify/*",
+        "description": "Non-Core 소스 코드 범위",
+        "eligibility": "프로그램 규칙 적용",
+        "maximum_severity": "명시되지 않음"
+      },
+      {
+        "asset_type": "DOMAIN",
+        "asset": "admin.shopify.com",
+        "description": "Core",
+        "eligibility": "프로그램 규칙 적용",
+        "maximum_severity": "명시되지 않음"
+      },
+      {
+        "asset_type": "DOMAIN",
+        "asset": "arrive-server.shopifycloud.com",
+        "description": "Core",
+        "eligibility": "프로그램 규칙 적용",
+        "maximum_severity": "명시되지 않음"
+      },
+      {
+        "asset_type": "DOMAIN",
+        "asset": "shopify.plus",
+        "description": "Core",
+        "eligibility": "프로그램 규칙 적용",
+        "maximum_severity": "명시되지 않음"
+      },
+      {
+        "asset_type": "DOMAIN",
+        "asset": "shop.app",
+        "description": "Core",
+        "eligibility": "프로그램 규칙 적용",
+        "maximum_severity": "명시되지 않음"
+      },
+      {
+        "asset_type": "DOMAIN",
+        "asset": "shopifyinbox.com",
+        "description": "Non-Core",
+        "eligibility": "프로그램 규칙 적용",
+        "maximum_severity": "명시되지 않음"
+      },
+      {
+        "asset_type": "DOMAIN",
+        "asset": "linkpop.com",
+        "description": "Non-Core",
+        "eligibility": "프로그램 규칙 적용",
+        "maximum_severity": "명시되지 않음"
+      },
+      {
+        "asset_type": "WILDCARD",
+        "asset": "*.shopifycloud.com",
+        "description": "Non-Core",
+        "eligibility": "명시적인 제외 자산과 프로그램 규칙 적용",
+        "maximum_severity": "명시되지 않음"
+      },
+      {
+        "asset_type": "WILDCARD",
+        "asset": "*.shopifykloud.com",
+        "description": "Non-Core",
+        "eligibility": "프로그램 규칙 적용",
+        "maximum_severity": "명시되지 않음"
+      },
+      {
+        "asset_type": "MOBILE_APP",
+        "asset": "Shopify Mobile Applications",
+        "description": "Non-Core 모바일 애플리케이션 범주",
+        "eligibility": "모바일 관련 부적격 항목 적용",
+        "maximum_severity": "명시되지 않음"
+      },
+      {
+        "asset_type": "OTHER",
+        "asset": "Shopify Developed Apps",
+        "description": "Non-Core Shopify 개발 애플리케이션 범주",
+        "eligibility": "프로그램 규칙 적용",
+        "maximum_severity": "명시되지 않음"
+      },
+      {
+        "asset_type": "WILDCARD",
+        "asset": "*.shopify.com",
+        "description": "Non-Core",
+        "eligibility": "명시적인 제외 자산과 프로그램 규칙 적용",
+        "maximum_severity": "명시되지 않음"
+      },
+      {
+        "asset_type": "WILDCARD",
+        "asset": "*.shopify.io",
+        "description": "Non-Core",
+        "eligibility": "프로그램 규칙 적용",
+        "maximum_severity": "명시되지 않음"
+      },
+      {
+        "asset_type": "OTHER",
+        "asset": "Shopify Third Party Store",
+        "description": "Non-Core 제삼자 상점 범주",
+        "eligibility": "표에는 포함되지만 자신이 만들지 않은 상점과의 상호작용 금지 규칙이 적용됨",
+        "maximum_severity": "명시되지 않음"
+      },
+      {
+        "asset_type": "OTHER",
+        "asset": "Shopify Third Party Apps",
+        "description": "Non-Core 제삼자 애플리케이션 범주",
+        "eligibility": "표에는 포함되지만 보상 대상이 아니며 Informative 처리",
+        "maximum_severity": "명시되지 않음"
+      },
+      {
+        "asset_type": "DOMAIN",
+        "asset": "accounts.shopify.com",
+        "description": "Core",
+        "eligibility": "프로그램 규칙 적용",
+        "maximum_severity": "명시되지 않음"
+      },
+      {
+        "asset_type": "DOMAIN",
+        "asset": "partners.shopify.com",
+        "description": "Core",
+        "eligibility": "프로그램 규칙 적용",
+        "maximum_severity": "명시되지 않음"
+      },
+      {
+        "asset_type": "DOMAIN",
+        "asset": "your-store.myshopify.com",
+        "description": "Core 테스트 상점 표기",
+        "eligibility": "지정된 HackerOne 이메일로 직접 생성한 상점만 테스트",
+        "maximum_severity": "명시되지 않음"
+      }
+    ],
+    "out_of_scope_assets": [
+      {
+        "asset_type": "DOMAIN",
+        "asset": "community.shopify.dev",
+        "description": "Non-Core",
+        "eligibility": "명시적 제외",
+        "maximum_severity": "해당 없음"
+      },
+      {
+        "asset_type": "DOMAIN",
+        "asset": "academy.shopify.com",
+        "description": "Non-Core",
+        "eligibility": "명시적 제외",
+        "maximum_severity": "해당 없음"
+      },
+      {
+        "asset_type": "DOMAIN",
+        "asset": "supplier-portal.shopifycloud.com",
+        "description": "Non-Core",
+        "eligibility": "명시적 제외",
+        "maximum_severity": "해당 없음"
+      },
+      {
+        "asset_type": "DOMAIN",
+        "asset": "community.shopify.com",
+        "description": "Non-Core",
+        "eligibility": "명시적 제외",
+        "maximum_severity": "해당 없음"
+      },
+      {
+        "asset_type": "DOMAIN",
+        "asset": "livechat.shopify.com",
+        "description": "Non-Core",
+        "eligibility": "명시적 제외",
+        "maximum_severity": "해당 없음"
+      },
+      {
+        "asset_type": "DOMAIN",
+        "asset": "cdn.shopify.com",
+        "description": "Non-Core",
+        "eligibility": "명시적 제외",
+        "maximum_severity": "해당 없음"
+      },
+      {
+        "asset_type": "WILDCARD",
+        "asset": "*.email.shopify.com",
+        "description": "Non-Core",
+        "eligibility": "명시적 제외",
+        "maximum_severity": "해당 없음"
+      },
+      {
+        "asset_type": "DOMAIN",
+        "asset": "investors.shopify.com",
+        "description": "Non-Core",
+        "eligibility": "명시적 제외",
+        "maximum_severity": "해당 없음"
+      },
+      {
+        "asset_type": "OTHER",
+        "asset": "Other",
+        "description": "Non-Core 기타 범주",
+        "eligibility": "명시적 제외",
+        "maximum_severity": "해당 없음"
+      }
+    ],
+    "allowed_activities": [
+      "지정된 HackerOne 이메일로 직접 만든 상점에서 프로그램 규칙에 따라 테스트한다.",
+      "GraphQL introspection은 조사 자료로 활용할 수 있다."
+    ],
+    "prohibited_activities": [
+      "직접 만들지 않은 상점 접근·상호작용, Shopify Support 대상 테스트·사전 검증·진행 문의를 금지한다.",
+      "해결 전 또는 허락 없는 공개, 위법 행위, 타인 데이터의 중단·침해를 금지한다."
+    ],
+    "submission_requirements": [
+      "취약점을 검증하면 즉시 신고하고 모든 신고 규칙을 준수한다.",
+      "제삼자 앱은 개발자에게 먼저 신고한다. 일주일간 답변이 없으면 앱·개발자 이름, URL, 취약점, 재현 단계, 영향과 심각도를 포함해 Shopify에 신고할 수 있으나 보상은 없다.",
+      "제출물은 권리를 보유한 원본이어야 하며, 저작인격권 포기와 MIT License 조건이 적용된다."
+    ],
+    "operational_constraints": [
+      "보상 참여자는 Shopify 직원이 아니어야 한다. Shopify는 규칙 변경, 제출 무효화, 프로그램 취소 및 보상 여부를 결정할 수 있다.",
+      "DDoS, 사회공학, 단순 HTTP/DNS SSRF, GraphQL introspection, 비밀번호 강도 및 CVV 검증 신고는 부적격이다.",
+      "일부 XSS·CSRF, 의도된 CDN 동작, 상점의 알려진 오탐 및 모바일 관련 항목은 제외된다. 리디렉션·이메일 HTML 삽입은 영향 있는 취약점 연계가 필요하다.",
+      "직원 권한 문제는 민감 권한 상승, 직접적인 재정 영향 또는 미승인 구매자 개인정보 영향을 평가한다. 경쟁 조건은 악용 가능성과 민감정보 접근을 요구한다."
+    ],
+    "safe_harbor": "열람한 페이지에는 명시적인 법적 면책 약속이 없다.",
+    "ambiguities": [
+      "제삼자 상점의 범위 포함 표기와 본인 생성 상점만 테스트하라는 규칙의 관계가 불명확하다.",
+      "제삼자 앱은 범위 표에 포함되지만 보상 제외이다.",
+      "범주형 자산의 구체적인 식별자, 최대 심각도 및 요청 속도 제한은 명시되지 않았다.",
+      "외부 HackerOne 부적격 지침은 참조되지만 열람하지 않았다.",
+      "저작권상 발췌 제한으로 captured_text에는 전체 규칙과 세부 예외를 재현하지 않았다. COMPLETE는 페이지 접근과 필수 섹션 가용성을 의미한다."
+    ],
+    "source_evidence": [
+      {
+        "section": "Eligibility for Rewards",
+        "quote": "Only test against stores you created using your HackerOne YOURHANDLE @ wearehackerone.com registered email."
+      },
+      {
+        "section": "Domains in scope",
+        "quote": "Shopify Third Party Apps | In Scope | Non-Core"
+      }
+    ]
+  }
+}

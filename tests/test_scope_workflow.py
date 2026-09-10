@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import io
+import errno
 import hashlib
 import os
 import tempfile
@@ -81,6 +82,44 @@ class FakeMainAgent:
 
 
 class ScopeCoordinatorTests(unittest.TestCase):
+    def test_normalizes_relative_publish_destination_to_absolute_path(self) -> None:
+        coordinator = ScopeCoordinator("Scope/example")
+
+        self.assertTrue(coordinator.output_dir.is_absolute())
+        self.assertEqual(
+            coordinator.output_dir,
+            (Path.cwd() / "Scope" / "example").resolve(),
+        )
+
+    def test_cross_device_publish_falls_back_to_sibling_copy(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_dir:
+            output = Path(temporary_dir) / "Scope"
+            real_replace = os.replace
+            calls = 0
+
+            def replace_with_one_exdev(source, destination):
+                nonlocal calls
+                calls += 1
+                if calls == 1:
+                    raise OSError(errno.EXDEV, "Invalid cross-device link")
+                return real_replace(source, destination)
+
+            with patch(
+                "aidast.orchestration.scope.os.replace",
+                side_effect=replace_with_one_exdev,
+            ):
+                document = ScopeCoordinator(output).collect(
+                    "https://bugcrowd.com/example",
+                    main_agent=FakeMainAgent(),
+                    approved_by="reviewer",
+                    review=lambda _: True,
+                )
+
+            self.assertIsNotNone(document)
+            self.assertEqual(calls, 2)
+            self.assertTrue((output / "Scope.md").is_file())
+            self.assertTrue((output / "Approval.json").is_file())
+
     def test_collect_publishes_only_an_approved_scope(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_dir:
             output = Path(temporary_dir) / "Scope"
@@ -344,6 +383,24 @@ class ScopeModelTests(unittest.TestCase):
 
 
 class CliTests(unittest.TestCase):
+    def test_scope_reports_extraction_before_review(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_dir:
+            root = Path(temporary_dir) / "Scope"
+            console = io.StringIO()
+            with (
+                patch("aidast.cli.CodexMainAgent", return_value=FakeMainAgent()),
+                patch("builtins.input", return_value="n"),
+                redirect_stdout(console),
+            ):
+                main([
+                    "scope", "https://bugcrowd.com/engagements/example",
+                    "--output-dir", str(root),
+                ])
+            output = console.getvalue()
+            self.assertIn("Scope 추출 및 정책 해석이 완료되었습니다.", output)
+            self.assertIn("In-scope 자산: 1개", output)
+            self.assertIn("Temporary Scope draft:", output)
+
     def test_aidast_scope_approval_saves_default_scope_directory(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_dir:
             previous_directory = Path.cwd()

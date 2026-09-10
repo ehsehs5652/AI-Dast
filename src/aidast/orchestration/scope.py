@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+import errno
 import os
 import shutil
 import tempfile
@@ -38,7 +39,12 @@ class ProgramPageReader(Protocol):
 
 class ScopeCoordinator:
     def __init__(self, output_dir: Path | str = "Scope") -> None:
-        self.output_dir = Path(output_dir)
+        # tempfile.mkdtemp() returns an absolute path.  Keep the publication
+        # destination absolute as well: on WSL/Windows-mounted workspaces an
+        # absolute source plus a relative destination can otherwise be
+        # classified as a cross-device rename even though both names resolve
+        # to the same mounted filesystem.
+        self.output_dir = Path(output_dir).resolve(strict=False)
 
     def collect(
         self,
@@ -205,7 +211,23 @@ class ScopeCoordinator:
             encoding="utf-8",
         )
         approval_path.chmod(0o600)
-        os.replace(staging, self.output_dir)
+        try:
+            os.replace(staging, self.output_dir)
+        except OSError as exc:
+            if exc.errno != errno.EXDEV:
+                raise
+            self._publish_cross_device(staging)
+
+    def _publish_cross_device(self, staging: Path) -> None:
+        """Publish through a sibling copy when rename(2) reports EXDEV."""
+        sibling = self.output_dir.parent / (
+            f".{self.output_dir.name}-publish-{uuid4().hex}"
+        )
+        try:
+            shutil.copytree(staging, sibling, copy_function=shutil.copy2)
+            os.replace(sibling, self.output_dir)
+        finally:
+            shutil.rmtree(sibling, ignore_errors=True)
 
     @staticmethod
     def _verify_content_hashes(

@@ -20,5 +20,10 @@ aidast = "aidast.cli:main"
 where = ["src"]
 
 [tool.setuptools.package-data]
+"aidast.auth" = ["*.ps1"]
 "aidast.skills.scope" = ["SKILL.md"]
 "aidast.skills.ffuf_root_selection" = ["SKILL.md"]
+"aidast.skills.target_policy" = ["SKILL.md"]
+"aidast.skills.attack" = ["manifest.json", "controller.md", "catalog/*.json"]
+"aidast.skills.validation" = ["SKILL.md"]
+"aidast.skills.reporting" = ["SKILL.md", "references/*.md"]

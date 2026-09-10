@@ -7,9 +7,12 @@ recon binaries (httpx, katana, ...) are installed locally.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from urllib.error import HTTPError, URLError
+from typing import Callable
+from urllib.error import URLError
 from urllib.parse import urlsplit
-from urllib.request import Request, urlopen
+
+from aidast.core.request_broker import RequestBroker
+from aidast.recon.policy import TargetPolicy
 
 
 @dataclass
@@ -23,31 +26,20 @@ class ProbeResult:
     headers: dict[str, str]
 
 
-def probe(url: str, *, timeout: float = 30.0) -> ProbeResult:
+def probe(url: str, *, timeout: float = 30.0, policy: TargetPolicy | None = None,
+          transport: Callable | None = None, headers: dict[str, str] | None = None) -> ProbeResult:
     parsed = urlsplit(url)
-    request = Request(url, headers={"User-Agent": "aidast-recon/0.1"})
+    broker = RequestBroker(policy, transport=transport)
     try:
-        with urlopen(request, timeout=timeout) as response:
-            body = response.read(200_000).decode("utf-8", errors="replace")
-            return ProbeResult(
-                ok=True,
-                status_code=response.status,
-                scheme=parsed.scheme,
-                host=parsed.hostname or "",
-                port=parsed.port,
-                body=body,
-                headers=dict(response.headers.items()),
-            )
-    except HTTPError as exc:
-        body = exc.read(200_000).decode("utf-8", errors="replace") if exc.fp else ""
+        response = broker.request(url, headers={"User-Agent": "aidast-recon/0.1", **(headers or {})}, timeout=timeout)
         return ProbeResult(
             ok=True,
-            status_code=exc.code,
+            status_code=response.status_code,
             scheme=parsed.scheme,
             host=parsed.hostname or "",
             port=parsed.port,
-            body=body,
-            headers=dict(exc.headers.items()) if exc.headers else {},
+            body=response.body.decode("utf-8", errors="replace"),
+            headers=response.headers,
         )
     except URLError:
         return ProbeResult(

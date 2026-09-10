@@ -1,0 +1,653 @@
+{
+  "schema_version": "1.0",
+  "catalog_version": "1.0",
+  "source_repository": "https://github.com/elementalsouls/Claude-BugHunter",
+  "source_commit": "e49b9da698bfe830302f0ae49ea02e41cc5cf876",
+  "entry_count": 59,
+  "entries": [
+    {
+      "skill_id": "chain",
+      "title": "Chain reference",
+      "category": "orchestration_reference",
+      "source_sha256": "6c2a202c2ca5dcfcc43c9841c7e36efdedf8dbc33c7cb8c9919cdd067187d64d",
+      "source_path": "library/chain/SKILL.md",
+      "signal_tags": [],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-api-misconfig",
+      "title": "api misconfig reference",
+      "category": "security_review_reference",
+      "source_sha256": "d27a00337ac1c708ddd7540e8425d6131c61af27cc964f4de3bf845372b6a8cd",
+      "source_path": "library/hunt-api-misconfig/SKILL.md",
+      "signal_tags": [
+        "function:configuration"
+      ],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-aspnet",
+      "title": "aspnet reference",
+      "category": "platform_reference",
+      "source_sha256": "1606594f88ee4e178ab61ece133e83c53db64733da838aa7bc016c9daa5f9755",
+      "source_path": "library/hunt-aspnet/SKILL.md",
+      "signal_tags": [],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-ato",
+      "title": "ato reference",
+      "category": "security_review_reference",
+      "source_sha256": "f2afcab5682c117c77259b1ead3eb746aeefaa70c07c019b581b79ede09c7596",
+      "source_path": "library/hunt-ato/SKILL.md",
+      "signal_tags": [
+        "function:authentication",
+        "function:password_reset"
+      ],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-auth-bypass",
+      "title": "auth bypass reference",
+      "category": "security_review_reference",
+      "source_sha256": "7d8c2a013969817ceb337ecdb6afd04564727cfb0d9f2c2c86d5141020638e14",
+      "source_path": "library/hunt-auth-bypass/SKILL.md",
+      "signal_tags": [
+        "function:authentication",
+        "function:authorization"
+      ],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-brute-force",
+      "title": "brute force reference",
+      "category": "security_review_reference",
+      "source_sha256": "cca90153a3154dc7b188addb2ec3da804cea91f0d619fb9e17e289dcd3c4b1ce",
+      "source_path": "library/hunt-brute-force/SKILL.md",
+      "signal_tags": [
+        "function:authentication"
+      ],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-business-logic",
+      "title": "business logic reference",
+      "category": "security_review_reference",
+      "source_sha256": "c498fee1e663deeebed2332ba9248cadee782b7f65e2b61089623b02fca1ce89",
+      "source_path": "library/hunt-business-logic/SKILL.md",
+      "signal_tags": [
+        "data_role:business_data",
+        "function:payment"
+      ],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-cache-poison",
+      "title": "cache poison reference",
+      "category": "security_review_reference",
+      "source_sha256": "a64dea2f7b69bcfbc6d03c21ca8fa0ddf78bc481ecc6531c9f6064737879f25d",
+      "source_path": "library/hunt-cache-poison/SKILL.md",
+      "signal_tags": [],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-captcha-bypass",
+      "title": "captcha bypass reference",
+      "category": "security_review_reference",
+      "source_sha256": "41faee06c8c8db7f2f509d7f5d169b82b7bb32588064aa192f7369c88a2c0bde",
+      "source_path": "library/hunt-captcha-bypass/SKILL.md",
+      "signal_tags": [
+        "function:bot_protection"
+      ],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-cicd",
+      "title": "cicd reference",
+      "category": "security_review_reference",
+      "source_sha256": "4645e37a7695a36610ae3e86d8fc3f57b45fb8a56832aac7006cece481931bc2",
+      "source_path": "library/hunt-cicd/SKILL.md",
+      "signal_tags": [],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-clickjacking",
+      "title": "clickjacking reference",
+      "category": "security_review_reference",
+      "source_sha256": "4d47fdcec28fcce2e01ec9c3097cd7d1d2eda21d212ad13a2ceff770370cd939",
+      "source_path": "library/hunt-clickjacking/SKILL.md",
+      "signal_tags": [],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-cloud-misconfig",
+      "title": "cloud misconfig reference",
+      "category": "security_review_reference",
+      "source_sha256": "dff86dce91a6b5fa95b404cd025a16a5f5d94a1c992bfc275122530cb3b1b54e",
+      "source_path": "library/hunt-cloud-misconfig/SKILL.md",
+      "signal_tags": [
+        "function:configuration"
+      ],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-cors",
+      "title": "cors reference",
+      "category": "security_review_reference",
+      "source_sha256": "00e0e9e866db6729eaf67361d3194be684b2712ea6f74b9701042beff4677f57",
+      "source_path": "library/hunt-cors/SKILL.md",
+      "signal_tags": [],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-csrf",
+      "title": "csrf reference",
+      "category": "security_review_reference",
+      "source_sha256": "d311dce06a0715587abb25f7a28d946111b55d8439697d75e047f8a5a3cd3e79",
+      "source_path": "library/hunt-csrf/SKILL.md",
+      "signal_tags": [
+        "function:profile_update"
+      ],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-deserialization",
+      "title": "deserialization reference",
+      "category": "security_review_reference",
+      "source_sha256": "4c30e08e46bc5721b12a7d92e237060c0ea440581f3295bc0912b28230ff168b",
+      "source_path": "library/hunt-deserialization/SKILL.md",
+      "signal_tags": [],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-dispatch",
+      "title": "dispatch reference",
+      "category": "orchestration_reference",
+      "source_sha256": "b582c50d9f36d78d97a5d7eda3d70134e8c03ebfa968afd7119eb4ea476ae5c1",
+      "source_path": "library/hunt-dispatch/SKILL.md",
+      "signal_tags": [],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-dom",
+      "title": "dom reference",
+      "category": "security_review_reference",
+      "source_sha256": "c3f6bdc38bdfc1304d0b2d5ecd3456f6e4a391941d0dad1346d875600cdc9f49",
+      "source_path": "library/hunt-dom/SKILL.md",
+      "signal_tags": [],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-exceptional-conditions",
+      "title": "exceptional conditions reference",
+      "category": "security_review_reference",
+      "source_sha256": "dceb38f2a35b862989cf737068835e08da7b847a11989a7cf2998fb78e70bfd9",
+      "source_path": "library/hunt-exceptional-conditions/SKILL.md",
+      "signal_tags": [],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-file-upload",
+      "title": "file upload reference",
+      "category": "security_review_reference",
+      "source_sha256": "2ce6b6bd65376b22d9145997c4639edcc8b8033f646957e3e2c4b915e42eb52c",
+      "source_path": "library/hunt-file-upload/SKILL.md",
+      "signal_tags": [
+        "function:file_upload"
+      ],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-fintech-graphql",
+      "title": "fintech graphql reference",
+      "category": "security_review_reference",
+      "source_sha256": "9e3bb181f1cd9f772a9c8595c3e00b98c46c1401011add3338de9b6a0667e24c",
+      "source_path": "library/hunt-fintech-graphql/SKILL.md",
+      "signal_tags": [
+        "function:payment"
+      ],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-forgot-password",
+      "title": "forgot password reference",
+      "category": "security_review_reference",
+      "source_sha256": "b484286559f091f3dc8cab21a43e47f4d7fbe00382f5bade799fb40c7101fb1e",
+      "source_path": "library/hunt-forgot-password/SKILL.md",
+      "signal_tags": [
+        "function:password_reset"
+      ],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-graphql",
+      "title": "graphql reference",
+      "category": "security_review_reference",
+      "source_sha256": "5a2d5080566449b85f3e4e7d5a73d9a7465f126ae688ed7dafe9186cb30cb5ca",
+      "source_path": "library/hunt-graphql/SKILL.md",
+      "signal_tags": [],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-grpc",
+      "title": "grpc reference",
+      "category": "security_review_reference",
+      "source_sha256": "e14cb7a2824064bf8292a271c5fb0a2e7866d3b4caa2562a0a4da30135bf032c",
+      "source_path": "library/hunt-grpc/SKILL.md",
+      "signal_tags": [],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-host-header",
+      "title": "host header reference",
+      "category": "security_review_reference",
+      "source_sha256": "ef6054768ad32a55d094884acaaa02b4bbe7d2efd811f64076bf38ff6defb8d1",
+      "source_path": "library/hunt-host-header/SKILL.md",
+      "signal_tags": [],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-html-injection",
+      "title": "html injection reference",
+      "category": "security_review_reference",
+      "source_sha256": "5fe67c0256124d39821d1d63eb45b8a6c0ca20ca2018c5aba7ead72b343ea51e",
+      "source_path": "library/hunt-html-injection/SKILL.md",
+      "signal_tags": [],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-http-smuggling",
+      "title": "http smuggling reference",
+      "category": "security_review_reference",
+      "source_sha256": "9ebd33dbdd534d08df689a4b7fd8a8dcef770d6d0358c0cf22252d2a8cf2da45",
+      "source_path": "library/hunt-http-smuggling/SKILL.md",
+      "signal_tags": [],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-idor",
+      "title": "idor reference",
+      "category": "security_review_reference",
+      "source_sha256": "c264f8d251a21c88b127bfa831acd819e7363ec1b138bcecbf226dc98b74ed3e",
+      "source_path": "library/hunt-idor/SKILL.md",
+      "signal_tags": [
+        "data_role:identifier",
+        "function:authorization",
+        "function:profile_read"
+      ],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-jwt-crypto",
+      "title": "jwt crypto reference",
+      "category": "security_review_reference",
+      "source_sha256": "8ecbc4b840be4e814e600bd0d6b22aac179d5085a6ac8dc38aba238972deee51",
+      "source_path": "library/hunt-jwt-crypto/SKILL.md",
+      "signal_tags": [
+        "function:authentication",
+        "function:session_creation"
+      ],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-k8s",
+      "title": "k8s reference",
+      "category": "platform_reference",
+      "source_sha256": "4598198a99ed4443603282d8ce2c1dabb382573ac23ac64aab029edbe921148f",
+      "source_path": "library/hunt-k8s/SKILL.md",
+      "signal_tags": [],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-laravel",
+      "title": "laravel reference",
+      "category": "platform_reference",
+      "source_sha256": "176725dc473a60e33d2d3b7614f634ee58544b6e5e96ec3b47cf1334a824bf3e",
+      "source_path": "library/hunt-laravel/SKILL.md",
+      "signal_tags": [],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-ldap",
+      "title": "ldap reference",
+      "category": "security_review_reference",
+      "source_sha256": "ae7a9fbd3a12ced888f36efc83b3b5cc16a219825a664a84b60c429bc4487a93",
+      "source_path": "library/hunt-ldap/SKILL.md",
+      "signal_tags": [
+        "function:search"
+      ],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-lfi",
+      "title": "lfi reference",
+      "category": "security_review_reference",
+      "source_sha256": "ccc93c6c750c37d941af16556ec3fa6d29ee5e71fa9ccf96aa29ab9f8be1251c",
+      "source_path": "library/hunt-lfi/SKILL.md",
+      "signal_tags": [
+        "function:file_download"
+      ],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-llm-ai",
+      "title": "llm ai reference",
+      "category": "security_review_reference",
+      "source_sha256": "44968fc1b2ff3210e481aafbdf7f160d9a1fcbcce995df1edf0329cbff9b7658",
+      "source_path": "library/hunt-llm-ai/SKILL.md",
+      "signal_tags": [],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-mfa-bypass",
+      "title": "mfa bypass reference",
+      "category": "security_review_reference",
+      "source_sha256": "453126b12df075d941f5a39552d4b17b623aaa692fe3d87442dae104384aafed",
+      "source_path": "library/hunt-mfa-bypass/SKILL.md",
+      "signal_tags": [
+        "function:authentication"
+      ],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-misc",
+      "title": "misc reference",
+      "category": "security_review_reference",
+      "source_sha256": "1da165c46da0cb8c2ef9d4e110cb6b876081619b7d96acad43ff96850d2a029e",
+      "source_path": "library/hunt-misc/SKILL.md",
+      "signal_tags": [],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-nextjs",
+      "title": "nextjs reference",
+      "category": "platform_reference",
+      "source_sha256": "b2090dbf732788d6eefa0556c99fb2ad3dc0b86b13f3cd7b8a88c55285bd8179",
+      "source_path": "library/hunt-nextjs/SKILL.md",
+      "signal_tags": [],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-nodejs",
+      "title": "nodejs reference",
+      "category": "platform_reference",
+      "source_sha256": "5a10ab815e5c5949e59d0f997c358a8a4f3c6e2ca6b3145942ab701f8c98608c",
+      "source_path": "library/hunt-nodejs/SKILL.md",
+      "signal_tags": [],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-nosqli",
+      "title": "nosqli reference",
+      "category": "security_review_reference",
+      "source_sha256": "6df5885eb5095adcaab95f54b88a919a0d7300e81d244b284a10a3d76a2c578f",
+      "source_path": "library/hunt-nosqli/SKILL.md",
+      "signal_tags": [
+        "function:search"
+      ],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-ntlm-info",
+      "title": "ntlm info reference",
+      "category": "security_review_reference",
+      "source_sha256": "2ebe0e8acfc301a4986ac508cc5e032727e01f0246dff1df8b2073dcae2ea86f",
+      "source_path": "library/hunt-ntlm-info/SKILL.md",
+      "signal_tags": [],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-oauth",
+      "title": "oauth reference",
+      "category": "security_review_reference",
+      "source_sha256": "05ef8cb632293ab8e0ae0399a7e5b08587e2645e778eb51377573cb4023de685",
+      "source_path": "library/hunt-oauth/SKILL.md",
+      "signal_tags": [
+        "function:authentication"
+      ],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-open-redirect",
+      "title": "open redirect reference",
+      "category": "security_review_reference",
+      "source_sha256": "eda49dc99c2775bf034a5f7d3b4b187061bc8a38d76e92ca3a598592fe1ad5ad",
+      "source_path": "library/hunt-open-redirect/SKILL.md",
+      "signal_tags": [],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-race-condition",
+      "title": "race condition reference",
+      "category": "security_review_reference",
+      "source_sha256": "783248a920928a4aaa981c268be436af91a7d6251a29730d729a4f678f83c768",
+      "source_path": "library/hunt-race-condition/SKILL.md",
+      "signal_tags": [
+        "function:payment"
+      ],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-rag-vector",
+      "title": "rag vector reference",
+      "category": "security_review_reference",
+      "source_sha256": "979b5530e0b7f99820a45d09e270ab02a0b373c5edad44981a5d7c9d1ec4ff07",
+      "source_path": "library/hunt-rag-vector/SKILL.md",
+      "signal_tags": [],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-rce",
+      "title": "rce reference",
+      "category": "security_review_reference",
+      "source_sha256": "86246654cdbafbadf622e3d3a387f587512412df6e83f13a16db443223601140",
+      "source_path": "library/hunt-rce/SKILL.md",
+      "signal_tags": [],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-saml",
+      "title": "saml reference",
+      "category": "security_review_reference",
+      "source_sha256": "37070e08eb1d451408420c76a35cec184b4e9387a404dd512a8a0b7557641f32",
+      "source_path": "library/hunt-saml/SKILL.md",
+      "signal_tags": [
+        "function:authentication"
+      ],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-session",
+      "title": "session reference",
+      "category": "security_review_reference",
+      "source_sha256": "d7e1a5c418d8f86180d9e242c9e5e2fd186efe61b3633c68f914160586968ecc",
+      "source_path": "library/hunt-session/SKILL.md",
+      "signal_tags": [
+        "function:logout",
+        "function:session_creation",
+        "function:session_refresh"
+      ],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-shadow-api",
+      "title": "shadow api reference",
+      "category": "security_review_reference",
+      "source_sha256": "05567a1fe7b58e95d28e0b5c5a2ca74372d4a1e7e1710ec872c51f30214bdcbc",
+      "source_path": "library/hunt-shadow-api/SKILL.md",
+      "signal_tags": [],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-sharepoint",
+      "title": "sharepoint reference",
+      "category": "platform_reference",
+      "source_sha256": "6c9a1741da8b328176c42c5673dc54e7dd2ae61dc414dbb40eb7ebad7b253a98",
+      "source_path": "library/hunt-sharepoint/SKILL.md",
+      "signal_tags": [],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-source-leak",
+      "title": "source leak reference",
+      "category": "security_review_reference",
+      "source_sha256": "ab5146c6af333082fec036b3085838cd5beaa4d45dbd3b6e15791e0a85ea0e03",
+      "source_path": "library/hunt-source-leak/SKILL.md",
+      "signal_tags": [
+        "function:configuration"
+      ],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-spa-api",
+      "title": "spa api reference",
+      "category": "security_review_reference",
+      "source_sha256": "6b37e5dde646cb603738915b39768e88685b8dd1aa53a4b7c5e04dfa491713f4",
+      "source_path": "library/hunt-spa-api/SKILL.md",
+      "signal_tags": [],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-springboot",
+      "title": "springboot reference",
+      "category": "platform_reference",
+      "source_sha256": "4602c5718f7a452f064b934d7f227b060e3767e9b6039f36aa10460291b61eeb",
+      "source_path": "library/hunt-springboot/SKILL.md",
+      "signal_tags": [],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-sqli",
+      "title": "sqli reference",
+      "category": "security_review_reference",
+      "source_sha256": "fc5627c37b1028172413285c322c76d1105ebffbbb5af4e0ca0eaa81811fd7c0",
+      "source_path": "library/hunt-sqli/SKILL.md",
+      "signal_tags": [
+        "function:search"
+      ],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-ssrf",
+      "title": "ssrf reference",
+      "category": "security_review_reference",
+      "source_sha256": "e9723e4a78a3a2113efd88b0d49df02f9dded113569964d5b1b6aa2f592df058",
+      "source_path": "library/hunt-ssrf/SKILL.md",
+      "signal_tags": [],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-ssti",
+      "title": "ssti reference",
+      "category": "security_review_reference",
+      "source_sha256": "edab65afe43abcd2d0d19f7dde29c91f54fbd8720f66e9161a58a4552f1092af",
+      "source_path": "library/hunt-ssti/SKILL.md",
+      "signal_tags": [],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-subdomain",
+      "title": "subdomain reference",
+      "category": "security_review_reference",
+      "source_sha256": "aac68521ad4a90fa5a21777f2c1c3ac05a1dfc080e066e88b0ce42571f174ca3",
+      "source_path": "library/hunt-subdomain/SKILL.md",
+      "signal_tags": [],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-tls-network",
+      "title": "tls network reference",
+      "category": "security_review_reference",
+      "source_sha256": "0c27faca993c6e83dcaad9a38cc8d95055c5599c7d6e19e642587cf4627f11f0",
+      "source_path": "library/hunt-tls-network/SKILL.md",
+      "signal_tags": [],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-websocket",
+      "title": "websocket reference",
+      "category": "security_review_reference",
+      "source_sha256": "11f68926ffab55ecf91f1027280cb6e16864432b62ba079973e11bca0d3dffc1",
+      "source_path": "library/hunt-websocket/SKILL.md",
+      "signal_tags": [],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-xss",
+      "title": "xss reference",
+      "category": "security_review_reference",
+      "source_sha256": "fad790ac05164299eff8f2206160d23b79d2508ac930721e3d8835d746443714",
+      "source_path": "library/hunt-xss/SKILL.md",
+      "signal_tags": [],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    },
+    {
+      "skill_id": "hunt-xxe",
+      "title": "xxe reference",
+      "category": "security_review_reference",
+      "source_sha256": "a74b466dfb2220787cd61c65860fa50c914b77c30151f04e63284a565c269069",
+      "source_path": "library/hunt-xxe/SKILL.md",
+      "signal_tags": [],
+      "enabled": false,
+      "execution_mode": "metadata_only"
+    }
+  ]
+}
