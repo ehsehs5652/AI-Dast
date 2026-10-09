@@ -1,0 +1,25 @@
+{
+  "name": "ai-dast-dashboard",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "node scripts/check-i18n.mjs && tsc -b && vite build",
+    "check:i18n": "node scripts/check-i18n.mjs",
+    "preview": "vite preview",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "engines": { "node": ">=22.18.0" },
+  "dependencies": {
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "6.1.1",
+    "vite": "8.3.0",
+    "typescript": "7.0.2",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0"
+  }
+}

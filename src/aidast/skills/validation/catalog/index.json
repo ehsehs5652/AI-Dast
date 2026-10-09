@@ -1,0 +1,412 @@
+{
+  "schema_version": 1,
+  "entry_count": 58,
+  "entries": [
+    {
+      "skill_id": "hunt-api-misconfig",
+      "skill_path": "library/hunt-api-misconfig/SKILL.md",
+      "contract_path": "library/hunt-api-misconfig/contract.json",
+      "skill_sha256": "bf9532b2f654640ae24db05df9e8ef7b438cdad23a2a08c2d7025f6f0ef19666",
+      "contract_sha256": "347b3dd3d2744a35a19412128e0505bd01cfdf864cdab6ce9f1d449d88b58e2a"
+    },
+    {
+      "skill_id": "hunt-aspnet",
+      "skill_path": "library/hunt-aspnet/SKILL.md",
+      "contract_path": "library/hunt-aspnet/contract.json",
+      "skill_sha256": "c5ce81c9514f0c398bb6df9b95857451aca4781452ee18a524d39a4f03b1378b",
+      "contract_sha256": "72937c700f720f171a9501cede01eebb30d2190d03def083fe89eabea91f3c6b"
+    },
+    {
+      "skill_id": "hunt-ato",
+      "skill_path": "library/hunt-ato/SKILL.md",
+      "contract_path": "library/hunt-ato/contract.json",
+      "skill_sha256": "9ea3126b36fc01d2751f17eae7ddea728ecdbaf99b9de2731a8f8e3b7466ab90",
+      "contract_sha256": "b3ce3095f8566318b2f8430db12ec1d9e1c5567a78a824eaca9092ba7536b2d4"
+    },
+    {
+      "skill_id": "hunt-auth-bypass",
+      "skill_path": "library/hunt-auth-bypass/SKILL.md",
+      "contract_path": "library/hunt-auth-bypass/contract.json",
+      "skill_sha256": "e19d9633579c9286e518299fae14616cd158cfabd7e985eaea52a71078079f5f",
+      "contract_sha256": "2f1a3b84956f072a175f3969ead4be160c68de0b19ce11d6fe3b693a7319caf6"
+    },
+    {
+      "skill_id": "hunt-brute-force",
+      "skill_path": "library/hunt-brute-force/SKILL.md",
+      "contract_path": "library/hunt-brute-force/contract.json",
+      "skill_sha256": "f9a12cd6d0ddb0eb55ca5dbaed253f002d98da1d52e29012be81edcb9e10c43d",
+      "contract_sha256": "f786c82a57785024b47e9d9be99b1471efab14ff6484d4f125b51e9fddd34036"
+    },
+    {
+      "skill_id": "hunt-business-logic",
+      "skill_path": "library/hunt-business-logic/SKILL.md",
+      "contract_path": "library/hunt-business-logic/contract.json",
+      "skill_sha256": "66c7003e7488cb7aad8572da664d04351d63c946ed902773f4b96e5bf8772d18",
+      "contract_sha256": "e44784e34a29af6d5a710ced0306f17149c8df58bdea293fe9e9a77855542b6a"
+    },
+    {
+      "skill_id": "hunt-cache-poison",
+      "skill_path": "library/hunt-cache-poison/SKILL.md",
+      "contract_path": "library/hunt-cache-poison/contract.json",
+      "skill_sha256": "f91eab3fed1ca376b12abc44ae461b25bf9e31e965b2812275a68f83b8fc0c89",
+      "contract_sha256": "8b67311aa7bf8eb5c4192ff54159fc09ee2d77737d127ef73e429f4aa9f0f5a4"
+    },
+    {
+      "skill_id": "hunt-captcha-bypass",
+      "skill_path": "library/hunt-captcha-bypass/SKILL.md",
+      "contract_path": "library/hunt-captcha-bypass/contract.json",
+      "skill_sha256": "911299311cd96af1938ed91315ee4ccf1ba3beaf3c387fd111251b57ad3edf68",
+      "contract_sha256": "2ae20a089c3d1bee46818966a7564847747a1f7b50e10db85edcd73787b2a59a"
+    },
+    {
+      "skill_id": "hunt-cicd",
+      "skill_path": "library/hunt-cicd/SKILL.md",
+      "contract_path": "library/hunt-cicd/contract.json",
+      "skill_sha256": "2b6f4fe1435996e362f7eedf4176f5bd778d3e9f4ef550740fbded7a1c3f214a",
+      "contract_sha256": "86f68fb695b5f620f964698bc34e853a4d98a28011fce4f0c740516d34a9073a"
+    },
+    {
+      "skill_id": "hunt-clickjacking",
+      "skill_path": "library/hunt-clickjacking/SKILL.md",
+      "contract_path": "library/hunt-clickjacking/contract.json",
+      "skill_sha256": "fec65f3833cfc2e607336aeb65e4e3c2e4bfcabbdbe30944f804710f0f4d7cba",
+      "contract_sha256": "b0e7e3f83fc89970bf444a16e62c86cc0f38b856524990735c8eecbb0dc7a3c9"
+    },
+    {
+      "skill_id": "hunt-cloud-misconfig",
+      "skill_path": "library/hunt-cloud-misconfig/SKILL.md",
+      "contract_path": "library/hunt-cloud-misconfig/contract.json",
+      "skill_sha256": "0835af91cd5ecca5be9682ad206c7f758ec5c5138e79a028a955f7ddc2476f9c",
+      "contract_sha256": "98b24566331ec69fc97d029a40c6d2010801fef0dc163f0821f6ebb31f15ce0c"
+    },
+    {
+      "skill_id": "hunt-cors",
+      "skill_path": "library/hunt-cors/SKILL.md",
+      "contract_path": "library/hunt-cors/contract.json",
+      "skill_sha256": "49fd5aefaf0e910c417fe750b9d49b18571659e5574d0f79ac32c1add0755408",
+      "contract_sha256": "198c34246f9e50efedded1d6a8d15138842b806a75775bdbf30f793940219e18"
+    },
+    {
+      "skill_id": "hunt-csrf",
+      "skill_path": "library/hunt-csrf/SKILL.md",
+      "contract_path": "library/hunt-csrf/contract.json",
+      "skill_sha256": "79b9a06954bda5c5482fcb4417b2230c12fc4ecbcf1039177ea84a60b0e49789",
+      "contract_sha256": "778141c68a3c4c6fd9fb1e9257d6bf28b666f508c2e03b9a8fc97ed2d8caed11"
+    },
+    {
+      "skill_id": "hunt-deserialization",
+      "skill_path": "library/hunt-deserialization/SKILL.md",
+      "contract_path": "library/hunt-deserialization/contract.json",
+      "skill_sha256": "f9fafe54304260403ca31405b37d912e8cdd1cc93e1fa6c643675b20e385f332",
+      "contract_sha256": "927bca1972b5255054332071e807e276c7d611c956e9f6ca3b3a4863d1ecfc6b"
+    },
+    {
+      "skill_id": "hunt-dispatch",
+      "skill_path": "library/hunt-dispatch/SKILL.md",
+      "contract_path": "library/hunt-dispatch/contract.json",
+      "skill_sha256": "efdbd61b4427e6b6ee363c97b33d0794f1588fe342698a81b5cedf55abb6f7bc",
+      "contract_sha256": "08d29f9b8de1961449e742251efe510d582bdaaff46f88708e103140b4f6edde"
+    },
+    {
+      "skill_id": "hunt-dom",
+      "skill_path": "library/hunt-dom/SKILL.md",
+      "contract_path": "library/hunt-dom/contract.json",
+      "skill_sha256": "e2f1dd2c24e7c528446f2a2a1eba45158c7ea42f914667af754ceebc73561f39",
+      "contract_sha256": "055ff592afc6389ed098d8c2d957f78f7ce22dbb9c497cec9804bb4e37bfef14"
+    },
+    {
+      "skill_id": "hunt-exceptional-conditions",
+      "skill_path": "library/hunt-exceptional-conditions/SKILL.md",
+      "contract_path": "library/hunt-exceptional-conditions/contract.json",
+      "skill_sha256": "5b00f03ad2a2b9787f6333ab21f970fbdb5c2419998dd6be99d974fb278927a7",
+      "contract_sha256": "dcb9c44f1517f27db7b302c1217b9abd4b526500cf4fea5e4ea4667be365b326"
+    },
+    {
+      "skill_id": "hunt-file-upload",
+      "skill_path": "library/hunt-file-upload/SKILL.md",
+      "contract_path": "library/hunt-file-upload/contract.json",
+      "skill_sha256": "dafc2315e1cdaecf95161b07f170a55968718ce85159c25001df726d6fa01d82",
+      "contract_sha256": "2221301b9dd407eef8d88e05cedc0e00e633b42dd7e8c335501b00ec908b434d"
+    },
+    {
+      "skill_id": "hunt-fintech-graphql",
+      "skill_path": "library/hunt-fintech-graphql/SKILL.md",
+      "contract_path": "library/hunt-fintech-graphql/contract.json",
+      "skill_sha256": "e6217c75e1c9f7e73ac874493d1ed022cd739f1c27bdd0c38eef09c8abd47000",
+      "contract_sha256": "1705eebbdc05f71f9c54939d2cdf7ed767b78186dbb3d186d3c67b01d950da1d"
+    },
+    {
+      "skill_id": "hunt-forgot-password",
+      "skill_path": "library/hunt-forgot-password/SKILL.md",
+      "contract_path": "library/hunt-forgot-password/contract.json",
+      "skill_sha256": "bdf2601ac07289776899bca40304a595348b2d5144a17a50ff3b7424ff30463e",
+      "contract_sha256": "0682a975d54821c5f7649a357e6ecb7213af182ce9c41de9462849024ccff0d5"
+    },
+    {
+      "skill_id": "hunt-graphql",
+      "skill_path": "library/hunt-graphql/SKILL.md",
+      "contract_path": "library/hunt-graphql/contract.json",
+      "skill_sha256": "5b8caf8b0924fa3077239eb5d6c06d3d94522bd894a82a075a9a327be80317ef",
+      "contract_sha256": "cdbf6e81a267ac0dc9c1b19d931b7b78aadc1c84a178d74079466b033bf65c0f"
+    },
+    {
+      "skill_id": "hunt-grpc",
+      "skill_path": "library/hunt-grpc/SKILL.md",
+      "contract_path": "library/hunt-grpc/contract.json",
+      "skill_sha256": "3b3e6b4b6ee8b8e56d75246fa6696d207f9be1e7e0ef0f590f43b76abb7f8182",
+      "contract_sha256": "36a7753d1eb39791ede940296e7e320bc82ef2d546c7b80aa5940d2875329654"
+    },
+    {
+      "skill_id": "hunt-host-header",
+      "skill_path": "library/hunt-host-header/SKILL.md",
+      "contract_path": "library/hunt-host-header/contract.json",
+      "skill_sha256": "2b30857f687cf88e85f05ece52f24ebc1a4094450a65ad4f91c3871a91b32447",
+      "contract_sha256": "624b024ea934cb7dda47d73ddb84b3723248c8189c566541f66026a5bcdaf1db"
+    },
+    {
+      "skill_id": "hunt-html-injection",
+      "skill_path": "library/hunt-html-injection/SKILL.md",
+      "contract_path": "library/hunt-html-injection/contract.json",
+      "skill_sha256": "f54324c27ba7549925e6fbb3ce8a24866fd306d78d832735dbdefd3f16f4e467",
+      "contract_sha256": "f8f15c6d29818dd3332f729bc2dedd8efacfa1ba290303bebf1f141b104770a5"
+    },
+    {
+      "skill_id": "hunt-http-smuggling",
+      "skill_path": "library/hunt-http-smuggling/SKILL.md",
+      "contract_path": "library/hunt-http-smuggling/contract.json",
+      "skill_sha256": "f07e87092add4d990ffe5b5d4fe44f54aa041ba6899248a57f2198e2fa9c0463",
+      "contract_sha256": "efbb16e6f2e28b6452130c178e24f5f54e95e40052ca73c9d7651a536c6eda09"
+    },
+    {
+      "skill_id": "hunt-idor",
+      "skill_path": "library/hunt-idor/SKILL.md",
+      "contract_path": "library/hunt-idor/contract.json",
+      "skill_sha256": "93ecde758e223f2d96f2ef601622f51cf48b42fb1b80907c205686d3f219efa4",
+      "contract_sha256": "160f15a8b621f5c22c2cf987a5d17ff9b8be9d07e05636a8a2985c816c5b6f20"
+    },
+    {
+      "skill_id": "hunt-jwt-crypto",
+      "skill_path": "library/hunt-jwt-crypto/SKILL.md",
+      "contract_path": "library/hunt-jwt-crypto/contract.json",
+      "skill_sha256": "1a2c4bbcd0ec1cd9866faafad0f981fd3198326b4440f97739c49d25fd22f84c",
+      "contract_sha256": "f10d20220dcf162bad252142a100278bee8e05d2ef609cf2ac8136c8178a43d7"
+    },
+    {
+      "skill_id": "hunt-k8s",
+      "skill_path": "library/hunt-k8s/SKILL.md",
+      "contract_path": "library/hunt-k8s/contract.json",
+      "skill_sha256": "377ee98836566ce7cae756f156d76364b9a300c81a9c5bdfb11026ab1019369f",
+      "contract_sha256": "a1b077a61e81a9bdd796f1a318acfbb0c2b07b7378ddc67f517e06231d4063cc"
+    },
+    {
+      "skill_id": "hunt-laravel",
+      "skill_path": "library/hunt-laravel/SKILL.md",
+      "contract_path": "library/hunt-laravel/contract.json",
+      "skill_sha256": "bf0ac6730d4c690d98407402c0acf86989eb1296e73af935d8a77a794eed0524",
+      "contract_sha256": "c5edcf6bf6e868b25c08c9ec617c7515e1ffc8f1ac0abe921076e2351a3202c2"
+    },
+    {
+      "skill_id": "hunt-ldap",
+      "skill_path": "library/hunt-ldap/SKILL.md",
+      "contract_path": "library/hunt-ldap/contract.json",
+      "skill_sha256": "b7e9873aa9dbb3d6ce8854d8e8a2d207928597e161b37ca6d683f1a20f03dad7",
+      "contract_sha256": "e067e71e85c4ffb3171e5c923272e62162b874490bbd9c98267613563e62b423"
+    },
+    {
+      "skill_id": "hunt-lfi",
+      "skill_path": "library/hunt-lfi/SKILL.md",
+      "contract_path": "library/hunt-lfi/contract.json",
+      "skill_sha256": "29932cf69abaa6f324b2ad6f707f692f3d36e1b3b86783bd9bcc27d14118e377",
+      "contract_sha256": "de574274a3fb6ccaa38893b393aabdba264f6e9be3103265da264334e9f03a00"
+    },
+    {
+      "skill_id": "hunt-llm-ai",
+      "skill_path": "library/hunt-llm-ai/SKILL.md",
+      "contract_path": "library/hunt-llm-ai/contract.json",
+      "skill_sha256": "89282f184756556866535c0b26455570c279bd8d4c55b87bcc7b94d5c72555a7",
+      "contract_sha256": "36a3b92ec28bcbdd42e01ee504854ace240b72e31c8a9ea3115d628bf89919a0"
+    },
+    {
+      "skill_id": "hunt-mfa-bypass",
+      "skill_path": "library/hunt-mfa-bypass/SKILL.md",
+      "contract_path": "library/hunt-mfa-bypass/contract.json",
+      "skill_sha256": "5a8bd5f5cfb370748a6ea68054a03e71128f85c69e080c60555846b08f5420e2",
+      "contract_sha256": "5605a6c9ffe2ef29a493adf111f965bdb416a11f3ecf8db3ae0c33ed3a25c16d"
+    },
+    {
+      "skill_id": "hunt-misc",
+      "skill_path": "library/hunt-misc/SKILL.md",
+      "contract_path": "library/hunt-misc/contract.json",
+      "skill_sha256": "3560f46b8a8ac8a4b39f37d7d6f18d3982512f8c485514b74a86046baf7b7565",
+      "contract_sha256": "87839175828a20a32fb7dbc46625d809b6baf84c8ca7a6ebc9c2d3b45155b1ce"
+    },
+    {
+      "skill_id": "hunt-nextjs",
+      "skill_path": "library/hunt-nextjs/SKILL.md",
+      "contract_path": "library/hunt-nextjs/contract.json",
+      "skill_sha256": "fac21e17098eb7fa21a986af08693c270ac2d66ecddf3caa74613ea021d0b750",
+      "contract_sha256": "ed906374b6df8913fb58b33e7717082a091a5980da48161d7accae2310e6f005"
+    },
+    {
+      "skill_id": "hunt-nodejs",
+      "skill_path": "library/hunt-nodejs/SKILL.md",
+      "contract_path": "library/hunt-nodejs/contract.json",
+      "skill_sha256": "f8130f32a80d505cb30501cb8d6a4240a0a94c1ddd213d354f97a6d98c5fcb5f",
+      "contract_sha256": "ac0b940611a8c4e402e13171897c16efd8e1071ff9caff94230c2fb8f96ed4fb"
+    },
+    {
+      "skill_id": "hunt-nosqli",
+      "skill_path": "library/hunt-nosqli/SKILL.md",
+      "contract_path": "library/hunt-nosqli/contract.json",
+      "skill_sha256": "586b16d7d1a8add70bf0bb5dbe6e6929238f52e23730e04c8e802325b9bff63a",
+      "contract_sha256": "f43405c3a1b6bf945ea39a84734c850c6fc19a02a78192e2b9c40d9ddd99c3cb"
+    },
+    {
+      "skill_id": "hunt-ntlm-info",
+      "skill_path": "library/hunt-ntlm-info/SKILL.md",
+      "contract_path": "library/hunt-ntlm-info/contract.json",
+      "skill_sha256": "e2a04a55175afc0cd4995f459be12731a11585dc841eb2d8d9df48e26d9ffb54",
+      "contract_sha256": "398e36ca051da23d1329e8321b8b39fbedaef191c3848389a38f0948a1f63d04"
+    },
+    {
+      "skill_id": "hunt-oauth",
+      "skill_path": "library/hunt-oauth/SKILL.md",
+      "contract_path": "library/hunt-oauth/contract.json",
+      "skill_sha256": "c5930e4d3fe55a61507a970d9b218249b59ee54a649c512358058c6bf5289a84",
+      "contract_sha256": "d64b1316fba53854422ebddfb8940bd4e2a92fac3881682178ee50e21b8b2a03"
+    },
+    {
+      "skill_id": "hunt-open-redirect",
+      "skill_path": "library/hunt-open-redirect/SKILL.md",
+      "contract_path": "library/hunt-open-redirect/contract.json",
+      "skill_sha256": "1b70d36ace78c6b75a275cadae52bb38a4951c6774cf85f739368752163b918c",
+      "contract_sha256": "768ecfd0858d807edb5bdb66cd9486ee13866497265200156c21b7934d8231fc"
+    },
+    {
+      "skill_id": "hunt-race-condition",
+      "skill_path": "library/hunt-race-condition/SKILL.md",
+      "contract_path": "library/hunt-race-condition/contract.json",
+      "skill_sha256": "b571df191cdf2bc45fff497d0a528982ebd41824c9ce2086a05e1e664489e81f",
+      "contract_sha256": "e07d4640d985c8b242873cb573b6bb27bf7f4fbcde590607bb2383c5e806d8dd"
+    },
+    {
+      "skill_id": "hunt-rag-vector",
+      "skill_path": "library/hunt-rag-vector/SKILL.md",
+      "contract_path": "library/hunt-rag-vector/contract.json",
+      "skill_sha256": "39a764855819ee944192e9d2a43be60fbfd79dea17ee4e36e9889d02ab803e5d",
+      "contract_sha256": "42176b944078b278768862dcf53fa4a2cfab70a4269c8a3c3f54a367211bc755"
+    },
+    {
+      "skill_id": "hunt-rce",
+      "skill_path": "library/hunt-rce/SKILL.md",
+      "contract_path": "library/hunt-rce/contract.json",
+      "skill_sha256": "d1725f9ccb99ff0457f2ce5f477b443b4b54d288c1b218edf2a82ba6aba79ad3",
+      "contract_sha256": "96ea2723db7455e767e199eebbd9be05f6d70b5d69ea4feff3ba19cf74368342"
+    },
+    {
+      "skill_id": "hunt-saml",
+      "skill_path": "library/hunt-saml/SKILL.md",
+      "contract_path": "library/hunt-saml/contract.json",
+      "skill_sha256": "fc34ff54ff0f05fcceaa63d6445a253e31e6ba5e8d07740fb052444249615560",
+      "contract_sha256": "3a57410c9ae48107c4712fd71589fb0c65331f333e72e924b963ba546124fe65"
+    },
+    {
+      "skill_id": "hunt-session",
+      "skill_path": "library/hunt-session/SKILL.md",
+      "contract_path": "library/hunt-session/contract.json",
+      "skill_sha256": "b08c31a1802358a1b112f8ec14f9681656a99ff54b70f611426bf2f174a5a3e4",
+      "contract_sha256": "3dd587a11ff0372a2d1afd0fbdcf6072c73f4c7abf4b702cabe727eb5ed5e96d"
+    },
+    {
+      "skill_id": "hunt-shadow-api",
+      "skill_path": "library/hunt-shadow-api/SKILL.md",
+      "contract_path": "library/hunt-shadow-api/contract.json",
+      "skill_sha256": "7c4a21ef3648ceb637d819fc546846d6f20117759ed9c5cddfba07c205b63048",
+      "contract_sha256": "40b0e5f49bc6efc64f3315a372378440ee142fdef3ce264f28505f86ed2db406"
+    },
+    {
+      "skill_id": "hunt-sharepoint",
+      "skill_path": "library/hunt-sharepoint/SKILL.md",
+      "contract_path": "library/hunt-sharepoint/contract.json",
+      "skill_sha256": "8746745c82e331038475a1d3740e58f167df327cfcb92428a196c86d22a2f64a",
+      "contract_sha256": "b1807b4ced9e10a6e97980cfddda9391a01f82a694309683af75bbf1aa2f0c51"
+    },
+    {
+      "skill_id": "hunt-source-leak",
+      "skill_path": "library/hunt-source-leak/SKILL.md",
+      "contract_path": "library/hunt-source-leak/contract.json",
+      "skill_sha256": "4f066398bb6860c494d9d8182892a3c2ef4eef33b27d805c9c7187e820a9b8da",
+      "contract_sha256": "0b80409b9fe9e6a9193e3b1ab442a9c2466ee109e1bf57166b6ce04f55738d94"
+    },
+    {
+      "skill_id": "hunt-spa-api",
+      "skill_path": "library/hunt-spa-api/SKILL.md",
+      "contract_path": "library/hunt-spa-api/contract.json",
+      "skill_sha256": "b377dc548828719844cd2f8ef756954ac2fe9e08236ce17ec8934a51c3281cad",
+      "contract_sha256": "e2eecbd8c73bfd40925c8b5201b4ad09abbd765f3ba888d5ae94de4d58764a04"
+    },
+    {
+      "skill_id": "hunt-springboot",
+      "skill_path": "library/hunt-springboot/SKILL.md",
+      "contract_path": "library/hunt-springboot/contract.json",
+      "skill_sha256": "eb1ef3b445472bfaad9586ffa98a2022c83ed2a88168a9407e433bf5318eeaa4",
+      "contract_sha256": "7e0ec4621c5732b708e6a6f04d1a004e71b82219d52e0a4d7f2c1099853676c2"
+    },
+    {
+      "skill_id": "hunt-sqli",
+      "skill_path": "library/hunt-sqli/SKILL.md",
+      "contract_path": "library/hunt-sqli/contract.json",
+      "skill_sha256": "6a3ea3346959b67643803cbbcd635445ba1ba4495b484e387d339899a780fe49",
+      "contract_sha256": "a6f6cc5e7a361deb0a6fe563b9095c1685f7b0aef08830a6384b955fac732b3a"
+    },
+    {
+      "skill_id": "hunt-ssrf",
+      "skill_path": "library/hunt-ssrf/SKILL.md",
+      "contract_path": "library/hunt-ssrf/contract.json",
+      "skill_sha256": "78d1ce11d7d7f09690be3143e685f953b8f9ea471956d8f619ef70eadd8e1816",
+      "contract_sha256": "905efac68d21de7f94f5b976e2f25bd123148868141243a3269fcf7a81b52cee"
+    },
+    {
+      "skill_id": "hunt-ssti",
+      "skill_path": "library/hunt-ssti/SKILL.md",
+      "contract_path": "library/hunt-ssti/contract.json",
+      "skill_sha256": "e404586cef393d267c43e6ef14b1909f8e7c61d46067c5ab3566fe95812abdf3",
+      "contract_sha256": "7fb135ab861674483ba2d9159ba09bd8fd5da0494948a37af6967a0d22558a68"
+    },
+    {
+      "skill_id": "hunt-subdomain",
+      "skill_path": "library/hunt-subdomain/SKILL.md",
+      "contract_path": "library/hunt-subdomain/contract.json",
+      "skill_sha256": "155b42967a471781e454d5d8bad0c3f4fac1d721debb0435c53e0498c6cd2fa6",
+      "contract_sha256": "a4b20cd72786dee3469b03479b4e3941ff4ef9493287fa0b8e38d62d484b0f3d"
+    },
+    {
+      "skill_id": "hunt-tls-network",
+      "skill_path": "library/hunt-tls-network/SKILL.md",
+      "contract_path": "library/hunt-tls-network/contract.json",
+      "skill_sha256": "095a4646576c62afe952f025d229c72984c6b336bcce5644cc3882e7cf01aeda",
+      "contract_sha256": "3aba5f8181e604db7fb0a21d8298d4efeb68fc3c5617d2f76610dd2838355749"
+    },
+    {
+      "skill_id": "hunt-websocket",
+      "skill_path": "library/hunt-websocket/SKILL.md",
+      "contract_path": "library/hunt-websocket/contract.json",
+      "skill_sha256": "4fa6033ab6f778f1c33dec7f85fb2a25c2a1d5dca1526d95033e0ee015551eda",
+      "contract_sha256": "5797572fdd2ab879aeda306e16e288490e135c05576f507a232fb118899b818d"
+    },
+    {
+      "skill_id": "hunt-xss",
+      "skill_path": "library/hunt-xss/SKILL.md",
+      "contract_path": "library/hunt-xss/contract.json",
+      "skill_sha256": "ab36879ff0a5050fa3493c64b108edc0748e92d81c30363497693f54a5fd29b0",
+      "contract_sha256": "f9faa30b29380362a664fda300c7938b28eab1e52a06d6e497373310322f9291"
+    },
+    {
+      "skill_id": "hunt-xxe",
+      "skill_path": "library/hunt-xxe/SKILL.md",
+      "contract_path": "library/hunt-xxe/contract.json",
+      "skill_sha256": "f62af2826959ae0ea0e730287c9f589a6bb8d3d019d483931a73c8c2c6773acf",
+      "contract_sha256": "431e50ca639b0a7612ded14a22b3e45a56ff4c812b531210d2982c663b44b328"
+    }
+  ]
+}

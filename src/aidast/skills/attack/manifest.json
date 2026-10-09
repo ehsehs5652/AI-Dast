@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "name": "aidast-offline-evidence-review",
+  "mode": "plan",
+  "network_enabled": false,
+  "external_processes_enabled": false,
+  "resources": ["controller.md"],
+  "catalog": {
+    "resource": "catalog/index.json",
+    "catalog_version": "1.0",
+    "entry_count": 59,
+    "enabled": false,
+    "execution_mode": "metadata_only"
+  },
+  "provenance": {
+    "implementation": "AI-Dast local evidence-review consumer",
+    "reviewed_source_bundle": "attack",
+    "reviewed_upstream": "https://github.com/elementalsouls/Claude-BugHunter",
+    "reviewed_upstream_commit": "e49b9da698bfe830302f0ae49ea02e41cc5cf876",
+    "upstream_content_included": false,
+    "attribution_directory": "docs/third-party/claude-bughunter",
+    "source_inventory": "docs/third-party/claude-bughunter/inventory.json",
+    "source_notices_included": true,
+    "note": "This controller is original local evidence-review guidance. The reviewed upstream attack controller and playbooks are not copied or executed. Disabled catalog metadata and source attribution notices are included."
+  }
+}

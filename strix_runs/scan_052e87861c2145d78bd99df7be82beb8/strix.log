@@ -1,0 +1,7 @@
+2026-10-05 20:22:04.367 INFO    scan_052e87861c2145d78bd99df7be82beb8 - strix.core.runner: Starting Strix scan scan_052e87861c2145d78bd99df7be82beb8 (image=aidast-strix-mitm:local, max_turns=500, interactive=False, run_dir=/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/strix_runs/scan_052e87861c2145d78bd99df7be82beb8)
+2026-10-05 20:22:18.420 INFO    scan_052e87861c2145d78bd99df7be82beb8 - strix.core.runner: LLM model resolved: chatgpt/gpt-5.6-terra
+2026-10-05 20:22:18.422 INFO    scan_052e87861c2145d78bd99df7be82beb8 - strix.core.runner: Bringing up sandbox session for scan scan_052e87861c2145d78bd99df7be82beb8
+2026-10-05 20:22:18.422 DEBUG   scan_052e87861c2145d78bd99df7be82beb8 - strix.runtime.backends: Selected sandbox backend: docker
+2026-10-05 20:22:18.426 INFO    scan_052e87861c2145d78bd99df7be82beb8 - strix.runtime.session_manager: Creating sandbox session for scan scan_052e87861c2145d78bd99df7be82beb8 (backend=docker, image=aidast-strix-mitm:local)
+2026-10-05 20:22:19.294 DEBUG   scan_052e87861c2145d78bd99df7be82beb8 - strix.runtime.docker_client: Creating sandbox container: image=aidast-strix-mitm:local caps=['NET_ADMIN', 'NET_RAW'] exposed_ports=[]
+2026-10-05 20:22:19.404 INFO    scan_052e87861c2145d78bd99df7be82beb8 - strix.runtime.docker_client: Sandbox container created: id=5c88c9884aa8 image=aidast-strix-mitm:local

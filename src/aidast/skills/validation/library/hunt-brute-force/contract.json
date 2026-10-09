@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "attack_skill_name": "hunt-brute-force",
+  "signal_types": [
+    "timing"
+  ],
+  "runtime_kinds": [
+    "http"
+  ],
+  "target_expected_signal": {
+    "kind": "hunt-brute-force_verified",
+    "criterion": "repeated guesses bypass the declared throttling or lockout boundary",
+    "requires_fresh_target_and_control_evidence": true
+  },
+  "control_positive": {
+    "payload_template": {
+      "mode": "channel_health_baseline"
+    },
+    "expected_signal": {
+      "kind": "timing_channel_operational",
+      "criterion": "the same transport, identity, parser, browser, callback, or timing channel produces its declared harmless baseline"
+    },
+    "signal_type": "timing"
+  },
+  "control_negative": {
+    "payload_template": {
+      "mode": "inert_same_shape_control"
+    },
+    "expected_signal": {
+      "kind": "no_timing_target_effect",
+      "criterion": "an inert same-shape input does not produce the target security effect"
+    }
+  },
+  "impact_rules": {
+    "boundary": "credit a boundary only when controlled timing or concurrency changes a protected outcome",
+    "sensitivity": "cite the resulting data, state, cache, or protocol effect rather than latency alone",
+    "actor_requirements": "score request count, concurrency, authentication, and timing precision required"
+  },
+  "allowed_development_actions": [
+    {
+      "action_type": "recalibrate_timing_baseline",
+      "blocker_axis": "timing_concurrency"
+    },
+    {
+      "action_type": "reduce_validation_concurrency",
+      "blocker_axis": "timing_concurrency"
+    }
+  ],
+  "impact_expansion_paths": [
+    {
+      "path_id": "bounded-impact-confirmation",
+      "gap_axis": "boundary",
+      "hypothesis_kind": "bounded_state_or_browser_impact",
+      "required_preconditions": [
+        "An isolated test tenant or browser context with reversible state",
+        "Explicit authorization for the profile-specific impact check"
+      ],
+      "expected_signal": {
+        "kind": "hunt_brute_force_bounded_impact_observed"
+      },
+      "recommended_actions": [
+        "Preserve the hypothesis for manual review; do not mutate state from Validation"
+      ],
+      "execution_owner": "manual",
+      "feasibility": "low",
+      "potential_impact": {
+        "boundary": 2
+      }
+    }
+  ],
+  "baseline_samples": 3
+}

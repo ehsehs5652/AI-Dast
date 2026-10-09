@@ -1,0 +1,68 @@
+name: aidast-functional-lab
+
+services:
+  juice-shop:
+    image: bkimminich/juice-shop@sha256:73c53fbf442e8337b3ea3d98c7e8550308854701ebdfce4cc39768f36b75430e
+    ports:
+      - "127.0.0.1:3001:3000"
+    restart: "no"
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+
+  vuln-bank:
+    build:
+      context: ../result/lab/vuln-bank
+    image: aidast-lab/vuln-bank:5e5ea5425fcf
+    ports:
+      - "127.0.0.1:5001:5000"
+    environment:
+      DB_NAME: vulnerable_bank
+      DB_USER: postgres
+      DB_PASSWORD: local-lab-only
+      DB_HOST: vuln-bank-db
+      DB_PORT: "5432"
+      DEEPSEEK_API_KEY: ""
+    depends_on:
+      vuln-bank-db:
+        condition: service_healthy
+    networks:
+      - bank
+      - bank-web
+    volumes:
+      - bank-uploads:/app/static/uploads
+    restart: "no"
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+
+  vuln-bank-db:
+    image: postgres:13@sha256:4689940c683801b4ab839ab3b0a0a3555a5fe425371422310944e89eca7d8068
+    environment:
+      POSTGRES_DB: vulnerable_bank
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: local-lab-only
+    volumes:
+      - bank-data:/var/lib/postgresql/data
+    networks:
+      - bank
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d vulnerable_bank"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 10s
+    restart: "no"
+    security_opt:
+      - no-new-privileges:true
+
+networks:
+  bank-web:
+  bank:
+    internal: true
+
+volumes:
+  bank-data:
+  bank-uploads:

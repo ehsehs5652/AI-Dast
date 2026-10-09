@@ -1,0 +1,11 @@
+.git
+.venv
+**/__pycache__
+**/*.py[cod]
+result
+reference
+WebUI/node_modules
+WebUI/dist
+node_modules
+dist
+build

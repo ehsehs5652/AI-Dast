@@ -1,0 +1,61 @@
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+.runtime-tools/
+*.egg-info/
+
+# uv
+.python-version
+
+# 로컬 로그인 세션 / 브라우저 프로필 (실제 쿠키·JWT 토큰 포함 - 절대 커밋 금지)
+.aidast_sessions/
+.tmp-cdp-profile*/
+
+# 정찰 실행 산출물 (재실행마다 새로 생기는 로컬 데이터)
+result/
+/Scope/
+/Runs/
+/AttackRuns/
+/ValidationRuns/
+/ReportRuns/
+Recon.db
+Report.db
+recon_juiceshop.db
+recon_juiceshop.db-wal
+recon_juiceshop.db-shm
+Surface.json
+mitm_capture_*.jsonl
+
+# mitmproxy 스코프 임시 파일
+scope_rules_*.json
+
+# OS / 에디터
+.DS_Store
+.vscode/
+.playwright-mcp/
+
+# Web dashboard
+WebUI/node_modules/
+WebUI/dist/
+WebUI/*.tsbuildinfo
+WebUI/vite.config.js
+WebUI/vite.config.d.ts
+WebUI/verification/*.png
+
+# Local pre-migration database backups
+.aidast_db_backups/
+
+# 프로젝트 이해 및 정리 문서
+
+docs/PROJECT_OVERVIEW.md
+docs/PROJECT_STACKS.md
+docs/design/AGENT_ORCHESTRATION_REFACTOR.md
+
+# superpowers
+
+docs/superpowers
+
+# Teammate source checkout used only for the verified merge
+/AI-DAST-ALL/

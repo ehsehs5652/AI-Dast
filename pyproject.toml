@@ -1,0 +1,87 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ai-dast"
+version = "0.1.0"
+description = "Multi-agent AI DAST orchestration core"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+  "cryptography>=48.0.1,<49",
+  "playwright>=1.55,<2",
+  "pydantic>=2.12,<3",
+  "pyyaml>=6.0.2,<7",
+  "websockets>=15,<17",
+  "grpcio>=1.84,<2",
+  "protobuf>=7.36,<8",
+  "fastapi>=0.115,<1",
+  "uvicorn[standard]>=0.34,<1",
+  "psutil>=7.2,<8; sys_platform == 'win32'",
+]
+
+[project.optional-dependencies]
+# The Recon agent engine is vendored in src/aidast/recon/strix_engine. Its
+# Python dependencies are optional so DB/report-only installations stay lean.
+recon-engine = [
+  "openai-agents[litellm]>=0.19.0,<0.20",
+  "openai>=2.45.0,<3",
+  "litellm>=1.101.0,<1.102.0",
+  "pydantic-settings>=2.13.0",
+  "rich>=13",
+  "docker>=7.1.0",
+  "requests>=2.32.0",
+  "cvss>=3.2",
+  "markdown-it-py>=3.0.0",
+  "reportlab>=4.0",
+  "pypdf>=5.0",
+]
+
+[dependency-groups]
+dev = [
+  "httpx>=0.27,<1",
+  "pytest>=8,<10",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+cache_dir = "result/.pytest_cache"
+
+[project.scripts]
+aidast = "aidast.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"aidast.auth" = ["*.ps1"]
+"aidast.recon.strix_engine" = ["**/*"]
+"aidast.attack" = ["templates/*/*.yaml"]
+"aidast.skills.scope" = ["SKILL.md"]
+"aidast.skills.ffuf_root_selection" = ["SKILL.md"]
+"aidast.skills.target_policy" = ["SKILL.md"]
+"aidast.skills.attack" = [
+  "manifest.json",
+  "controller.md",
+  "catalog/*.json",
+  "controller/SKILL.md",
+  "controller/scripts/*.sql",
+  "library/*/SKILL.md",
+]
+"aidast.skills.attack.orchestrator" = ["SKILL.md"]
+"aidast.skills.attack.live" = ["SKILL.md", "references/*.md"]
+"aidast.skills.chaining.orchestrator" = ["SKILL.md"]
+"aidast.skills.chaining.live" = ["SKILL.md", "references/*.md"]
+"aidast.skills.validation" = [
+  "SKILL.md",
+  "BASE_SKILL.md",
+  "ELIGIBILITY_SKILL.md",
+  "catalog/*.json",
+  "library/*/SKILL.md",
+  "library/*/contract.json",
+]
+"aidast.skills.validation.legacy" = ["SKILL.md"]
+"aidast.skills.reporting" = ["SKILL.md", "references/*.md"]
+"aidast.skills.reporting.legacy" = ["SKILL.md"]

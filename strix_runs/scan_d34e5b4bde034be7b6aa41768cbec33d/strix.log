@@ -1,0 +1,571 @@
+2026-10-06 17:45:39.450 INFO    scan_d34e5b4bde034be7b6aa41768cbec33d - strix.core.runner: Starting Strix scan scan_d34e5b4bde034be7b6aa41768cbec33d (image=aidast-strix-mitm:local, max_turns=500, interactive=False, run_dir=/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/strix_runs/scan_d34e5b4bde034be7b6aa41768cbec33d)
+2026-10-06 17:45:55.305 INFO    scan_d34e5b4bde034be7b6aa41768cbec33d - strix.core.runner: LLM model resolved: chatgpt/gpt-5.6-terra
+2026-10-06 17:45:55.308 INFO    scan_d34e5b4bde034be7b6aa41768cbec33d - strix.core.runner: Bringing up sandbox session for scan scan_d34e5b4bde034be7b6aa41768cbec33d
+2026-10-06 17:45:55.308 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.runtime.backends: Selected sandbox backend: docker
+2026-10-06 17:45:55.314 INFO    scan_d34e5b4bde034be7b6aa41768cbec33d - strix.runtime.session_manager: Creating sandbox session for scan scan_d34e5b4bde034be7b6aa41768cbec33d (backend=docker, image=aidast-strix-mitm:local)
+2026-10-06 17:45:55.999 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.runtime.docker_client: Creating sandbox container: image=aidast-strix-mitm:local caps=['NET_ADMIN', 'NET_RAW'] exposed_ports=[]
+2026-10-06 17:45:56.114 INFO    scan_d34e5b4bde034be7b6aa41768cbec33d - strix.runtime.docker_client: Sandbox container created: id=6d170976a24d image=aidast-strix-mitm:local
+2026-10-06 17:45:58.474 INFO    scan_d34e5b4bde034be7b6aa41768cbec33d - strix.runtime.session_manager: Sandbox session for scan scan_d34e5b4bde034be7b6aa41768cbec33d ready and cached
+2026-10-06 17:45:58.475 INFO    scan_d34e5b4bde034be7b6aa41768cbec33d - strix.core.runner: Sandbox ready for scan scan_d34e5b4bde034be7b6aa41768cbec33d
+2026-10-06 17:45:58.477 INFO    scan_d34e5b4bde034be7b6aa41768cbec33d - strix.agents.factory: Built root agent 'Root Agent' (skills=4, tools=21, scan_mode=deep, whitebox=False)
+2026-10-06 17:45:58.478 INFO    scan_d34e5b4bde034be7b6aa41768cbec33d - strix.core.agents: agent.register 74b883ab (Root Agent) parent=-
+2026-10-06 17:45:58.745 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating trace
+2026-10-06 17:45:58.747 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Setting current trace: no-op
+2026-10-06 17:45:58.747 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:45:58.794 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:45:58.795 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 1, current_agent=Root Agent
+2026-10-06 17:45:58.796 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:45:58.850 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:45:58.852 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:45:58.853 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:46:12.498 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_038298532016507d016ac4b54d9dbc87d0bb7e0cf8f1180b1d stream=1 duration_ms=15501 ttft_ms=9778 req_bytes=48052 res_bytes=54313 finish=completed in=10512 out=102 cached=0 cost=- agent=74b883ab attempt=0
+2026-10-06 17:46:12.499 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:46:12.499 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=message class=ResponseOutputMessage
+2026-10-06 17:46:12.499 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:46:12.500 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:46:12.500 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Invoking tool view_agent_graph
+2026-10-06 17:46:12.501 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tool view_agent_graph completed.
+2026-10-06 17:46:12.502 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 1 complete, next_step type=NextStepRunAgain
+2026-10-06 17:46:12.543 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 2, current_agent=Root Agent
+2026-10-06 17:46:12.544 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:46:12.545 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:46:12.546 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:46:12.547 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:46:19.421 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_038298532016507d016ac4b55526c487d0a7ca7be320a1c3ec stream=1 duration_ms=6874 ttft_ms=1328 req_bytes=50698 res_bytes=53443 finish=completed in=10706 out=196 cached=0 cost=- agent=74b883ab attempt=0
+2026-10-06 17:46:19.422 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:46:19.422 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:46:19.423 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Invoking tool create_agent
+2026-10-06 17:46:19.674 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tool create_agent completed.
+2026-10-06 17:46:19.675 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 2 complete, next_step type=NextStepRunAgain
+2026-10-06 17:46:19.755 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 3, current_agent=Root Agent
+2026-10-06 17:46:19.755 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:46:19.756 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:46:19.757 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:46:19.758 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:46:28.091 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_038298532016507d016ac4b55b436087d087a3e93271b67d85 stream=1 duration_ms=8332 ttft_ms=1129 req_bytes=53084 res_bytes=55450 finish=completed in=11254 out=216 cached=0 cost=- agent=74b883ab attempt=0
+2026-10-06 17:46:28.093 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:46:28.093 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:46:28.095 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:46:28.096 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Invoking tool create_agent
+2026-10-06 17:46:28.252 INFO    scan_d34e5b4bde034be7b6aa41768cbec33d - strix.agents.factory: Built child agent 'Web Surface Mapper' (skills=3, tools=21, scan_mode=deep, whitebox=False)
+2026-10-06 17:46:28.252 INFO    scan_d34e5b4bde034be7b6aa41768cbec33d - strix.core.agents: agent.register 4ad262a9 (Web Surface Mapper) parent=74b883ab
+2026-10-06 17:46:28.278 INFO    scan_d34e5b4bde034be7b6aa41768cbec33d - strix.tools.agents_graph.tools: create_agent: spawned 4ad262a9 (Web Surface Mapper) parent=74b883ab skills=3 task_len=779
+2026-10-06 17:46:28.278 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tool create_agent completed.
+2026-10-06 17:46:28.280 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 3 complete, next_step type=NextStepRunAgain
+2026-10-06 17:46:28.336 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 4, current_agent=Root Agent
+2026-10-06 17:46:28.337 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:46:28.338 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:46:28.339 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:46:28.340 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:46:28.433 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:46:28.485 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:46:28.486 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 1, current_agent=Web Surface Mapper
+2026-10-06 17:46:28.487 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:46:28.488 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:46:28.490 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:46:28.491 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:46:35.311 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_038298532016507d016ac4b56349e487d0bd2795aaacc4fe09 stream=1 duration_ms=8801 ttft_ms=987 req_bytes=55959 res_bytes=56538 finish=completed in=11538 out=237 cached=8960 cost=- agent=74b883ab attempt=0
+2026-10-06 17:46:35.313 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:46:35.314 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=message class=ResponseOutputMessage
+2026-10-06 17:46:35.314 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:46:35.315 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:46:35.573 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 4 complete, next_step type=NextStepRunAgain
+2026-10-06 17:46:35.634 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 5, current_agent=Root Agent
+2026-10-06 17:46:35.635 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:46:35.636 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:46:35.638 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:46:35.639 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:46:35.841 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_08faa1e5bcabc00f016ac4b5636b1c87d0b394fcbbd47f9090 stream=1 duration_ms=9180 ttft_ms=1338 req_bytes=51809 res_bytes=57300 finish=completed in=11286 out=213 cached=9984 cost=- agent=4ad262a9 attempt=0
+2026-10-06 17:46:35.842 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:46:35.843 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=message class=ResponseOutputMessage
+2026-10-06 17:46:35.843 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:46:35.844 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:46:36.043 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 1 complete, next_step type=NextStepRunAgain
+2026-10-06 17:46:36.109 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 2, current_agent=Web Surface Mapper
+2026-10-06 17:46:36.110 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:46:36.111 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:46:36.113 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:46:36.114 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:46:41.157 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_038298532016507d016ac4b56c07dc87d0b9d5fb523e8c0920 stream=1 duration_ms=5518 ttft_ms=670 req_bytes=59291 res_bytes=55957 finish=completed in=11880 out=76 cached=8960 cost=- agent=74b883ab attempt=0
+2026-10-06 17:46:41.158 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:46:41.159 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:46:41.160 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:46:41.162 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Invoking tool aidast_list_captured_requests
+2026-10-06 17:46:41.164 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tool aidast_list_captured_requests completed.
+2026-10-06 17:46:41.165 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 5 complete, next_step type=NextStepRunAgain
+2026-10-06 17:46:41.273 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 6, current_agent=Root Agent
+2026-10-06 17:46:41.274 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:46:41.275 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:46:41.276 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:46:41.278 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:46:43.788 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_08faa1e5bcabc00f016ac4b56c679c87d085d2f26be92ee06b stream=1 duration_ms=7675 ttft_ms=811 req_bytes=54864 res_bytes=57437 finish=completed in=11600 out=222 cached=0 cost=- agent=4ad262a9 attempt=0
+2026-10-06 17:46:43.790 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:46:43.791 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:46:43.791 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:46:45.474 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 2 complete, next_step type=NextStepRunAgain
+2026-10-06 17:46:45.537 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 3, current_agent=Web Surface Mapper
+2026-10-06 17:46:45.538 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:46:45.539 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:46:45.540 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:46:45.542 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:46:47.918 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_038298532016507d016ac4b57159a887d09c4b2e59dba81b10 stream=1 duration_ms=6642 ttft_ms=1057 req_bytes=61373 res_bytes=56518 finish=completed in=12007 out=72 cached=0 cost=- agent=74b883ab attempt=0
+2026-10-06 17:46:47.919 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:46:47.920 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:46:47.921 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:46:47.921 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Invoking tool wait_for_agents
+2026-10-06 17:46:47.922 INFO    scan_d34e5b4bde034be7b6aa41768cbec33d - strix.core.agents: agent.status 74b883ab=waiting
+2026-10-06 17:46:49.955 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_08faa1e5bcabc00f016ac4b575476487d0b238d22241aae73a stream=1 duration_ms=4414 ttft_ms=708 req_bytes=58856 res_bytes=57602 finish=completed in=12338 out=94 cached=9984 cost=- agent=4ad262a9 attempt=0
+2026-10-06 17:46:49.956 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:46:49.957 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:46:49.958 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:46:49.959 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Invoking tool aidast_list_captured_requests
+2026-10-06 17:46:49.961 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tool aidast_list_captured_requests completed.
+2026-10-06 17:46:49.961 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 3 complete, next_step type=NextStepRunAgain
+2026-10-06 17:46:50.011 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 4, current_agent=Web Surface Mapper
+2026-10-06 17:46:50.011 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:46:50.012 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:46:50.013 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:46:50.014 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:46:59.750 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_08faa1e5bcabc00f016ac4b57ac0ac87d0a13539a29e1e2baa stream=1 duration_ms=9736 ttft_ms=3685 req_bytes=61890 res_bytes=58559 finish=completed in=12813 out=124 cached=0 cost=- agent=4ad262a9 attempt=0
+2026-10-06 17:46:59.752 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:46:59.753 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=message class=ResponseOutputMessage
+2026-10-06 17:46:59.754 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:46:59.754 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:47:00.031 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 4 complete, next_step type=NextStepRunAgain
+2026-10-06 17:47:00.136 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 5, current_agent=Web Surface Mapper
+2026-10-06 17:47:00.138 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:47:00.140 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:47:00.142 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:47:00.144 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:47:11.284 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_08faa1e5bcabc00f016ac4b58301fc87d094112e69294e1f02 stream=1 duration_ms=12968 ttft_ms=1050 req_bytes=73999 res_bytes=59580 finish=completed in=15129 out=367 cached=0 cost=- agent=4ad262a9 attempt=0
+2026-10-06 17:47:11.286 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:47:11.286 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:47:11.287 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:47:12.769 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 5 complete, next_step type=NextStepRunAgain
+2026-10-06 17:47:12.839 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 6, current_agent=Web Surface Mapper
+2026-10-06 17:47:12.840 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:47:12.841 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:47:12.843 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:47:12.844 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:47:23.430 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_08faa1e5bcabc00f016ac4b590738c87d0a904f450fb0b0134 stream=1 duration_ms=10585 ttft_ms=1261 req_bytes=77042 res_bytes=59871 finish=completed in=15561 out=319 cached=9984 cost=- agent=4ad262a9 attempt=0
+2026-10-06 17:47:23.431 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:47:23.432 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:47:23.433 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:47:41.679 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 6 complete, next_step type=NextStepRunAgain
+2026-10-06 17:47:41.776 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 7, current_agent=Web Surface Mapper
+2026-10-06 17:47:41.777 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:47:41.779 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:47:41.781 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:47:41.783 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:47:57.391 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_08faa1e5bcabc00f016ac4b5ad6f4487d0adf46692c72f40f4 stream=1 duration_ms=15610 ttft_ms=855 req_bytes=112867 res_bytes=60979 finish=completed in=28040 out=451 cached=9984 cost=- agent=4ad262a9 attempt=0
+2026-10-06 17:47:57.396 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:47:57.396 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:47:57.397 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:47:57.709 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 7 complete, next_step type=NextStepRunAgain
+2026-10-06 17:47:57.773 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 8, current_agent=Web Surface Mapper
+2026-10-06 17:47:57.773 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:47:57.775 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:47:57.776 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:47:57.777 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:48:07.512 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_08faa1e5bcabc00f016ac4b5bc464887d08df5b482e9176827 stream=1 duration_ms=10234 ttft_ms=1013 req_bytes=124141 res_bytes=61035 finish=completed in=31863 out=326 cached=0 cost=- agent=4ad262a9 attempt=0
+2026-10-06 17:48:07.513 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:48:07.514 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:48:07.515 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:48:07.756 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 8 complete, next_step type=NextStepRunAgain
+2026-10-06 17:48:07.829 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 9, current_agent=Web Surface Mapper
+2026-10-06 17:48:07.830 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:48:07.832 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:48:07.835 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:48:07.836 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:48:12.614 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_08faa1e5bcabc00f016ac4b5c6933887d086ab039eac293cad stream=1 duration_ms=4779 ttft_ms=912 req_bytes=130820 res_bytes=60922 finish=completed in=33780 out=106 cached=9984 cost=- agent=4ad262a9 attempt=0
+2026-10-06 17:48:12.616 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:48:12.617 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:48:12.619 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:48:11.367 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 9 complete, next_step type=NextStepRunAgain
+2026-10-06 17:48:11.453 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 10, current_agent=Web Surface Mapper
+2026-10-06 17:48:11.454 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:48:11.455 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:48:11.457 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:48:11.459 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:48:16.645 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_08faa1e5bcabc00f016ac4b5cc1c1087d0be9cb2573c3955ad stream=1 duration_ms=5187 ttft_ms=1110 req_bytes=143583 res_bytes=61383 finish=completed in=36282 out=125 cached=14080 cost=- agent=4ad262a9 attempt=0
+2026-10-06 17:48:16.645 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:48:16.646 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:48:16.646 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:48:18.773 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 10 complete, next_step type=NextStepRunAgain
+2026-10-06 17:48:18.849 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 11, current_agent=Web Surface Mapper
+2026-10-06 17:48:18.849 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:48:18.852 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:48:18.854 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:48:18.856 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:48:25.574 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_08faa1e5bcabc00f016ac4b5d3537087d09adb4fa1426be250 stream=1 duration_ms=6720 ttft_ms=809 req_bytes=150207 res_bytes=62755 finish=completed in=38108 out=178 cached=12032 cost=- agent=4ad262a9 attempt=0
+2026-10-06 17:48:25.575 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:48:25.576 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=message class=ResponseOutputMessage
+2026-10-06 17:48:25.577 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:48:25.577 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:48:27.093 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 11 complete, next_step type=NextStepRunAgain
+2026-10-06 17:48:25.796 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 12, current_agent=Web Surface Mapper
+2026-10-06 17:48:25.797 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:48:25.798 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:48:25.800 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:48:25.801 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:48:40.625 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_08faa1e5bcabc00f016ac4b5da4d4c87d0987c08d09fc2a7d1 stream=1 duration_ms=14825 ttft_ms=899 req_bytes=154127 res_bytes=63909 finish=completed in=38574 out=411 cached=9984 cost=- agent=4ad262a9 attempt=0
+2026-10-06 17:48:40.626 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:48:40.626 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:48:40.627 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:48:40.834 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 12 complete, next_step type=NextStepRunAgain
+2026-10-06 17:48:40.900 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 13, current_agent=Web Surface Mapper
+2026-10-06 17:48:40.900 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:48:40.902 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:48:40.903 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:48:40.905 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:48:47.962 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_08faa1e5bcabc00f016ac4b5e898ac87d096f9d6ce7b4ee065 stream=1 duration_ms=7058 ttft_ms=2159 req_bytes=165027 res_bytes=63081 finish=completed in=41369 out=99 cached=0 cost=- agent=4ad262a9 attempt=0
+2026-10-06 17:48:47.963 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:48:47.963 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:48:47.964 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:48:47.965 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Invoking tool aidast_list_captured_requests
+2026-10-06 17:48:48.168 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tool aidast_list_captured_requests completed.
+2026-10-06 17:48:48.168 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 13 complete, next_step type=NextStepRunAgain
+2026-10-06 17:48:48.210 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 14, current_agent=Web Surface Mapper
+2026-10-06 17:48:48.210 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:48:48.212 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:48:48.213 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:48:48.214 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:48:57.249 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_08faa1e5bcabc00f016ac4b5ef031887d085391cd3d1f21706 stream=1 duration_ms=11020 ttft_ms=821 req_bytes=196466 res_bytes=64995 finish=completed in=52801 out=377 cached=11008 cost=- agent=4ad262a9 attempt=0
+2026-10-06 17:48:57.250 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:48:57.251 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:48:57.251 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:49:03.247 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 14 complete, next_step type=NextStepRunAgain
+2026-10-06 17:49:03.310 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 15, current_agent=Web Surface Mapper
+2026-10-06 17:49:03.311 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:49:03.312 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:49:03.314 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:49:03.315 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:49:09.701 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_08faa1e5bcabc00f016ac4b5ff858087d0a88d689fead15c00 stream=1 duration_ms=6386 ttft_ms=1225 req_bytes=219747 res_bytes=64444 finish=completed in=58616 out=187 cached=9984 cost=- agent=4ad262a9 attempt=0
+2026-10-06 17:49:09.703 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:49:09.704 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:49:09.706 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:49:10.602 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 15 complete, next_step type=NextStepRunAgain
+2026-10-06 17:49:10.674 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 16, current_agent=Web Surface Mapper
+2026-10-06 17:49:10.675 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:49:10.677 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:49:10.679 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:49:10.680 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:49:18.258 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_08faa1e5bcabc00f016ac4b606726487d082f25a9eb15f0549 stream=1 duration_ms=7578 ttft_ms=1139 req_bytes=230949 res_bytes=64949 finish=completed in=60902 out=148 cached=9984 cost=- agent=4ad262a9 attempt=0
+2026-10-06 17:49:18.260 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:49:18.261 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:49:18.262 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:49:18.263 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Invoking tool aidast_view_captured_request
+2026-10-06 17:49:18.375 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tool aidast_view_captured_request completed.
+2026-10-06 17:49:18.376 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 16 complete, next_step type=NextStepRunAgain
+2026-10-06 17:49:18.419 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 17, current_agent=Web Surface Mapper
+2026-10-06 17:49:18.419 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:49:18.421 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:49:18.423 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:49:18.424 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:49:30.201 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_08faa1e5bcabc00f016ac4b60d897487d0b069fa6003bf2cde stream=1 duration_ms=13256 ttft_ms=1059 req_bytes=250282 res_bytes=65677 finish=completed in=65172 out=303 cached=37632 cost=- agent=4ad262a9 attempt=0
+2026-10-06 17:49:30.202 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:49:30.202 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:49:30.203 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:49:30.479 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 17 complete, next_step type=NextStepRunAgain
+2026-10-06 17:49:30.546 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 18, current_agent=Web Surface Mapper
+2026-10-06 17:49:30.547 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:49:30.549 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:49:30.551 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:49:30.552 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:49:38.286 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tool wait_for_agents completed.
+2026-10-06 17:49:38.288 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 6 complete, next_step type=NextStepRunAgain
+2026-10-06 17:49:38.337 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 7, current_agent=Root Agent
+2026-10-06 17:49:38.338 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:49:38.339 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:49:38.340 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:49:38.341 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:49:41.833 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_038298532016507d016ac4b621f9b487d0952d6eda6c3d3832 stream=1 duration_ms=3492 ttft_ms=842 req_bytes=63668 res_bytes=57299 finish=completed in=12146 out=53 cached=8960 cost=- agent=74b883ab attempt=0
+2026-10-06 17:49:41.835 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:49:41.836 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=message class=ResponseOutputMessage
+2026-10-06 17:49:41.837 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:49:41.840 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:49:41.842 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Invoking tool view_agent_graph
+2026-10-06 17:49:41.843 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tool view_agent_graph completed.
+2026-10-06 17:49:41.844 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 7 complete, next_step type=NextStepRunAgain
+2026-10-06 17:49:41.929 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 8, current_agent=Root Agent
+2026-10-06 17:49:41.930 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:49:41.932 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:49:41.934 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:49:41.935 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:49:45.154 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_038298532016507d016ac4b625735c87d0a207bded005674e5 stream=1 duration_ms=3220 ttft_ms=1059 req_bytes=66036 res_bytes=55955 finish=completed in=12306 out=46 cached=9984 cost=- agent=74b883ab attempt=0
+2026-10-06 17:49:45.155 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:49:45.156 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:49:45.156 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Invoking tool aidast_list_captured_requests
+2026-10-06 17:49:45.157 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tool aidast_list_captured_requests completed.
+2026-10-06 17:49:45.157 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 8 complete, next_step type=NextStepRunAgain
+2026-10-06 17:49:45.212 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 9, current_agent=Root Agent
+2026-10-06 17:49:45.212 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:49:45.214 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:49:45.215 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:49:45.216 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:49:49.769 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_038298532016507d016ac4b6287b9487d088335a4180d178b0 stream=1 duration_ms=4554 ttft_ms=1648 req_bytes=66471 res_bytes=58019 finish=completed in=12380 out=77 cached=11008 cost=- agent=74b883ab attempt=0
+2026-10-06 17:49:49.771 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:49:49.772 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:49:49.773 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:49:49.774 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Invoking tool aidast_list_captured_requests
+2026-10-06 17:49:50.100 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tool aidast_list_captured_requests completed.
+2026-10-06 17:49:50.103 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 9 complete, next_step type=NextStepRunAgain
+2026-10-06 17:49:50.171 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 10, current_agent=Root Agent
+2026-10-06 17:49:50.172 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:49:50.173 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:49:50.174 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:49:50.175 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:49:50.656 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_08faa1e5bcabc00f016ac4b61a98e487d0b6eb176a529f0d92 stream=1 duration_ms=20105 ttft_ms=1043 req_bytes=262604 res_bytes=68031 finish=completed in=68865 out=680 cached=0 cost=- agent=4ad262a9 attempt=0
+2026-10-06 17:49:50.657 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:49:50.658 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=message class=ResponseOutputMessage
+2026-10-06 17:49:50.658 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:49:50.659 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:49:50.973 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 18 complete, next_step type=NextStepRunAgain
+2026-10-06 17:49:51.057 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 19, current_agent=Web Surface Mapper
+2026-10-06 17:49:51.057 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:49:51.059 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:49:51.062 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:49:51.064 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:49:55.549 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_038298532016507d016ac4b62db39087d0a29834107a329f24 stream=1 duration_ms=6763 ttft_ms=2123 req_bytes=84122 res_bytes=59171 finish=completed in=18594 out=156 cached=8960 cost=- agent=74b883ab attempt=0
+2026-10-06 17:49:55.550 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:49:55.550 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:49:55.552 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:49:55.552 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Invoking tool send_message_to_agent
+2026-10-06 17:49:55.563 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tool send_message_to_agent completed.
+2026-10-06 17:49:55.564 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 10 complete, next_step type=NextStepRunAgain
+2026-10-06 17:49:55.623 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 11, current_agent=Root Agent
+2026-10-06 17:49:55.624 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:49:55.625 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:49:55.626 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:49:55.627 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:50:00.331 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_038298532016507d016ac4b633bebc87d0819f2bdf066ce0df stream=1 duration_ms=4704 ttft_ms=913 req_bytes=86844 res_bytes=59132 finish=completed in=18801 out=102 cached=0 cost=- agent=74b883ab attempt=0
+2026-10-06 17:50:00.332 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:50:00.333 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:50:00.333 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:50:00.334 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Invoking tool aidast_view_captured_request
+2026-10-06 17:50:00.358 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tool aidast_view_captured_request completed.
+2026-10-06 17:50:00.360 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 11 complete, next_step type=NextStepRunAgain
+2026-10-06 17:50:00.405 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 12, current_agent=Root Agent
+2026-10-06 17:50:00.406 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:50:00.407 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:50:00.409 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:50:00.410 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:50:01.476 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_08faa1e5bcabc00f016ac4b62e269c87d09be90e6cecc1e7a3 stream=1 duration_ms=11805 ttft_ms=1362 req_bytes=272467 res_bytes=66803 finish=completed in=71680 out=316 cached=9984 cost=- agent=4ad262a9 attempt=0
+2026-10-06 17:50:01.478 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:50:01.478 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:50:01.479 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:50:01.910 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 19 complete, next_step type=NextStepRunAgain
+2026-10-06 17:50:02.007 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 20, current_agent=Web Surface Mapper
+2026-10-06 17:50:02.008 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:50:02.010 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:50:02.012 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:50:02.014 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:50:06.446 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_038298532016507d016ac4b63841e487d0b417c13b4d22d24e stream=1 duration_ms=6036 ttft_ms=753 req_bytes=102759 res_bytes=59832 finish=completed in=27204 out=109 cached=8960 cost=- agent=74b883ab attempt=0
+2026-10-06 17:50:06.448 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:50:06.449 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:50:06.450 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:50:06.451 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Invoking tool wait_for_agents
+2026-10-06 17:50:06.452 INFO    scan_d34e5b4bde034be7b6aa41768cbec33d - strix.core.agents: agent.status 74b883ab=waiting
+2026-10-06 17:50:07.945 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_08faa1e5bcabc00f016ac4b63a189487d0adcf027ed96fd5bb stream=1 duration_ms=5933 ttft_ms=1085 req_bytes=278249 res_bytes=67121 finish=completed in=72793 out=224 cached=31488 cost=- agent=4ad262a9 attempt=0
+2026-10-06 17:50:07.946 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:50:07.947 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:50:07.948 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:50:09.259 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 20 complete, next_step type=NextStepRunAgain
+2026-10-06 17:50:09.368 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 21, current_agent=Web Surface Mapper
+2026-10-06 17:50:09.369 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:50:09.372 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:50:09.376 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:50:09.379 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:50:18.066 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_08faa1e5bcabc00f016ac4b640ef8c87d08e2d8f9959bf9508 stream=1 duration_ms=8692 ttft_ms=1035 req_bytes=291616 res_bytes=67285 finish=completed in=77279 out=93 cached=15104 cost=- agent=4ad262a9 attempt=0
+2026-10-06 17:50:18.067 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:50:18.067 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:50:18.069 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:50:18.069 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Invoking tool aidast_view_captured_request
+2026-10-06 17:50:18.167 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tool aidast_view_captured_request completed.
+2026-10-06 17:50:18.168 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 21 complete, next_step type=NextStepRunAgain
+2026-10-06 17:50:18.205 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 22, current_agent=Web Surface Mapper
+2026-10-06 17:50:18.206 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:50:18.207 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:50:18.209 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:50:18.210 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:50:24.088 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_08faa1e5bcabc00f016ac4b649397887d0a9e6610dbf4b210e stream=1 duration_ms=7353 ttft_ms=1353 req_bytes=310679 res_bytes=67816 finish=completed in=82111 out=84 cached=33536 cost=- agent=4ad262a9 attempt=0
+2026-10-06 17:50:24.091 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:50:24.092 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:50:24.094 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:50:24.095 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Invoking tool aidast_list_captured_requests
+2026-10-06 17:50:24.218 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tool aidast_list_captured_requests completed.
+2026-10-06 17:50:24.219 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 22 complete, next_step type=NextStepRunAgain
+2026-10-06 17:50:24.266 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 23, current_agent=Web Surface Mapper
+2026-10-06 17:50:24.267 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:50:24.268 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:50:24.270 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:50:24.272 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:50:37.442 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_08faa1e5bcabc00f016ac4b650691487d0af430a00b0becd52 stream=1 duration_ms=13171 ttft_ms=928 req_bytes=318944 res_bytes=68428 finish=completed in=84569 out=96 cached=76544 cost=- agent=4ad262a9 attempt=0
+2026-10-06 17:50:37.444 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:50:37.445 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:50:37.446 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:50:37.447 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Invoking tool aidast_view_captured_request
+2026-10-06 17:50:37.532 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tool aidast_view_captured_request completed.
+2026-10-06 17:50:37.533 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 23 complete, next_step type=NextStepRunAgain
+2026-10-06 17:50:37.572 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 24, current_agent=Web Surface Mapper
+2026-10-06 17:50:37.573 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:50:37.574 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:50:37.576 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:50:37.577 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:50:49.750 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_08faa1e5bcabc00f016ac4b65d1de487d0a3a81e9341cea6ab stream=1 duration_ms=13651 ttft_ms=1598 req_bytes=322561 res_bytes=66933 finish=completed in=85169 out=56 cached=9984 cost=- agent=4ad262a9 attempt=0
+2026-10-06 17:50:49.753 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:50:49.754 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:50:49.755 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Invoking tool aidast_view_captured_request
+2026-10-06 17:50:49.962 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tool aidast_view_captured_request completed.
+2026-10-06 17:50:49.963 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 24 complete, next_step type=NextStepRunAgain
+2026-10-06 17:50:49.999 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 25, current_agent=Web Surface Mapper
+2026-10-06 17:50:49.999 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:50:50.001 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:50:50.003 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:50:50.004 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:51:39.673 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_08faa1e5bcabc00f016ac4b66a788887d0af3e618f99c1ff08 stream=1 duration_ms=51105 ttft_ms=1125 req_bytes=324555 res_bytes=77101 finish=completed in=85753 out=1899 cached=51968 cost=- agent=4ad262a9 attempt=0
+2026-10-06 17:51:39.675 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:51:39.677 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=message class=ResponseOutputMessage
+2026-10-06 17:51:39.678 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:51:39.679 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:51:39.681 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Invoking tool create_note
+2026-10-06 17:51:39.700 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tool create_note completed.
+2026-10-06 17:51:39.702 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 25 complete, next_step type=NextStepRunAgain
+2026-10-06 17:51:39.791 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 26, current_agent=Web Surface Mapper
+2026-10-06 17:51:39.791 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:51:39.793 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:51:39.796 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:51:39.798 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:51:45.196 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_08faa1e5bcabc00f016ac4b69b2b9c87d0b524e3987456c9ce stream=1 duration_ms=6877 ttft_ms=1943 req_bytes=334392 res_bytes=68269 finish=completed in=87710 out=106 cached=0 cost=- agent=4ad262a9 attempt=0
+2026-10-06 17:51:45.198 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:51:45.199 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:51:45.562 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 26 complete, next_step type=NextStepRunAgain
+2026-10-06 17:51:45.606 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 27, current_agent=Web Surface Mapper
+2026-10-06 17:51:45.607 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:51:45.609 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:51:45.611 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:51:45.612 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:52:00.604 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tool wait_for_agents completed.
+2026-10-06 17:52:00.604 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 12 complete, next_step type=NextStepRunAgain
+2026-10-06 17:52:00.664 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 13, current_agent=Root Agent
+2026-10-06 17:52:00.665 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:52:00.666 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:52:00.668 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:52:00.669 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:52:03.663 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_038298532016507d016ac4b6b06a3087d09ff0057e1e17f8b9 stream=1 duration_ms=2994 ttft_ms=982 req_bytes=105294 res_bytes=59820 finish=completed in=27386 out=28 cached=0 cost=- agent=74b883ab attempt=0
+2026-10-06 17:52:03.667 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:52:03.672 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:52:03.680 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:52:03.683 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Invoking tool view_agent_graph
+2026-10-06 17:52:03.691 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tool view_agent_graph completed.
+2026-10-06 17:52:03.696 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 13 complete, next_step type=NextStepRunAgain
+2026-10-06 17:52:03.818 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 14, current_agent=Root Agent
+2026-10-06 17:52:03.818 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:52:03.820 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:52:03.821 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:52:03.822 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:52:04.082 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_08faa1e5bcabc00f016ac4b6a20d8887d084f7d381830ef160 stream=1 duration_ms=18470 ttft_ms=1098 req_bytes=335291 res_bytes=71996 finish=completed in=87904 out=465 cached=40704 cost=- agent=4ad262a9 attempt=0
+2026-10-06 17:52:04.085 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:52:04.086 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:52:04.089 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:52:04.337 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 27 complete, next_step type=NextStepRunAgain
+2026-10-06 17:52:04.424 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 28, current_agent=Web Surface Mapper
+2026-10-06 17:52:04.424 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:52:04.427 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:52:04.430 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:52:04.431 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:52:13.771 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_08faa1e5bcabc00f016ac4b6b3fe5487d0aab13b25b823b7bb stream=1 duration_ms=9342 ttft_ms=1141 req_bytes=340171 res_bytes=71521 finish=completed in=88778 out=306 cached=84736 cost=- agent=4ad262a9 attempt=0
+2026-10-06 17:52:13.772 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:52:13.772 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:52:13.774 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:52:14.025 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 28 complete, next_step type=NextStepRunAgain
+2026-10-06 17:52:14.120 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 29, current_agent=Web Surface Mapper
+2026-10-06 17:52:14.121 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:52:14.124 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:52:14.128 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:52:14.130 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:52:14.546 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_038298532016507d016ac4b6b34e3487d0a13ae52bae744e18 stream=1 duration_ms=10724 ttft_ms=1177 req_bytes=107341 res_bytes=61373 finish=completed in=27521 out=140 cached=18176 cost=- agent=74b883ab attempt=0
+2026-10-06 17:52:14.548 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:52:14.549 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=message class=ResponseOutputMessage
+2026-10-06 17:52:14.550 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:52:14.550 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:52:14.551 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Invoking tool send_message_to_agent
+2026-10-06 17:52:14.568 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tool send_message_to_agent completed.
+2026-10-06 17:52:14.569 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 14 complete, next_step type=NextStepRunAgain
+2026-10-06 17:52:14.611 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 15, current_agent=Root Agent
+2026-10-06 17:52:14.612 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:52:14.614 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:52:14.615 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:52:14.616 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:52:28.472 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_038298532016507d016ac4b6bd91e487d0b6e9c9d0762f5a65 stream=1 duration_ms=15325 ttft_ms=787 req_bytes=109990 res_bytes=61181 finish=completed in=27712 out=65 cached=11008 cost=- agent=74b883ab attempt=0
+2026-10-06 17:52:28.474 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:52:28.475 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:52:28.475 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:52:28.476 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Invoking tool aidast_list_captured_requests
+2026-10-06 17:52:28.626 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tool aidast_list_captured_requests completed.
+2026-10-06 17:52:28.628 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 15 complete, next_step type=NextStepRunAgain
+2026-10-06 17:52:28.670 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 16, current_agent=Root Agent
+2026-10-06 17:52:28.670 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:52:28.672 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:52:28.673 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:52:28.674 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:52:35.193 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_038298532016507d016ac4b6cd955c87d0a33c868de4f6ed4e stream=1 duration_ms=6518 ttft_ms=2857 req_bytes=115022 res_bytes=62052 finish=completed in=29005 out=91 cached=18176 cost=- agent=74b883ab attempt=0
+2026-10-06 17:52:35.194 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:52:35.195 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:52:35.196 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:52:35.197 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Invoking tool wait_for_agents
+2026-10-06 17:52:35.198 INFO    scan_d34e5b4bde034be7b6aa41768cbec33d - strix.core.agents: agent.status 74b883ab=waiting
+2026-10-06 17:52:48.907 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_08faa1e5bcabc00f016ac4b6bd299887d0a8d29e0da55c0314 stream=1 duration_ms=37711 ttft_ms=1366 req_bytes=344997 res_bytes=74359 finish=completed in=89781 out=727 cached=87808 cost=- agent=4ad262a9 attempt=0
+2026-10-06 17:52:48.909 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:52:48.910 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:52:48.912 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:52:48.914 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Invoking tool agent_finish
+2026-10-06 17:52:48.930 INFO    scan_d34e5b4bde034be7b6aa41768cbec33d - strix.core.agents: agent.status 4ad262a9=completed
+2026-10-06 17:52:48.941 INFO    scan_d34e5b4bde034be7b6aa41768cbec33d - strix.tools.agents_graph.tools: agent_finish: 4ad262a9 success=True findings=5 filed_reports=0 parent_notified=True
+2026-10-06 17:52:48.942 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tool agent_finish completed.
+2026-10-06 17:52:48.943 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 29 complete, next_step type=NextStepFinalOutput
+2026-10-06 17:52:49.033 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tool wait_for_agents completed.
+2026-10-06 17:52:49.034 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 16 complete, next_step type=NextStepRunAgain
+2026-10-06 17:52:49.157 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 17, current_agent=Root Agent
+2026-10-06 17:52:49.160 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:52:49.163 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:52:49.164 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:52:49.165 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:52:56.784 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_038298532016507d016ac4b6e1252887d080de7db2ac9e83c2 stream=1 duration_ms=7618 ttft_ms=888 req_bytes=121560 res_bytes=62810 finish=completed in=30097 out=87 cached=11008 cost=- agent=74b883ab attempt=0
+2026-10-06 17:52:56.787 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:52:56.788 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=message class=ResponseOutputMessage
+2026-10-06 17:52:56.789 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:52:56.790 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:52:56.790 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Invoking tool view_agent_graph
+2026-10-06 17:52:56.791 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tool view_agent_graph completed.
+2026-10-06 17:52:56.792 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 17 complete, next_step type=NextStepRunAgain
+2026-10-06 17:52:56.839 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 18, current_agent=Root Agent
+2026-10-06 17:52:56.840 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:52:56.841 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:52:56.843 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:52:56.844 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:53:00.765 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_038298532016507d016ac4b6e8952087d08dce2b2a5038fadf stream=1 duration_ms=3921 ttft_ms=1572 req_bytes=124127 res_bytes=61155 finish=completed in=30291 out=22 cached=0 cost=- agent=74b883ab attempt=0
+2026-10-06 17:53:00.766 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:53:00.767 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:53:00.769 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Invoking tool get_note
+2026-10-06 17:53:00.770 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tool get_note completed.
+2026-10-06 17:53:00.771 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 18 complete, next_step type=NextStepRunAgain
+2026-10-06 17:53:00.862 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Starting turn 19, current_agent=Root Agent
+2026-10-06 17:53:00.863 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:53:00.864 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: No conversation_id available for request
+2026-10-06 17:53:00.865 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:53:00.866 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Calling LLM
+2026-10-06 17:53:18.870 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.6-terra host=- outcome=success status=200 request_id=- response_id=resp_038298532016507d016ac4b6ec79e087d0a275e5a62a178f3d stream=1 duration_ms=19461 ttft_ms=1191 req_bytes=130981 res_bytes=65592 finish=completed in=32077 out=511 cached=11008 cost=- agent=74b883ab attempt=0
+2026-10-06 17:53:18.872 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=reasoning class=ResponseReasoningItem
+2026-10-06 17:53:18.873 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Processing output item type=function_call class=ResponseFunctionToolCall
+2026-10-06 17:53:18.874 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tracing is disabled. Not creating span
+2026-10-06 17:53:18.876 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Invoking tool finish_recon
+2026-10-06 17:53:18.876 INFO    scan_d34e5b4bde034be7b6aa41768cbec33d - strix.tools.finish.recon_tool: Recon finish requested agent=74b883ab unresolved_gap_count=4
+2026-10-06 17:53:18.877 INFO    scan_d34e5b4bde034be7b6aa41768cbec33d - strix.tools.finish.recon_tool: Recon finish accepted agent=74b883ab targets=0 child_tasks=1 target_assignments=[] status_counts={'running': 1, 'completed': 1} failed_agents=0 unresolved_gap_count=4
+2026-10-06 17:53:18.878 INFO    scan_d34e5b4bde034be7b6aa41768cbec33d - strix.core.agents: agent.status 74b883ab=completed
+2026-10-06 17:53:18.887 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Tool finish_recon completed.
+2026-10-06 17:53:18.888 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Turn 19 complete, next_step type=NextStepFinalOutput
+2026-10-06 17:53:18.919 DEBUG   scan_d34e5b4bde034be7b6aa41768cbec33d - openai.agents: Resetting current trace
+2026-10-06 17:53:18.924 INFO    scan_d34e5b4bde034be7b6aa41768cbec33d - strix.core.runner: Tearing down sandbox session for scan scan_d34e5b4bde034be7b6aa41768cbec33d
+2026-10-06 17:53:19.234 INFO    scan_d34e5b4bde034be7b6aa41768cbec33d - strix.runtime.session_manager: Cleaned up sandbox session for scan scan_d34e5b4bde034be7b6aa41768cbec33d
+2026-10-06 17:53:19.236 INFO    scan_d34e5b4bde034be7b6aa41768cbec33d - strix.core.runner: Strix scan scan_d34e5b4bde034be7b6aa41768cbec33d done

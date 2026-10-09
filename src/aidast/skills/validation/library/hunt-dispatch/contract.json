@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "attack_skill_name": "hunt-dispatch",
+  "signal_types": [
+    "response_diff"
+  ],
+  "runtime_kinds": [
+    "http"
+  ],
+  "target_expected_signal": {
+    "kind": "hunt-dispatch_verified",
+    "criterion": "the dispatcher routes attacker-controlled input to an unintended handler or capability",
+    "requires_fresh_target_and_control_evidence": true
+  },
+  "control_positive": {
+    "payload_template": {
+      "mode": "channel_health_baseline"
+    },
+    "expected_signal": {
+      "kind": "response_diff_channel_operational",
+      "criterion": "the same transport, identity, parser, browser, callback, or timing channel produces its declared harmless baseline"
+    },
+    "signal_type": "response_diff"
+  },
+  "control_negative": {
+    "payload_template": {
+      "mode": "inert_same_shape_control"
+    },
+    "expected_signal": {
+      "kind": "no_response_diff_target_effect",
+      "criterion": "an inert same-shape input does not produce the target security effect"
+    }
+  },
+  "impact_rules": {
+    "boundary": "identify the exact route, origin, tenant, service, or configuration boundary crossed",
+    "sensitivity": "cite the security-relevant data or capability behind the stable response difference",
+    "actor_requirements": "score the minimum authentication and environmental prerequisites"
+  },
+  "allowed_development_actions": [
+    {
+      "action_type": "refresh_current_role_credential",
+      "blocker_axis": "identity_auth"
+    },
+    {
+      "action_type": "prepare_declared_resource_state",
+      "blocker_axis": "state_setup"
+    }
+  ],
+  "impact_expansion_paths": [
+    {
+      "path_id": "bounded-impact-confirmation",
+      "gap_axis": "sensitivity",
+      "hypothesis_kind": "bounded_sensitive_disclosure",
+      "required_preconditions": [
+        "An exact same-origin safe-method request already captured by Attack",
+        "A unique non-secret configuration or data marker for the stronger impact"
+      ],
+      "expected_signal": {
+        "kind": "hunt_dispatch_bounded_impact_observed"
+      },
+      "recommended_actions": [
+        "Evaluate only the immutable request for the declared non-secret disclosure marker"
+      ],
+      "execution_owner": "validation",
+      "feasibility": "medium",
+      "potential_impact": {
+        "sensitivity": 2
+      }
+    }
+  ]
+}

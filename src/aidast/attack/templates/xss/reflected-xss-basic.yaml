@@ -1,0 +1,33 @@
+schema_version: "1.0"
+id: reflected-xss-basic
+version: 1
+skill_name: hunt-xss
+category: xss
+title: Reflected XSS marker probe
+severity: medium
+candidate_disposition: candidate_only
+
+applicability:
+  methods:
+    - GET
+  parameter_locations:
+    - query
+
+payloads:
+  - id: plain-marker
+    value: "<aidast-xss-{{marker}}>"
+  - id: attribute-breakout-marker
+    value: "\"><aidast-xss-{{marker}}>"
+
+matchers:
+  - type: response_body_contains_marker
+  - type: response_header_contains
+    name: content-type
+    value: text/html
+
+evidence:
+  save:
+    - request_url
+    - response_status
+    - response_headers
+    - response_body_excerpt

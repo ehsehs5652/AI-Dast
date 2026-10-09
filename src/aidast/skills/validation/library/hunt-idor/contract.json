@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "attack_skill_name": "hunt-idor",
+  "signal_types": [
+    "authorization_boundary"
+  ],
+  "runtime_kinds": [
+    "http"
+  ],
+  "target_expected_signal": {
+    "kind": "hunt-idor_verified",
+    "criterion": "a low-privilege identity receives the other test identity object or state transition",
+    "requires_fresh_target_and_control_evidence": true
+  },
+  "control_positive": {
+    "payload_template": {
+      "mode": "channel_health_baseline"
+    },
+    "expected_signal": {
+      "kind": "authorization_boundary_channel_operational",
+      "criterion": "the same transport, identity, parser, browser, callback, or timing channel produces its declared harmless baseline"
+    },
+    "signal_type": "authorization_boundary"
+  },
+  "control_negative": {
+    "payload_template": {
+      "mode": "inert_same_shape_control"
+    },
+    "expected_signal": {
+      "kind": "no_authorization_boundary_target_effect",
+      "criterion": "an inert same-shape input does not produce the target security effect"
+    }
+  },
+  "impact_rules": {
+    "boundary": "identify the exact unauthenticated, identity, role, tenant, or administrator boundary crossed",
+    "sensitivity": "identify only protected fields or committed actions observed in the fresh response",
+    "actor_requirements": "score the lowest role and setup that reproduced the unauthorized access"
+  },
+  "allowed_development_actions": [
+    {
+      "action_type": "refresh_current_role_credential",
+      "blocker_axis": "identity_auth"
+    },
+    {
+      "action_type": "prepare_second_test_identity_state",
+      "blocker_axis": "state_setup"
+    }
+  ],
+  "impact_expansion_paths": [
+    {
+      "path_id": "cross-role-object-access",
+      "gap_axis": "boundary",
+      "hypothesis_kind": "cross_role_access",
+      "required_preconditions": [
+        "A second low-privilege test identity",
+        "A test object owned by that identity"
+      ],
+      "expected_signal": {
+        "kind": "other_identity_object_returned"
+      },
+      "recommended_actions": [
+        "Replay the same object reference from the first low-privilege identity"
+      ],
+      "execution_owner": "validation",
+      "feasibility": "high",
+      "potential_impact": {
+        "boundary": 2
+      }
+    },
+    {
+      "path_id": "sensitive-object-field",
+      "gap_axis": "sensitivity",
+      "hypothesis_kind": "sensitive_field_exposure",
+      "required_preconditions": [
+        "A test object containing a unique non-secret marker"
+      ],
+      "expected_signal": {
+        "kind": "unique_marker_returned"
+      },
+      "recommended_actions": [
+        "Check only the declared response field for the marker"
+      ],
+      "execution_owner": "validation",
+      "feasibility": "medium",
+      "potential_impact": {
+        "sensitivity": 2
+      }
+    }
+  ]
+}

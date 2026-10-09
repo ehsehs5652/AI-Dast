@@ -1,0 +1,192 @@
+2026-10-03 16:06:54.407 INFO    scan_e466a5642a43492a8718dd0d2259eac4 - strix.core.runner: Starting Strix scan scan_e466a5642a43492a8718dd0d2259eac4 (image=aidast-strix-mitm:local, max_turns=500, interactive=False, run_dir=/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/strix_runs/scan_e466a5642a43492a8718dd0d2259eac4)
+2026-10-03 16:07:10.693 INFO    scan_e466a5642a43492a8718dd0d2259eac4 - strix.core.runner: LLM model resolved: chatgpt/gpt-5.4
+2026-10-03 16:07:10.695 INFO    scan_e466a5642a43492a8718dd0d2259eac4 - strix.core.runner: Bringing up sandbox session for scan scan_e466a5642a43492a8718dd0d2259eac4
+2026-10-03 16:07:10.695 DEBUG   scan_e466a5642a43492a8718dd0d2259eac4 - strix.runtime.backends: Selected sandbox backend: docker
+2026-10-03 16:07:10.701 INFO    scan_e466a5642a43492a8718dd0d2259eac4 - strix.runtime.session_manager: Creating sandbox session for scan scan_e466a5642a43492a8718dd0d2259eac4 (backend=docker, image=aidast-strix-mitm:local)
+2026-10-03 16:07:13.559 DEBUG   scan_e466a5642a43492a8718dd0d2259eac4 - strix.runtime.docker_client: Creating sandbox container: image=aidast-strix-mitm:local caps=['NET_ADMIN', 'NET_RAW'] exposed_ports=[]
+2026-10-03 16:07:13.736 INFO    scan_e466a5642a43492a8718dd0d2259eac4 - strix.runtime.docker_client: Sandbox container created: id=4bc4d15a3f5d image=aidast-strix-mitm:local
+2026-10-03 16:07:17.088 INFO    scan_e466a5642a43492a8718dd0d2259eac4 - strix.runtime.session_manager: Sandbox session for scan scan_e466a5642a43492a8718dd0d2259eac4 ready and cached
+2026-10-03 16:07:17.088 INFO    scan_e466a5642a43492a8718dd0d2259eac4 - strix.core.runner: Sandbox ready for scan scan_e466a5642a43492a8718dd0d2259eac4
+2026-10-03 16:07:17.090 INFO    scan_e466a5642a43492a8718dd0d2259eac4 - strix.agents.factory: Built root agent 'Root Agent' (skills=1, tools=20, scan_mode=deep, whitebox=False)
+2026-10-03 16:07:17.091 INFO    scan_e466a5642a43492a8718dd0d2259eac4 - strix.core.agents: agent.register 076edb68 (Root Agent) parent=-
+2026-10-03 16:07:17.291 DEBUG   scan_e466a5642a43492a8718dd0d2259eac4 - openai.agents: Tracing is disabled. Not creating trace
+2026-10-03 16:07:17.292 DEBUG   scan_e466a5642a43492a8718dd0d2259eac4 - openai.agents: Setting current trace: no-op
+2026-10-03 16:07:17.292 DEBUG   scan_e466a5642a43492a8718dd0d2259eac4 - openai.agents: Tracing is disabled. Not creating span
+2026-10-03 16:07:17.327 DEBUG   scan_e466a5642a43492a8718dd0d2259eac4 - openai.agents: Tracing is disabled. Not creating span
+2026-10-03 16:07:17.327 DEBUG   scan_e466a5642a43492a8718dd0d2259eac4 - openai.agents: Starting turn 1, current_agent=Root Agent
+2026-10-03 16:07:17.327 DEBUG   scan_e466a5642a43492a8718dd0d2259eac4 - openai.agents: Tracing is disabled. Not creating span
+2026-10-03 16:07:17.358 DEBUG   scan_e466a5642a43492a8718dd0d2259eac4 - openai.agents: No conversation_id available for request
+2026-10-03 16:07:17.359 DEBUG   scan_e466a5642a43492a8718dd0d2259eac4 - openai.agents: Tracing is disabled. Not creating span
+2026-10-03 16:07:17.360 DEBUG   scan_e466a5642a43492a8718dd0d2259eac4 - openai.agents: Calling LLM
+2026-10-03 16:07:43.652 ERROR   scan_e466a5642a43492a8718dd0d2259eac4 - openai.agents: Error streaming response
+2026-10-03 16:07:43.653 WARNING scan_e466a5642a43492a8718dd0d2259eac4 - strix.llm.request_log: llm_request route=openai provider=openai-codex model=gpt-5.4 host=- outcome=error status=400 request_id=- response_id=- stream=1 duration_ms=26295 ttft_ms=- req_bytes=45699 res_bytes=90 finish=- in=- out=- cached=- cost=- agent=076edb68 attempt=0 error=BadRequestError: Error code: 400 - {'detail': "The 'gpt-5.4' model is not supported when using Codex with a ChatGPT account."}
+2026-10-03 16:07:43.654 DEBUG   scan_e466a5642a43492a8718dd0d2259eac4 - openai.agents: Resetting current trace
+2026-10-03 16:07:43.760 ERROR   scan_e466a5642a43492a8718dd0d2259eac4 - strix.core.execution: agent run failed for 076edb68; marking failed
+Traceback (most recent call last):
+  File "/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/reference/strix/strix/core/execution.py", line 731, in _run_cycle
+    async for event in stream.stream_events():
+    ...<4 lines>...
+                logger.exception("stream event sink failed for %s", agent_id)
+  File "/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/.venv/lib/python3.13/site-packages/agents/result.py", line 931, in stream_events
+    raise self._stored_exception
+  File "/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/.venv/lib/python3.13/site-packages/agents/result.py", line 1021, in _await_task_safely
+    await task
+  File "/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/.venv/lib/python3.13/site-packages/agents/result.py", line 695, in _await_run_and_cleanup
+    result = await original_task
+             ^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/.venv/lib/python3.13/site-packages/agents/run_internal/run_loop.py", line 1226, in start_streaming
+    turn_result = await run_single_turn_streamed(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<15 lines>...
+    )
+    ^
+  File "/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/.venv/lib/python3.13/site-packages/agents/run_internal/run_loop.py", line 1712, in run_single_turn_streamed
+    async for event in model_run_context_stream(retry_stream, tool_use_tracker):
+    ...<142 lines>...
+                    )
+  File "/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/.venv/lib/python3.13/site-packages/agents/models/_run_context.py", line 31, in model_run_context_stream
+    async for item in stream:
+        yield item
+  File "/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/.venv/lib/python3.13/site-packages/agents/run_internal/model_retry.py", line 560, in stream_response_with_retry
+    event = await stream.__anext__()
+            ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/reference/strix/strix/config/models.py", line 355, in stream_response
+    async for event in _with_idle_timeout(stream, self._stream_idle_timeout):
+    ...<2 lines>...
+            yield guarded
+  File "/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/reference/strix/strix/config/models.py", line 379, in _with_idle_timeout
+    event = await asyncio.wait_for(iterator.__anext__(), timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/asyncio/tasks.py", line 507, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/reference/strix/strix/llm/request_log.py", line 1277, in stream_response
+    async for event in self._inner.stream_response(
+    ...<28 lines>...
+        yield event
+  File "/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/.venv/lib/python3.13/site-packages/agents/models/openai_responses.py", line 573, in stream_response
+    stream = await self._fetch_response(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<10 lines>...
+    )
+    ^
+  File "/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/reference/strix/strix/config/models.py", line 114, in _fetch_response
+    events = await super()._fetch_response(*args, stream=True, **kwargs)  # type: ignore[call-overload]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/.venv/lib/python3.13/site-packages/agents/models/openai_responses.py", line 745, in _fetch_response
+    api_response = await api_response_cm.__aenter__()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/.venv/lib/python3.13/site-packages/openai/_response.py", line 655, in __aenter__
+    self.__response = await self._api_request
+                      ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/.venv/lib/python3.13/site-packages/openai/resources/responses/responses.py", line 2869, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<49 lines>...
+    )
+    ^
+  File "/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/.venv/lib/python3.13/site-packages/openai/_base_client.py", line 1992, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/.venv/lib/python3.13/site-packages/openai/_base_client.py", line 1777, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'detail': "The 'gpt-5.4' model is not supported when using Codex with a ChatGPT account."}
+2026-10-03 16:07:43.867 INFO    scan_e466a5642a43492a8718dd0d2259eac4 - strix.core.agents: agent.status 076edb68=failed
+2026-10-03 16:07:43.878 ERROR   scan_e466a5642a43492a8718dd0d2259eac4 - strix.core.runner: Strix scan scan_e466a5642a43492a8718dd0d2259eac4 failed
+Traceback (most recent call last):
+  File "/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/reference/strix/strix/core/runner.py", line 580, in run_strix_scan
+    result = await run_agent_loop(
+             ^^^^^^^^^^^^^^^^^^^^^
+    ...<12 lines>...
+    )
+    ^
+  File "/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/reference/strix/strix/core/execution.py", line 207, in run_agent_loop
+    return await _run_agent_loop(
+           ^^^^^^^^^^^^^^^^^^^^^^
+    ...<12 lines>...
+    )
+    ^
+  File "/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/reference/strix/strix/core/execution.py", line 266, in _run_agent_loop
+    result = await _run_until_lifecycle(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/reference/strix/strix/core/execution.py", line 539, in _run_until_lifecycle
+    result = await _run_cycle(
+             ^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/reference/strix/strix/core/execution.py", line 731, in _run_cycle
+    async for event in stream.stream_events():
+    ...<4 lines>...
+                logger.exception("stream event sink failed for %s", agent_id)
+  File "/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/.venv/lib/python3.13/site-packages/agents/result.py", line 931, in stream_events
+    raise self._stored_exception
+  File "/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/.venv/lib/python3.13/site-packages/agents/result.py", line 1021, in _await_task_safely
+    await task
+  File "/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/.venv/lib/python3.13/site-packages/agents/result.py", line 695, in _await_run_and_cleanup
+    result = await original_task
+             ^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/.venv/lib/python3.13/site-packages/agents/run_internal/run_loop.py", line 1226, in start_streaming
+    turn_result = await run_single_turn_streamed(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<15 lines>...
+    )
+    ^
+  File "/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/.venv/lib/python3.13/site-packages/agents/run_internal/run_loop.py", line 1712, in run_single_turn_streamed
+    async for event in model_run_context_stream(retry_stream, tool_use_tracker):
+    ...<142 lines>...
+                    )
+  File "/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/.venv/lib/python3.13/site-packages/agents/models/_run_context.py", line 31, in model_run_context_stream
+    async for item in stream:
+        yield item
+  File "/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/.venv/lib/python3.13/site-packages/agents/run_internal/model_retry.py", line 560, in stream_response_with_retry
+    event = await stream.__anext__()
+            ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/reference/strix/strix/config/models.py", line 355, in stream_response
+    async for event in _with_idle_timeout(stream, self._stream_idle_timeout):
+    ...<2 lines>...
+            yield guarded
+  File "/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/reference/strix/strix/config/models.py", line 379, in _with_idle_timeout
+    event = await asyncio.wait_for(iterator.__anext__(), timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/asyncio/tasks.py", line 507, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/reference/strix/strix/llm/request_log.py", line 1277, in stream_response
+    async for event in self._inner.stream_response(
+    ...<28 lines>...
+        yield event
+  File "/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/.venv/lib/python3.13/site-packages/agents/models/openai_responses.py", line 573, in stream_response
+    stream = await self._fetch_response(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<10 lines>...
+    )
+    ^
+  File "/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/reference/strix/strix/config/models.py", line 114, in _fetch_response
+    events = await super()._fetch_response(*args, stream=True, **kwargs)  # type: ignore[call-overload]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/.venv/lib/python3.13/site-packages/agents/models/openai_responses.py", line 745, in _fetch_response
+    api_response = await api_response_cm.__aenter__()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/.venv/lib/python3.13/site-packages/openai/_response.py", line 655, in __aenter__
+    self.__response = await self._api_request
+                      ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/.venv/lib/python3.13/site-packages/openai/resources/responses/responses.py", line 2869, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+    ...<49 lines>...
+    )
+    ^
+  File "/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/.venv/lib/python3.13/site-packages/openai/_base_client.py", line 1992, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/.venv/lib/python3.13/site-packages/openai/_base_client.py", line 1777, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'detail': "The 'gpt-5.4' model is not supported when using Codex with a ChatGPT account."}
+2026-10-03 16:07:43.898 INFO    scan_e466a5642a43492a8718dd0d2259eac4 - strix.core.agents: agent.status 076edb68=failed
+2026-10-03 16:07:43.908 INFO    scan_e466a5642a43492a8718dd0d2259eac4 - strix.core.runner: Tearing down sandbox session for scan scan_e466a5642a43492a8718dd0d2259eac4
+2026-10-03 16:07:44.191 INFO    scan_e466a5642a43492a8718dd0d2259eac4 - strix.runtime.session_manager: Cleaned up sandbox session for scan scan_e466a5642a43492a8718dd0d2259eac4
+2026-10-03 16:07:44.193 INFO    scan_e466a5642a43492a8718dd0d2259eac4 - strix.core.runner: Strix scan scan_e466a5642a43492a8718dd0d2259eac4 done

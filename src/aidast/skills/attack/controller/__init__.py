@@ -1,0 +1,1 @@
+"""Packaged Attack controller resources."""

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (() => {
+        try {
+          const saved = localStorage.getItem('aidast-theme') || 'system';
+          const theme = saved === 'system'
+            ? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+            : saved;
+          document.documentElement.lang = 'ko';
+          document.documentElement.dataset.theme = theme === 'light' ? 'light' : 'dark';
+          document.documentElement.style.colorScheme = document.documentElement.dataset.theme;
+        } catch { document.documentElement.dataset.theme = 'dark'; }
+      })();
+    </script>
+    <meta name="theme-color" content="#101419" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="description" content="승인된 Scope, 스캔 활동, 취약점 검증과 로컬 보고서를 관리하는 DDalGak의 AI DAST 도구" />
+    <title>DDalGak — AI DAST 도구</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "attack_skill_name": "hunt-saml",
+  "signal_types": [
+    "authorization_boundary"
+  ],
+  "runtime_kinds": [
+    "http"
+  ],
+  "target_expected_signal": {
+    "kind": "hunt-saml_verified",
+    "criterion": "a modified or policy-invalid assertion establishes the protected identity or role",
+    "requires_fresh_target_and_control_evidence": true
+  },
+  "control_positive": {
+    "payload_template": {
+      "mode": "channel_health_baseline"
+    },
+    "expected_signal": {
+      "kind": "authorization_boundary_channel_operational",
+      "criterion": "the same transport, identity, parser, browser, callback, or timing channel produces its declared harmless baseline"
+    },
+    "signal_type": "authorization_boundary"
+  },
+  "control_negative": {
+    "payload_template": {
+      "mode": "inert_same_shape_control"
+    },
+    "expected_signal": {
+      "kind": "no_authorization_boundary_target_effect",
+      "criterion": "an inert same-shape input does not produce the target security effect"
+    }
+  },
+  "impact_rules": {
+    "boundary": "identify the exact unauthenticated, identity, role, tenant, or administrator boundary crossed",
+    "sensitivity": "identify only protected fields or committed actions observed in the fresh response",
+    "actor_requirements": "score the lowest role and setup that reproduced the unauthorized access"
+  },
+  "allowed_development_actions": [
+    {
+      "action_type": "refresh_current_role_credential",
+      "blocker_axis": "identity_auth"
+    },
+    {
+      "action_type": "prepare_second_test_identity_state",
+      "blocker_axis": "state_setup"
+    }
+  ],
+  "impact_expansion_paths": [
+    {
+      "path_id": "bounded-impact-confirmation",
+      "gap_axis": "boundary",
+      "hypothesis_kind": "bounded_authorization_boundary",
+      "required_preconditions": [
+        "An exact same-origin safe-method request already captured by Attack",
+        "A declared test identity or resource proving the stronger authorization boundary"
+      ],
+      "expected_signal": {
+        "kind": "hunt_saml_bounded_impact_observed"
+      },
+      "recommended_actions": [
+        "Evaluate only the immutable request and its declared non-status authorization assertion"
+      ],
+      "execution_owner": "validation",
+      "feasibility": "medium",
+      "potential_impact": {
+        "boundary": 2
+      }
+    }
+  ]
+}

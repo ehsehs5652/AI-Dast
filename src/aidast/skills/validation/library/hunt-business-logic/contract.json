@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "attack_skill_name": "hunt-business-logic",
+  "signal_types": [
+    "state_change"
+  ],
+  "runtime_kinds": [
+    "http"
+  ],
+  "target_expected_signal": {
+    "kind": "hunt-business-logic_verified",
+    "criterion": "the prohibited business transition is durably committed",
+    "requires_fresh_target_and_control_evidence": true
+  },
+  "control_positive": {
+    "payload_template": {
+      "mode": "channel_health_baseline"
+    },
+    "expected_signal": {
+      "kind": "state_change_channel_operational",
+      "criterion": "the same transport, identity, parser, browser, callback, or timing channel produces its declared harmless baseline"
+    },
+    "signal_type": "state_change"
+  },
+  "control_negative": {
+    "payload_template": {
+      "mode": "inert_same_shape_control"
+    },
+    "expected_signal": {
+      "kind": "no_state_change_target_effect",
+      "criterion": "an inert same-shape input does not produce the target security effect"
+    }
+  },
+  "impact_rules": {
+    "boundary": "identify whose resource or protected workflow accepted the state transition",
+    "sensitivity": "cite the durable effect and whether it is reversible within the test fixture",
+    "actor_requirements": "score the minimum role, interaction, and timing prerequisites"
+  },
+  "allowed_development_actions": [
+    {
+      "action_type": "prepare_declared_resource_state",
+      "blocker_axis": "state_setup"
+    },
+    {
+      "action_type": "refresh_current_role_credential",
+      "blocker_axis": "identity_auth"
+    }
+  ],
+  "impact_expansion_paths": [
+    {
+      "path_id": "bounded-impact-confirmation",
+      "gap_axis": "boundary",
+      "hypothesis_kind": "bounded_state_or_browser_impact",
+      "required_preconditions": [
+        "An isolated test tenant or browser context with reversible state",
+        "Explicit authorization for the profile-specific impact check"
+      ],
+      "expected_signal": {
+        "kind": "hunt_business_logic_bounded_impact_observed"
+      },
+      "recommended_actions": [
+        "Preserve the hypothesis for manual review; do not mutate state from Validation"
+      ],
+      "execution_owner": "manual",
+      "feasibility": "low",
+      "potential_impact": {
+        "boundary": 2
+      }
+    }
+  ]
+}

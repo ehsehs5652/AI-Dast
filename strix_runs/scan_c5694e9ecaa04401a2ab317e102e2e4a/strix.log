@@ -1,0 +1,1 @@
+2026-10-03 15:25:41.112 INFO    scan_c5694e9ecaa04401a2ab317e102e2e4a - strix.core.runner: Starting Strix scan scan_c5694e9ecaa04401a2ab317e102e2e4a (image=aidast-strix-mitm:local, max_turns=500, interactive=False, run_dir=/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/strix_runs/scan_c5694e9ecaa04401a2ab317e102e2e4a)

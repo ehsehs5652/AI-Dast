@@ -1,0 +1,1 @@
+2026-10-06 00:03:06.688 INFO    scan_1f703c276ff34b49bcea5f4cb572bcf7 - strix.core.runner: Starting Strix scan scan_1f703c276ff34b49bcea5f4cb572bcf7 (image=ghcr.io/usestrix/strix-sandbox:1.3.0, max_turns=500, interactive=False, run_dir=/mnt/c/Users/cms/Desktop/WHS4_DAST_Project-main/strix_runs/scan_1f703c276ff34b49bcea5f4cb572bcf7)

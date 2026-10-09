@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "attack_skill_name": "hunt-ssrf",
+  "signal_types": [
+    "oob_callback"
+  ],
+  "runtime_kinds": [
+    "oob"
+  ],
+  "target_expected_signal": {
+    "kind": "hunt-ssrf_verified",
+    "criterion": "the controlled callback endpoint receives a request attributable to the target server",
+    "requires_fresh_target_and_control_evidence": true
+  },
+  "control_positive": {
+    "payload_template": {
+      "mode": "channel_health_baseline"
+    },
+    "expected_signal": {
+      "kind": "oob_callback_channel_operational",
+      "criterion": "the same transport, identity, parser, browser, callback, or timing channel produces its declared harmless baseline"
+    },
+    "signal_type": "oob_callback"
+  },
+  "control_negative": {
+    "payload_template": {
+      "mode": "inert_same_shape_control"
+    },
+    "expected_signal": {
+      "kind": "no_oob_callback_target_effect",
+      "criterion": "an inert same-shape input does not produce the target security effect"
+    }
+  },
+  "impact_rules": {
+    "boundary": "identify whether the callback crosses the target server or internal network boundary",
+    "sensitivity": "distinguish DNS-only reachability from authenticated data transfer or local resource access",
+    "actor_requirements": "score the minimum caller role and callback prerequisites"
+  },
+  "allowed_development_actions": [
+    {
+      "action_type": "refresh_callback_registration",
+      "blocker_axis": "state_setup"
+    },
+    {
+      "action_type": "adjust_callback_wait_window",
+      "blocker_axis": "timing_concurrency"
+    }
+  ],
+  "impact_expansion_paths": [
+    {
+      "path_id": "bounded-impact-confirmation",
+      "gap_axis": "sensitivity",
+      "hypothesis_kind": "bounded_cross_system_impact",
+      "required_preconditions": [
+        "A demonstrated prerequisite finding with reusable non-secret evidence",
+        "A bounded terminal target explicitly allowed by current policy"
+      ],
+      "expected_signal": {
+        "kind": "hunt_ssrf_bounded_impact_observed"
+      },
+      "recommended_actions": [
+        "Hand the bounded cross-system hypothesis to Chaining without executing it in Validation"
+      ],
+      "execution_owner": "chaining",
+      "feasibility": "low",
+      "potential_impact": {
+        "sensitivity": 2
+      }
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+"""Packaged Hunt Skill library."""

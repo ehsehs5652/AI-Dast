@@ -1,0 +1,14 @@
+{
+  "name": "Claude-BugHunter",
+  "repository": "https://github.com/elementalsouls/Claude-BugHunter",
+  "commit": "e49b9da698bfe830302f0ae49ea02e41cc5cf876",
+  "retrieved_at": "2026-09-07",
+  "license": "MIT",
+  "vendored": [
+    "skills/hunt-*/SKILL.md",
+    "commands/hunt.md",
+    "commands/chain.md"
+  ],
+  "adaptation": "Vendored files are byte-identical. Codex execution is implemented by aidast.skills.attack.controller."
+}
+

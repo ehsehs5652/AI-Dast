@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "attack_skill_name": "hunt-lfi",
+  "signal_types": [
+    "error_signature"
+  ],
+  "runtime_kinds": [
+    "http"
+  ],
+  "target_expected_signal": {
+    "kind": "hunt-lfi_verified",
+    "criterion": "the declared local test file marker is returned through path-controlled inclusion",
+    "requires_fresh_target_and_control_evidence": true
+  },
+  "control_positive": {
+    "payload_template": {
+      "mode": "channel_health_baseline"
+    },
+    "expected_signal": {
+      "kind": "error_signature_channel_operational",
+      "criterion": "the same transport, identity, parser, browser, callback, or timing channel produces its declared harmless baseline"
+    },
+    "signal_type": "error_signature"
+  },
+  "control_negative": {
+    "payload_template": {
+      "mode": "inert_same_shape_control"
+    },
+    "expected_signal": {
+      "kind": "no_error_signature_target_effect",
+      "criterion": "an inert same-shape input does not produce the target security effect"
+    }
+  },
+  "impact_rules": {
+    "boundary": "credit a boundary only when the fresh result changes access or execution beyond an error alone",
+    "sensitivity": "distinguish parser disclosure from data access, file read, query control, or code execution",
+    "actor_requirements": "score the minimum reachable input surface and authentication role"
+  },
+  "allowed_development_actions": [
+    {
+      "action_type": "apply_profile_allowed_encoding",
+      "blocker_axis": "encoding_transport"
+    },
+    {
+      "action_type": "refresh_current_role_credential",
+      "blocker_axis": "identity_auth"
+    }
+  ],
+  "impact_expansion_paths": [
+    {
+      "path_id": "bounded-impact-confirmation",
+      "gap_axis": "sensitivity",
+      "hypothesis_kind": "bounded_sensitive_effect",
+      "required_preconditions": [
+        "An exact same-origin safe-method request already captured by Attack",
+        "A unique non-secret test marker proving the stronger data or execution effect"
+      ],
+      "expected_signal": {
+        "kind": "hunt_lfi_bounded_impact_observed"
+      },
+      "recommended_actions": [
+        "Evaluate only the immutable request for the declared non-secret impact marker"
+      ],
+      "execution_owner": "validation",
+      "feasibility": "medium",
+      "potential_impact": {
+        "sensitivity": 2
+      }
+    }
+  ]
+}
